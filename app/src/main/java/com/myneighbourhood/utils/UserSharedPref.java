@@ -10,6 +10,7 @@ public class UserSharedPref {
 
     public static final String SP_NAME = "userDetails";
     private static UserSharedPref INSTANCE = null;
+    private int lastLoggedInUser;
 
     public SharedPreferences getUserLocalDatabase() {
         return userLocalDatabase;

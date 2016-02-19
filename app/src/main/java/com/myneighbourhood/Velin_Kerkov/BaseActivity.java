@@ -1,5 +1,6 @@
 package com.myneighbourhood.Velin_Kerkov;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,18 +11,20 @@ import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.UserSharedPref;
+import com.myneighbourhood.utils.Utils;
 
 public class BaseActivity extends AppCompatActivity {
 
     // shared globals
     protected static UserSharedPref SP;
+    protected static SharedPreferences SP_VILI;
+    protected static SharedPreferences.Editor SP_VILI_EDITOR;
     protected static User user;
     protected static DBHelper DB;
 
 
     private Toolbar toolbar;
     private FrameLayout contentContainer;
-
 
 
     @Override
@@ -60,6 +63,11 @@ public class BaseActivity extends AppCompatActivity {
 
         if (SP == null) {
             SP = UserSharedPref.getInstance(this);
+        }
+
+        if (SP_VILI == null) {
+            SP_VILI = getSharedPreferences(Utils.SP, MODE_PRIVATE);
+            SP_VILI_EDITOR = SP_VILI.edit();
         }
 
         if (DB == null) {

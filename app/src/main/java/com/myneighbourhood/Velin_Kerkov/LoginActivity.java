@@ -40,6 +40,7 @@ public class LoginActivity extends BaseActivity {
 
                 User user = DB.getUser(username, password);
                 setLoggedInUser(user);
+                SP.setUserLoggedIn(true);
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);

@@ -45,4 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO: check username + password
         return new User(username, password, "07784397999", "abv@abv.bg");
     }
+
+    public User getUser(int lastLoginUserId) {
+        // TODO: get user by id
+        return new User("vili", "222", "07784397999", "abv@abv.bg");
+    }
 }

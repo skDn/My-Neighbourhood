@@ -6,4 +6,5 @@ package com.myneighbourhood.utils;
 public class Utils {
 
     public static final String SP = "SP";
+    public static final String SP_LAST_USER_ID = "user_last_login_id";
 }
