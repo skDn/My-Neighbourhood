@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         userSharedPref = UserSharedPref.getInstance(this);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -31,5 +30,4 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
-
 }
