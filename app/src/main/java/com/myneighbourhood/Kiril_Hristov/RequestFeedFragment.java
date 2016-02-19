@@ -12,6 +12,7 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 
 import android.support.v4.app.Fragment;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class RequestFeedFragment extends Fragment implements View.OnClickListener{
@@ -25,17 +26,18 @@ public class RequestFeedFragment extends Fragment implements View.OnClickListene
     }
 
     MainActivity mainActivity;
+    ListView RequestFeedListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_request_feed, container, false);
-
         mainActivity = (MainActivity) getActivity();
-        /*myListView = (ListView) v.findViewById(R.id.myListsListView);
-        createList.setOnClickListener(this);*/
-
+        RequestFeedListView = (ListView) v.findViewById(R.id.RequestFeedListView);
+        RequestFeedListView.setOnClickListener(this);
         return v;
     }
+
+
 
 
     @Override
