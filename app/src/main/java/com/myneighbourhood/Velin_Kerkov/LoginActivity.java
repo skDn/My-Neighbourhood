@@ -16,6 +16,11 @@ public class LoginActivity extends BaseActivity {
     private EditText usernameET;
 
     @Override
+    protected boolean useToolbar() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -35,7 +40,7 @@ public class LoginActivity extends BaseActivity {
                 String username = usernameET.getText().toString();
                 SP.setUserLoggedIn(true);
                 SP.storeUserData(new User(username, password));
-                
+
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }

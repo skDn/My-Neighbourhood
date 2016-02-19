@@ -7,6 +7,11 @@ import com.myneighbourhood.R;
 public class RegisterActivity extends BaseActivity {
 
     @Override
+    protected boolean useToolbar() {
+        return false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
