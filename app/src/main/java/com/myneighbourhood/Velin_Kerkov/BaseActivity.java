@@ -6,15 +6,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
+import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.UserSharedPref;
 
 public class BaseActivity extends AppCompatActivity {
 
+    // shared globals
+    protected static UserSharedPref SP;
+    protected static User user;
+    protected static DBHelper DB;
+
 
     private Toolbar toolbar;
-    protected static UserSharedPref SP;
     private FrameLayout contentContainer;
+
+
 
     @Override
     public void setContentView(int layoutResID) {
@@ -29,6 +37,10 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean useToolbar() {
         return true;
+    }
+
+    protected void setLoggedInUser(User user) {
+        this.user = user;
     }
 
     private void configureToolbar(View view) {
@@ -46,8 +58,12 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (SP != null) {
+        if (SP == null) {
             SP = UserSharedPref.getInstance(this);
+        }
+
+        if (DB == null) {
+            DB = DBHelper.getInstance(this);
         }
 
     }

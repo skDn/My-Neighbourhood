@@ -38,8 +38,9 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 String password = passwordET.getText().toString();
                 String username = usernameET.getText().toString();
-                SP.setUserLoggedIn(true);
-                SP.storeUserData(new User(username, password));
+
+                User user = DB.getUser(username, password);
+                setLoggedInUser(user);
 
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
