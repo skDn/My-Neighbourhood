@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kiril on 19/02/2016.
@@ -206,12 +209,13 @@ public class DBHelper extends SQLiteOpenHelper {
         if (c.getCount() > 0){
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
         }
+        c.close();
         db.close();
         return new User(id, username, password, phone, email);
     }
 
     public User getUser(String username, String password) {
-        int id = 0;
+        int id;
         String email = "";
         String phone = "";
         //String picture = "";
@@ -230,8 +234,12 @@ public class DBHelper extends SQLiteOpenHelper {
             if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
+            c.close();
+            db.close();
             return new User(id, username, password, phone, email);
         }
+        c.close();
+        db.close();
         return null;
     }
 
@@ -260,9 +268,121 @@ public class DBHelper extends SQLiteOpenHelper {
             if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
+            c.close();
+            db.close();
             return new User(lastLoginUserId, username, password, phone, email);
         }
+        c.close();
+        db.close();
         return null;
+    }
+
+    public void addRequest(Request request){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreatorId());
+        values.put(COLUMN_REQUEST_TITLE, request.getTitle());
+        values.put(COLUMN_REQUEST_DESCRIPTION, request.getDescription());
+        values.put(COLUMN_REQUEST_PEOPLE_NEEDED, request.getPeopleNeeded());
+        values.put(COLUMN_REQUEST_TIMESTAMP, request.getTimestamp());
+        values.put(COLUMN_REQUEST_EXPIRES, request.getExpires());
+        values.put(COLUMN_REQUEST_ACCEPTED, request.getAccepted());
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_USER, null, values);
+        db.close();
+    }
+
+    public Request getRequest(int requestId) {
+        int creatorId;
+        String title= "";
+        String description = "";
+        int peopleNeeded;
+        String timestamp = "";
+        String expires = "";
+        int accepted;
+        SQLiteDatabase db = getWritableDatabase();
+        String getRequest =
+                "SELECT * FROM " + TABLE_REQUEST +
+                        " WHERE " + COLUMN_REQUEST_ID + " = " + requestId + ";";
+        Cursor c = db.rawQuery(getRequest, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null){
+                title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null){
+                description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
+            }
+            peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
+                timestamp = c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
+                expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
+            }
+            accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
+            c.close();
+            db.close();
+            return new Request(requestId, creatorId, title, description, peopleNeeded, timestamp, expires, accepted);
+        }
+        c.close();
+        db.close();
+        return null;
+    }
+
+    // get myRequests or feedRequests
+    public ArrayList<Request> getRequests(int userId, String feedOrMy) {
+        int requestId;
+        int creatorId;
+        String title="";
+        String description="";
+        int peopleNeeded;
+        String timestamp = "";
+        String expires = "";
+        int accepted;
+        ArrayList<Request> toReturn = new ArrayList<>();
+
+        String getMyRequests =
+                "SELECT * FROM " + TABLE_REQUEST +
+                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
+        String getFeedRequests =
+                "SELECT * FROM " + TABLE_REQUEST +
+                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
+
+        String queryToExecute;
+        if(feedOrMy.equals("feed")){
+            queryToExecute = getMyRequests;
+        }
+        else queryToExecute = getFeedRequests;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor c = db.rawQuery(queryToExecute, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            requestId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ID));
+            creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null){
+                title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null){
+                description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
+            }
+            peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
+                timestamp = c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
+                expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
+            }
+            accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
+
+            toReturn.add(new Request(requestId, creatorId, title, description, peopleNeeded, timestamp, expires, accepted));
+
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return toReturn;
     }
 
 }

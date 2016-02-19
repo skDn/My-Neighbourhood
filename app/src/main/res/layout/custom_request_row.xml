@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:gravity="center"
+    >
+
+    <ImageView
+        android:id="@+id/RowRequestImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@android:drawable/presence_offline"/>
+
+    <TextView
+        android:id="@+id/RowRequestUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username" />
+
+    <TextView
+        android:id="@+id/RowRequestTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/RowRequestDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="description"/>
+
+    <TextView
+        android:id="@+id/RowRequestRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="80"/>
+
+   <RelativeLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center">
+
+       <Button
+           android:id="@+id/RowRequestContact"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Contact"
+           android:background="#0F0"/>
+
+       <Button
+           android:id="@+id/RowRequestHide"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Hide"
+           android:background="#F00"
+           android:layout_toRightOf="@+id/RowRequestContact"
+           android:layout_marginLeft="20dp"/>
+   </RelativeLayout>
+
+
+</LinearLayout>
