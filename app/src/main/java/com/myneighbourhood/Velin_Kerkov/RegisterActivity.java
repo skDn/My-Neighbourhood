@@ -1,11 +1,10 @@
 package com.myneighbourhood.Velin_Kerkov;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.myneighbourhood.R;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,11 +1,10 @@
 package com.myneighbourhood.Velin_Kerkov;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.myneighbourhood.R;
 
-public class SMSAuthorisationActivity extends Activity {
+public class SMSAuthorisationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
