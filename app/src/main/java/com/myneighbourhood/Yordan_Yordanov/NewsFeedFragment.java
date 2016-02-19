@@ -19,6 +19,11 @@ public class NewsFeedFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static NewsFeedFragment newInstance() {
+        NewsFeedFragment newsFeedFragment = new NewsFeedFragment();
+        return newsFeedFragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -4,9 +4,14 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- news -->
     <string name="add_news_title">Title</string>
     <string name="add_news_input_title">Add Title</string>
     <string name="add_news_description">Add Description</string>
     <string name="add_news_submit_button">Post your news item</string>
+
+    <!-- messages -->
+    <string name="messages_search">Search a message</string>
 
 </resources>
