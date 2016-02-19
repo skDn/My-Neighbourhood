@@ -24,8 +24,9 @@ public class BaseActivity extends AppCompatActivity {
         configureToolbar(baseView);
         contentContainer = (FrameLayout) baseView.findViewById(R.id.base_FL_content);
 
-        View requestedView = getLayoutInflater().inflate(layoutResID, contentContainer, true);
-        super.setContentView(requestedView);
+        View requestedView = getLayoutInflater().inflate(layoutResID, contentContainer, false);
+        contentContainer.addView(requestedView);
+        super.setContentView(baseView);
     }
 
     protected boolean useToolbar() {
