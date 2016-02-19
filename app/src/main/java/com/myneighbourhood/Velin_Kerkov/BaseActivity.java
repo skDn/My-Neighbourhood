@@ -1,6 +1,5 @@
 package com.myneighbourhood.Velin_Kerkov;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,14 +7,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.utils.Utils;
+import com.myneighbourhood.utils.UserSharedPref;
 
 public class BaseActivity extends AppCompatActivity {
 
 
     private Toolbar toolbar;
-    private SharedPreferences SP;
-    private SharedPreferences.Editor SP_EDITOR;
+    protected static UserSharedPref SP;
     private FrameLayout contentContainer;
 
     @Override
@@ -48,9 +46,8 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (SP == null || SP_EDITOR == null) {
-            SP = getSharedPreferences(Utils.SP, MODE_PRIVATE);
-            SP_EDITOR = SP.edit();
+        if (SP != null) {
+            SP = UserSharedPref.getInstance(this);
         }
 
     }

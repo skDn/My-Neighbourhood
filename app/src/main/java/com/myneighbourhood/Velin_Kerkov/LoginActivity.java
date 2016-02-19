@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.myneighbourhood.Kiril_Hristov.MainActivity;
 import com.myneighbourhood.R;
+import com.myneighbourhood.utils.User;
 
 public class LoginActivity extends BaseActivity {
 
@@ -25,12 +26,16 @@ public class LoginActivity extends BaseActivity {
         Button loginBTN = (Button) findViewById(R.id.login_B_login);
         Button registerBTN = (Button) findViewById(R.id.login_B_register);
 
+
         // set up listeners
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String password = passwordET.getText().toString();
                 String username = usernameET.getText().toString();
+                SP.setUserLoggedIn(true);
+                SP.storeUserData(new User(username, password));
+                
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }
