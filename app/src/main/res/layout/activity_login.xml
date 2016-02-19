@@ -49,6 +49,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:id="@+id/login_B_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -56,6 +57,7 @@
             android:text="Login" />
 
         <Button
+            android:id="@+id/login_B_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
