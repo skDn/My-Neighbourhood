@@ -36,6 +36,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public User registerUser(String username, String password, String email, String phone) {
+        // TODO: save user in DB if username is unique else null or throw error
+        return new User(username, password, phone, email);
+    }
+
     public User getUser(String username, String password) {
         // TODO: check username + password
         return new User(username, password, "07784397999", "abv@abv.bg");
