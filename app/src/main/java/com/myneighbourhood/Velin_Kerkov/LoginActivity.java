@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.myneighbourhood.Kiril_Hristov.MainActivity;
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
 
