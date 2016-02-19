@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -7,4 +7,66 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.myneighbourhood.Kiril_Hristov.AddRequestActivity">
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/AddRequestLinearLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/AddRequestTitle"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#d3d3d3"
+            android:hint="Title"/>
+
+        <EditText
+            android:id="@+id/AddRequestDescription"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#d3d3d3"
+            android:hint="Description"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How many people you need?"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+
+        <NumberPicker
+            android:id="@+id/AddRequestNumberPickerPeople"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expires in (h):"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+
+        <NumberPicker
+            android:id="@+id/AddRequestNumberPickerExpires"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+
+        <Button
+            android:id="@+id/AddRequestPostButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Post"
+            android:layout_gravity="center"/>
+
+
+    </LinearLayout>
+</ScrollView>
