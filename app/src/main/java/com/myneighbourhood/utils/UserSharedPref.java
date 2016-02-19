@@ -33,6 +33,8 @@ public class UserSharedPref {
         editor.putInt("id", user.getId());
         editor.putString("username", user.getUsername());
         editor.putString("password", user.getPassword());
+        editor.putString("email", user.getEmail());
+        editor.putString("phone", user.getPhone());
         editor.apply();
     }
 
@@ -40,7 +42,9 @@ public class UserSharedPref {
         int id = userLocalDatabase.getInt("id", 0);
         String username = userLocalDatabase.getString("username", "");
         String password = userLocalDatabase.getString("password", "");
-        User u = new User(username, password);
+        String email = userLocalDatabase.getString("email","");
+        String phone = userLocalDatabase.getString("phone", "");
+        User u = new User(username, password, phone, email);
         u.setId(id);
         return u;
     }
