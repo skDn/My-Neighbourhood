@@ -1,6 +1,8 @@
 package com.myneighbourhood.Kiril_Hristov;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -180,17 +182,86 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public User registerUser(String username, String password, String email, String phone) {
-        // TODO: save user in DB if username is unique else null or throw error
-        return new User(username, password, phone, email);
+        SQLiteDatabase db = getWritableDatabase();
+        String checkUnique =
+                "SELECT * FROM " + TABLE_USER +
+                " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\";";
+        Cursor c = db.rawQuery(checkUnique, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            // user with that username already exists
+            return null;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_USERNAME, username);
+        values.put(COLUMN_USER_PASSWORD, password);
+        values.put(COLUMN_USER_EMAIL, email);
+        values.put(COLUMN_USER_PHONE, phone);
+        db.insert(TABLE_USER, null, values);
+
+        int id=0;
+        c = db.rawQuery(checkUnique, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+        }
+        db.close();
+        return new User(id, username, password, phone, email);
     }
 
     public User getUser(String username, String password) {
-        // TODO: check username + password
-        return new User(username, password, "07784397999", "abv@abv.bg");
+        int id = 0;
+        String email = "";
+        String phone = "";
+        //String picture = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String authenticate =
+                "SELECT * FROM " + TABLE_USER +
+                " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\" " +
+                " AND " + COLUMN_USER_PASSWORD + "=\"" + password + "\" " + ";";
+        Cursor c = db.rawQuery(authenticate, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
+            }
+            return new User(id, username, password, phone, email);
+        }
+        return null;
     }
 
     public User getUser(int lastLoginUserId) {
-        // TODO: get user by id
-        return new User("vili", "222", "07784397999", "abv@abv.bg");
+        String username= "";
+        String password = "";
+        String email = "";
+        String phone = "";
+        //String picture = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String authenticate =
+                "SELECT * FROM " + TABLE_USER +
+                " WHERE " + COLUMN_USER_ID + " = " + lastLoginUserId + ";";
+        Cursor c = db.rawQuery(authenticate, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            if(c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null){
+                username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null){
+                password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
+            }
+            return new User(lastLoginUserId, username, password, phone, email);
+        }
+        return null;
     }
 }
