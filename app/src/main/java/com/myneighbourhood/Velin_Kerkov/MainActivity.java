@@ -60,6 +60,9 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(newsFeedFragment, "News");
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
+        if(getIntent().getIntExtra("tab", 0) == 1) {
+            viewPager.setCurrentItem(1);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

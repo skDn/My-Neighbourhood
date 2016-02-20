@@ -47,6 +47,7 @@ public class MyRequestsFragment extends Fragment {
 
     @Override
     public void onResume() {
+        super.onResume();
         DBHelper dbHelper = DBHelper.getInstance(mainActivity);
         UserSharedPref sp = UserSharedPref.getInstance(mainActivity);
 
