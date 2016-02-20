@@ -4,23 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.myneighbourhood.Kiril_Hristov.RequestFeedFragment">
 
-    <FrameLayout
+
+    <ListView
+        android:id="@+id/RequestFeedListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/requestFeedActionButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_input_add" />
-
-        <ListView
-            android:id="@+id/RequestFeedListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:dividerHeight="5dp"
-            android:layout_marginTop="10dp"/>
-
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:dividerHeight="5dp"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

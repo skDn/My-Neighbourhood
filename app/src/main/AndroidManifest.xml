@@ -29,7 +29,6 @@
         <activity android:name=".Yordan_Yordanov.MyNeighbourhoodActivity" />
         <activity android:name=".Kiril_Hristov.AddRequestActivity" />
         <activity android:name=".Kiril_Hristov.ViewRequestActivity" />
-        <activity android:name=".Kiril_Hristov.MyRequestsActivity" />
     </application>
 
 </manifest>

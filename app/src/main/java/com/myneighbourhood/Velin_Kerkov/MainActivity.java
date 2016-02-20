@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.myneighbourhood.Kiril_Hristov.MyRequestsFragment;
 import com.myneighbourhood.Kiril_Hristov.RequestFeedFragment;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.NewsFeedFragment;
@@ -20,6 +21,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
     private RequestFeedFragment requestFeedFragment;
+    private MyRequestsFragment myRequestsFragment;
     private NewsFeedFragment newsFeedFragment;
 
     @Override
@@ -45,11 +47,16 @@ public class MainActivity extends BaseActivity {
             requestFeedFragment = RequestFeedFragment.newInstance();
         }
 
+        if (myRequestsFragment == null){
+            myRequestsFragment = MyRequestsFragment.newInstance();
+        }
+
         if (newsFeedFragment == null) {
             newsFeedFragment = NewsFeedFragment.newInstance();
         }
 
         adapter.addFragment(requestFeedFragment, "Requests");
+        adapter.addFragment(myRequestsFragment, "My Requests");
         adapter.addFragment(newsFeedFragment, "News");
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
