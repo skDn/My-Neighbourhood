@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,14 @@ public class RequestFeedFragment extends Fragment{
 
     MainActivity mainActivity;
     ListView RequestFeedListView;
+    FloatingActionButton requestFeedActionButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_request_feed, container, false);
         mainActivity = (MainActivity) getActivity();
         RequestFeedListView = (ListView) v.findViewById(R.id.RequestFeedListView);
+        requestFeedActionButton = (FloatingActionButton) v.findViewById(R.id.requestFeedActionButton);
         return v;
     }
 

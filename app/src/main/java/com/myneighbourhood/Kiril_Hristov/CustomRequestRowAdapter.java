@@ -15,8 +15,9 @@ import com.myneighbourhood.utils.Request;
 import java.util.ArrayList;
 
 /**
- * Created by kirchoni on 19/02/16.
+ * Created by Kiril on 19/02/16.
  */
+
 public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
 
     ArrayList<Request> feedRequests;
