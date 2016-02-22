@@ -2,10 +2,13 @@ package com.myneighbourhood.Velin_Kerkov;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
@@ -41,6 +44,24 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(baseView);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_action_profile:
+                Intent i = new Intent(this, ProfileActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return false;
+        }
+    }
+
     protected boolean useToolbar() {
         return true;
     }
@@ -60,7 +81,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showError(String msg) {
+    protected void showDialogWithOkButton(String msg) {
         AlertDialog.Builder allertBuilder = new AlertDialog.Builder(this);
         allertBuilder.setMessage(msg);
         allertBuilder.setPositiveButton("OK", null);

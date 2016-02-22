@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
@@ -16,6 +17,8 @@ public class RegisterActivity extends BaseActivity {
     private EditText passwordET;
     private EditText phoneET;
     private EditText usernameET;
+    private EditText addressET;
+    private ImageView profilePicIV;
 
     @Override
     protected boolean useToolbar() {
@@ -33,6 +36,8 @@ public class RegisterActivity extends BaseActivity {
         passwordET = (EditText) findViewById(R.id.register_ET_password);
         phoneET = (EditText) findViewById(R.id.register_ET_phone);
         usernameET = (EditText) findViewById(R.id.register_ET_username);
+        addressET = (EditText) findViewById(R.id.register_ET_address);
+        profilePicIV = (ImageView) findViewById(R.id.register_IV_profile_picture);
 
         // set up onClick listeners
         registerBTN.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +48,7 @@ public class RegisterActivity extends BaseActivity {
                 String password = passwordET.getText().toString();
                 String phone = phoneET.getText().toString();
                 String username = usernameET.getText().toString();
+                String address = addressET.getText().toString();
 
                 User user = DB.registerUser(username, password, email, phone);
                 setLoggedInUser(user);
@@ -52,6 +58,13 @@ public class RegisterActivity extends BaseActivity {
 
                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(i);
+            }
+        });
+
+        profilePicIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogWithOkButton("Here you will be able to choose the picture for your profile. (TBA)");
             }
         });
 

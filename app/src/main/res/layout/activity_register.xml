@@ -82,6 +82,25 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10sp"
+            android:background="@android:color/white">
+
+            <EditText
+                android:id="@+id/register_ET_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="address"
+                android:text="1/1 100 Gibson Street"
+                android:editable="false"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:id="@+id/register_B_register"
             android:layout_width="wrap_content"
@@ -92,9 +111,14 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/register_IV_profile_picture"
         android:layout_width="match_parent"
         android:layout_height="150sp"
-        android:layout_above="@+id/login_LL_login_form"
-        android:src="@android:drawable/stat_sys_download" />
+        android:layout_above="@+id/register_LL_register_form"
+        android:src="@drawable/ic_account_circle_black_36dp" />
+
+
 
 </RelativeLayout>
+
+

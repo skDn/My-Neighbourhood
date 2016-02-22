@@ -47,7 +47,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 System.out.println("VLIZAM TUKA");
                 String title = titleField.getText().toString();
                 String description = descriptionField.getText().toString();
-                if (title.equals("")) showError("Please specify a title for the request!");
+                if (title.equals("")) showDialogWithOkButton("Please specify a title for the request!");
             }
         });
 
