@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 public class LoginActivity extends BaseActivity {
 
@@ -39,11 +41,18 @@ public class LoginActivity extends BaseActivity {
                 String username = usernameET.getText().toString();
 
                 User user = DB.getUser(username, password);
-                setLoggedInUser(user);
-                SP.setUserLoggedIn(true);
+                if (user != null) {
+                    SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
+                    SP_VILI_EDITOR.apply();
+                    setLoggedInUser(user);
+                    SP.setUserLoggedIn(true);
 
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "User credentials wrong", Toast.LENGTH_LONG).show();
+                }
             }
         });
         registerBTN.setOnClickListener(new View.OnClickListener() {

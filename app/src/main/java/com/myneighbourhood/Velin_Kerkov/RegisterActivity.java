@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -45,6 +46,8 @@ public class RegisterActivity extends BaseActivity {
 
                 User user = DB.registerUser(username, password, email, phone);
                 setLoggedInUser(user);
+                SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
+                SP_VILI_EDITOR.apply();
                 SP.setUserLoggedIn(true);
 
                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);

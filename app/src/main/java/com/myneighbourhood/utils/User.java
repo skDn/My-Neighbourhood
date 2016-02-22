@@ -4,6 +4,7 @@ package com.myneighbourhood.utils;
  * Created by kirchoni on 19/02/16.
  */
 public class User {
+    private static int ids = 0;
 
     private int id;
     private String username;
@@ -14,6 +15,7 @@ public class User {
 
 
     public User(String username, String password, String phone, String email) {
+        this.id = ids++;
         this.username = username;
         this.password = password;
         this.email = email;
