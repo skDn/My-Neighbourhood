@@ -1,15 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.myneighbourhood.Velin_Kerkov.ProfileActivity">
-    <Button
-        android:id="@+id/profile_B_log_off"
-        android:text="logOff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.myneighbourhood.Velin_Kerkov.ProfileActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile_pic_house"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <include layout="@layout/separator_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Username" />
+
+                <TextView
+                    android:id="@+id/profile_TV_username"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="First name" />
+
+                <TextView
+                    android:id="@+id/profile_TV_first_name"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Last name" />
+
+                <TextView
+                    android:id="@+id/profile_TV_last_name"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Email" />
+
+                <TextView
+                    android:id="@+id/profile_TV_email"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Phone" />
+
+                <TextView
+                    android:id="@+id/profile_TV_phone"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Address" />
+
+                <TextView
+                    android:id="@+id/profile_TV_address"
+                    style="@style/ProfileActivityRowTVSettings" />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/register_CMF_map"
+                android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_marginBottom="10sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/separator_black" />
+
+        <Button
+            android:id="@+id/profile_B_log_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="logOff" />
+
+
+    </LinearLayout>
+</ScrollView>
