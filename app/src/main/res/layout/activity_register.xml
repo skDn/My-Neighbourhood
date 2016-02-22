@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,9 +10,14 @@
         android:id="@+id/register_LL_register_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:padding="15sp">
+
+        <ImageView
+            android:id="@+id/register_IV_profile_picture"
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:src="@drawable/ic_account_circle_black_36dp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -76,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="phone"
-                android:inputType="number"
+                android:inputType="phone"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -92,14 +97,21 @@
                 android:id="@+id/register_ET_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="address"
-                android:text="1/1 100 Gibson Street"
                 android:editable="false"
+                android:hint="address"
                 android:inputType="text"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="1/1 100 Gibson Street" />
 
         </android.support.design.widget.TextInputLayout>
+
+        <fragment
+            android:id="@+id/register_CMF_map"
+            android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_marginBottom="10sp" />
 
         <Button
             android:id="@+id/register_B_register"
@@ -108,17 +120,10 @@
             android:layout_gravity="center"
             android:background="@android:color/white"
             android:text="Register" />
+
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/register_IV_profile_picture"
-        android:layout_width="match_parent"
-        android:layout_height="150sp"
-        android:layout_above="@+id/register_LL_register_form"
-        android:src="@drawable/ic_account_circle_black_36dp" />
+</ScrollView>
 
-
-
-</RelativeLayout>
 
 

@@ -30,7 +30,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDHJgGuMk_P_UonNNDO2bcc0Iz7F5KJQR0" />
+            android:value="AIzaSyCMhrCAcq8smEzsDTRr3x0c06kQ9feAGzo" />
 
         <activity
             android:name=".Velin_Kerkov.MainActivity"
