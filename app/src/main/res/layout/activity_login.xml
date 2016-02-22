@@ -24,6 +24,7 @@
                 android:id="@+id/login_ET_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:hint="Username"
                 android:inputType="text"
                 android:maxLines="1"
@@ -41,6 +42,7 @@
                 android:id="@+id/login_ET_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -58,19 +60,19 @@
 
         <Button
             android:id="@+id/login_B_register"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100sp"
             android:layout_gravity="center"
+            android:layout_marginTop="100sp"
             android:background="@android:color/transparent"
-            style="?android:attr/borderlessButtonStyle"
             android:text="Register" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
-        android:src="@android:drawable/stat_sys_download"
         android:layout_height="150sp"
-        android:layout_above="@+id/login_LL_login_form" />
+        android:layout_above="@+id/login_LL_login_form"
+        android:src="@android:drawable/stat_sys_download" />
 
 </RelativeLayout>

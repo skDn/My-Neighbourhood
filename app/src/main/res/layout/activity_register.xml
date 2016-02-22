@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username"
+                android:gravity="center"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:gravity="center"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -64,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="email"
+                android:gravity="center"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -81,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="phone"
+                android:gravity="center"
                 android:inputType="phone"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -99,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:editable="false"
                 android:hint="address"
+                android:gravity="center"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
