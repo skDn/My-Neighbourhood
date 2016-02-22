@@ -9,25 +9,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.myneighbourhood.Velin_Kerkov.SMSAuthorisationActivity">
 
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="10sp"
-        android:background="@android:color/white">
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/sms_authorisatoin_ET_code"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
-            android:hint="SMS Code"
-            android:gravity="center"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_marginBottom="10sp"
 
-    </android.support.design.widget.TextInputLayout>
+            android:layout_weight="0.8"
+            android:background="@android:color/white">
 
+            <EditText
+                android:id="@+id/sms_authorisatoin_ET_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="SMS Code"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2">
+
+            <Button
+                android:id="@+id/sms_authorisatoin_B_go"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0sp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:background="@android:color/transparent"
+                android:text="Go" />
+
+            <ImageView
+                android:layout_width="0sp"
+                android:src="@drawable/ic_next"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

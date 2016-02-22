@@ -56,7 +56,7 @@ public class RegisterActivity extends BaseActivity {
                 SP_VILI_EDITOR.apply();
                 SP.setUserLoggedIn(true);
 
-                Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                Intent i = new Intent(RegisterActivity.this, SMSAuthorisationActivity.class);
                 startActivity(i);
             }
         });
