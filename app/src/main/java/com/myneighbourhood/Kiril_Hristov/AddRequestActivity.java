@@ -1,25 +1,21 @@
 package com.myneighbourhood.Kiril_Hristov;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
-
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 
-public class AddRequestActivity extends BaseActivity implements NumberPicker.OnValueChangeListener{
+public class AddRequestActivity extends BaseActivity implements NumberPicker.OnValueChangeListener {
 
     LinearLayout addRequestLayout;
     EditText titleField;
@@ -32,7 +28,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
     private int numberOfPeopleSelected;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_request);
         getSupportActionBar().setTitle("Add Request");
@@ -51,7 +47,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 System.out.println("VLIZAM TUKA");
                 String title = titleField.getText().toString();
                 String description = descriptionField.getText().toString();
-                if (title.equals("")) showError();
+                if (title.equals("")) showError("Please specify a title for the request!");
             }
         });
 
@@ -114,17 +110,5 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         myIntent.putExtra("tab", 1);
         startActivity(myIntent);
         finish();
-    }
-
-    private void hideKeyboard(View view) {
-        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    private void showError(){
-        AlertDialog.Builder allertBuilder = new AlertDialog.Builder(this);
-        allertBuilder.setMessage("Please specify a title for the request!");
-        allertBuilder.setPositiveButton("OK", null);
-        allertBuilder.show();
     }
 }

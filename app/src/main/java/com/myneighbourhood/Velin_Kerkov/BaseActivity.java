@@ -1,10 +1,13 @@
 package com.myneighbourhood.Velin_Kerkov;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.myneighbourhood.Kiril_Hristov.DBHelper;
@@ -55,6 +58,18 @@ public class BaseActivity extends AppCompatActivity {
                 toolbar.setVisibility(View.GONE);
             }
         }
+    }
+
+    protected void showError(String msg) {
+        AlertDialog.Builder allertBuilder = new AlertDialog.Builder(this);
+        allertBuilder.setMessage(msg);
+        allertBuilder.setPositiveButton("OK", null);
+        allertBuilder.show();
+    }
+
+    protected void hideKeyboard(View view) {
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override

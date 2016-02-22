@@ -4,20 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.UserSharedPref;
-
-import android.support.v4.app.Fragment;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -26,6 +24,8 @@ public class RequestFeedFragment extends Fragment{
     MainActivity mainActivity;
     ListView RequestFeedListView;
     private ArrayList<Request> requestFeed;
+    private DBHelper dbHelper;
+    private UserSharedPref sp;
 
     public RequestFeedFragment(){}
 
@@ -38,6 +38,8 @@ public class RequestFeedFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_request_feed, container, false);
         mainActivity = (MainActivity) getActivity();
+        dbHelper = mainActivity.getDB();
+        sp = mainActivity.getSP();
         RequestFeedListView = (ListView) v.findViewById(R.id.RequestFeedListView);
         return v;
     }
@@ -46,8 +48,6 @@ public class RequestFeedFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        DBHelper dbHelper = DBHelper.getInstance(mainActivity);
-        UserSharedPref sp = UserSharedPref.getInstance(mainActivity);
 
         ProgressDialog progressDialog = new ProgressDialog(mainActivity,R.style.AppTheme);
         progressDialog.setCancelable(false);
