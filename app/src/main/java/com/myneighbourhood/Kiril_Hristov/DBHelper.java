@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
@@ -385,4 +386,40 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
 
+    public ArrayList<News> getNews() {
+        int newsId;
+        int userId;
+        String title = "";
+        String text = "";
+        String timestamp = "";
+//        String picture;
+        ArrayList<News> toReturn = new ArrayList<>();
+
+        String queryToExecute =
+                "SELECT * FROM " + TABLE_NEWS;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor c = db.rawQuery(queryToExecute, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()){
+            newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
+            userId = c.getInt(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null){
+                title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null){
+                text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null){
+                timestamp = c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
+            }
+
+            toReturn.add(new News(newsId, userId, title, text, timestamp));
+
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return toReturn;
+    }
 }
