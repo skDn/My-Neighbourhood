@@ -216,7 +216,7 @@
             android:id="@+id/profile_B_log_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:text="log Out"
             android:textColor="@android:color/white" />
 
