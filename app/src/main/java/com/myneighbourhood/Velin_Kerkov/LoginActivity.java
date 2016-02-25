@@ -2,9 +2,11 @@ package com.myneighbourhood.Velin_Kerkov;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.myneighbourhood.R;
@@ -15,6 +17,7 @@ public class LoginActivity extends BaseActivity {
 
     private EditText passwordET;
     private EditText usernameET;
+    private RelativeLayout mainLayoutLL;
 
     @Override
     protected boolean useToolbar() {
@@ -27,11 +30,20 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         // bind to UI elements
+        mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);
         passwordET = (EditText) findViewById(R.id.login_ET_password);
         usernameET = (EditText) findViewById(R.id.login_ET_username);
         Button loginBTN = (Button) findViewById(R.id.login_B_login);
         Button registerBTN = (Button) findViewById(R.id.login_B_register);
 
+
+        mainLayoutLL.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
 
         // set up listeners
         loginBTN.setOnClickListener(new View.OnClickListener() {

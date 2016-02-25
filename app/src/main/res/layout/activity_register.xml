@@ -2,147 +2,198 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/register_SV_main"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context="com.myneighbourhood.Velin_Kerkov.RegisterActivity">
 
     <LinearLayout
-        android:id="@+id/register_LL_register_form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15sp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/register_CIV_profile_picture"
-            android:src="@drawable/ic_account_circle_black_36dp"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp" />
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:id="@+id/register_LL_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <EditText
-                android:id="@+id/register_ET_username"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/register_CIV_profile_picture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_account_circle_black_36dp"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Username"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/register_ET_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/register_ET_password"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:layout_marginBottom="10dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+                    <EditText
+                        android:id="@+id/register_ET_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:hint="First name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/register_ET_email"
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white">
+
+                    <EditText
+                        android:id="@+id/register_ET_last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:hint="Last name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/register_ET_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/register_ET_phone"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="phone"
-                android:inputType="phone"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/register_ET_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/register_ET_address"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:hint="address"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="1/1 100 Gibson Street" />
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/register_ET_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="phone"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-        <FrameLayout
-            android:id="@+id/register_FL_map"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </android.support.design.widget.TextInputLayout>
 
-            <fragment
-                android:id="@+id/register_CMF_map"
-                android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
-                android:layout_marginBottom="10sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white">
 
-        </FrameLayout>
+                <EditText
+                    android:id="@+id/register_ET_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center"
+                    android:hint="address"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="1/1 100 Gibson Street" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/register_FL_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:id="@+id/register_CMF_map"
+                    android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="10dp" />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/register_B_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@android:color/white"
             android:text="Register" />
-
     </LinearLayout>
-
 </ScrollView>
 
 

@@ -2,6 +2,7 @@ package com.myneighbourhood.Velin_Kerkov;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.myneighbourhood.R;
 
 public class CustomMapFragment extends Fragment implements OnMapReadyCallback {
@@ -65,12 +68,28 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng homeLatLong = new LatLng(55.8734611, -4.2890117);
+        double homeLat = 55.8734611;
+        double homeLong = -4.2890117;
+        double differenceLat = 0.002;
+        double differenceLong = 0.004;
+
+        LatLng homeLatLong = new LatLng(homeLat, homeLong);
         MarkerOptions home = new MarkerOptions().position(homeLatLong).title("Home");
         googleMap.addMarker(home);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(homeLatLong).zoom(15).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+
+
+        PolygonOptions neighbourhoodPolygon = new PolygonOptions().add(
+                new LatLng(homeLat - differenceLat, homeLong + differenceLong),
+                new LatLng(homeLat - differenceLat, homeLong - differenceLong),
+                new LatLng(homeLat + differenceLat, homeLong - differenceLong),
+                new LatLng(homeLat + differenceLat, homeLong + differenceLong),
+                new LatLng(homeLat - differenceLat, homeLong + differenceLong)
+        ).strokeWidth(2).fillColor(ContextCompat.getColor(this.getActivity(), R.color.lightTransparentGreen));
+
+        Polygon polygon = googleMap.addPolygon(neighbourhoodPolygon);
     }
 }
