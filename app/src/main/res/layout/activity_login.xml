@@ -75,6 +75,6 @@
         android:layout_centerHorizontal="true"
         android:layout_height="150sp"
         android:layout_above="@+id/login_LL_login_form"
-        android:src="@android:drawable/stat_sys_download" />
+        android:src="@drawable/logo_login" />
 
 </RelativeLayout>
