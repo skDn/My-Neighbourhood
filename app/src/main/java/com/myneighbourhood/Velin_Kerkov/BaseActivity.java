@@ -157,6 +157,9 @@ public class BaseActivity extends AppCompatActivity {
         if (DB == null) {
             DB = DBHelper.getInstance(this);
         }
+    }
 
+    public User getUser() {
+        return user;
     }
 }
