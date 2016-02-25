@@ -227,12 +227,22 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_PHONE, phone);
         db.insert(TABLE_USER, null, values);
 
+
+
+
         int id=0;
         c = db.rawQuery(checkUnique, null);
         c.moveToFirst();
         if (c.getCount() > 0){
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
         }
+
+        ContentValues ratingValues = new ContentValues();
+        ratingValues.put(COLUMN_RATING_USER_ID, id);
+        ratingValues.put(COLUMN_RATING_AS_REQUESTER, 0);
+        ratingValues.put(COLUMN_RATING_AS_APPLICANT, 0);
+        ratingValues.put(COLUMN_RATING_ENDORCEDBY, 0);
+
         c.close();
         db.close();
         return new User(id, username, password, phone, email);
