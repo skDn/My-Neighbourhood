@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.myneighbourhood.utils.Address;
+import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 7;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -573,4 +574,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
 
+    public ArrayList<Chat> getChatsForUser(User user) {
+        ArrayList<Chat> chats = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_USER_1 + " = " + user.getId() + " OR " + COLUMN_CHATS_USER_2 + " = " + user.getId();
+
+        return chats;
+    }
 }
