@@ -2,9 +2,13 @@ package com.myneighbourhood.Kiril_Hristov;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -35,7 +39,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_request);
         getSupportActionBar().setTitle("Add Request");
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         titleField = (EditText) findViewById(R.id.AddRequestTitle);
         descriptionField = (EditText) findViewById(R.id.AddRequestDescription);
         postButton = (Button) findViewById(R.id.AddRequestPostButton);
@@ -75,7 +79,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
             }
         });
 
-        hours = new String[]{"1", "2", "3", "4", "5", "12", "24", "48", "72", "96"};
+        hours = new String[]{"1 Hour", "2 Hours", "3 Hours", "4 Hours", "5 Hours", "12 Hours", "24 Hours", "2 Days", "3 Days", "4 Days"};
 
         // hide keyboard on ACTION_DOWN
         addRequestLayout = (LinearLayout) findViewById(R.id.AddRequestLinearLayout);
@@ -86,6 +90,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 return false;
             }
         });
+        addRequestLayout.requestFocus();
     }
 
     protected void changeDisplays() {
@@ -107,14 +112,32 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
             System.out.println(" PEOPLE " + numberOfPeopleSelected);
         }
         else if(picker.getId()==R.id.ExpiresPicker){
-            hourSelected = newVal;
+            switch (newVal){
+                case 6:
+                    hourSelected = 12;
+                    break;
+                case 7:
+                    hourSelected = 24;
+                    break;
+                case 8:
+                    hourSelected = 48;
+                    break;
+                case 9:
+                    hourSelected = 72;
+                    break;
+                case 10:
+                    hourSelected = 96;
+                    break;
+
+                default: hourSelected = newVal;
+            }
             System.out.println(" HORS " + hourSelected);
         }
     }
 
     public void showNumberPicker() {
         final Dialog d = new Dialog(AddRequestActivity.this);
-        d.setTitle("How many people do you need?");
+        d.setTitle("Number of people required");
         d.setContentView(R.layout.dialog_number_picker);
         Button done = (Button) d.findViewById(R.id.NumberPickerButton);
         final NumberPicker peoplePicker = (NumberPicker) d.findViewById(R.id.NumberPickerPeople);
@@ -122,7 +145,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         peoplePicker.setMinValue(1);
         peoplePicker.setWrapSelectorWheel(false);
         peoplePicker.setOnValueChangedListener(this);
-        //user.getId()
+        setDividerColor(peoplePicker);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,11 +162,12 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         exDialog.setContentView(R.layout.dialog_expires_picker);
         Button done = (Button) exDialog.findViewById(R.id.ExpiresPickerButton);
         final NumberPicker expiresPicker = (NumberPicker) exDialog.findViewById(R.id.ExpiresPicker);
-        expiresPicker.setMaxValue(hours.length-1);
+        expiresPicker.setMaxValue(hours.length);
         expiresPicker.setMinValue(1);
         expiresPicker.setDisplayedValues(hours);
         expiresPicker.setWrapSelectorWheel(false);
         expiresPicker.setOnValueChangedListener(this);
+        setDividerColor(expiresPicker);
         //user.getId()
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,5 +186,28 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         myIntent.putExtra("tab", 1);
         startActivity(myIntent);
         finish();
+    }
+
+    private void setDividerColor(NumberPicker picker) {
+
+        java.lang.reflect.Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+        int c = Color.parseColor("#FFA000");
+        for (java.lang.reflect.Field pf : pickerFields) {
+            if (pf.getName().equals("mSelectionDivider")) {
+                pf.setAccessible(true);
+                try {
+                    ColorDrawable colorDrawable = new ColorDrawable(c);
+                    pf.set(picker, colorDrawable);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
+                catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
     }
 }
