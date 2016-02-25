@@ -21,7 +21,7 @@ public class ProfileActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             setTitle("Profile");
         } catch (NullPointerException e) {
-
+            e.printStackTrace();
         }
 
         Button logOffBTN = (Button) findViewById(R.id.profile_B_log_off);

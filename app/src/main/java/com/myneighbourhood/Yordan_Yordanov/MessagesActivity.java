@@ -1,6 +1,5 @@
 package com.myneighbourhood.Yordan_Yordanov;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.myneighbourhood.R;
@@ -12,5 +11,15 @@ public class MessagesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("Messages");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        
     }
 }
