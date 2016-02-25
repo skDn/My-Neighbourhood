@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Message;
 
 import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.News;
@@ -87,6 +86,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_MESSAGES_REQUEST_ID = "requestId";
     private static final String COLUMN_MESSAGES_TEXT = "text";
     private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
+
+    // Chat
+    private static final String TABLE_CHATS = "CHATS";
+    private static final String COLUMN_CHATS_REQUEST_ID = "request_id";
+//    private static final String COLUMN_CHATS_USER
+
 
     // Create table queries
     private static final String createUser =
@@ -557,5 +562,5 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
 
-    //public ArrayList<Message>
+
 }
