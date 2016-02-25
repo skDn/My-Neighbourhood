@@ -63,7 +63,7 @@ public class MyRequestsFragment extends Fragment {
         }
 
         ArrayAdapter<String> requestFeedAdapter =
-                new CustomRequestRowAdapter(mainActivity, titles, myRequests);
+                new CustomMyRequestRowAdapter(mainActivity, titles, myRequests);
         myRequestsListView.setAdapter(requestFeedAdapter);
 
         myRequestsListView.setOnItemClickListener(

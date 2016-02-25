@@ -109,9 +109,8 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         if(picker.getId()==R.id.NumberPickerPeople) {
             numberOfPeopleSelected = newVal;
-            System.out.println(" PEOPLE " + numberOfPeopleSelected);
         }
-        else if(picker.getId()==R.id.ExpiresPicker){
+        else {
             switch (newVal){
                 case 6:
                     hourSelected = 12;
@@ -131,7 +130,6 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
 
                 default: hourSelected = newVal;
             }
-            System.out.println(" HORS " + hourSelected);
         }
     }
 
