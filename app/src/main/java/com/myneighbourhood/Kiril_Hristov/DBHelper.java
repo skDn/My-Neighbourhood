@@ -5,11 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +22,7 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -41,7 +45,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Address table
     private static final String TABLE_ADDRESS = "Address";
-    private static final String COLUMN_ADDRESS_ID = "addressId";
     private static final String COLUMN_ADDRESS_USER_ID = "userId";
     private static final String COLUMN_ADDRESS_STREET = "street";
     private static final String COLUMN_ADDRESS_RECT_X = "rectX";
@@ -108,7 +111,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String createAddress =
             "CREATE TABLE " + TABLE_ADDRESS + "(" +
-            COLUMN_ADDRESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_ADDRESS_USER_ID + " INTEGER, " +
             COLUMN_ADDRESS_STREET + " TEXT, " +
             COLUMN_ADDRESS_RECT_X + " DOUBLE, " +
@@ -194,6 +196,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createNews);
         db.execSQL(createApplicant);
         db.execSQL(createMessage);
+        registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
     }
 
     @Override
@@ -208,11 +211,11 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public User registerUser(String username, String password, String email, String phone) {
+    public User registerUser(User user, Address address) {
         SQLiteDatabase db = getWritableDatabase();
         String checkUnique =
                 "SELECT * FROM " + TABLE_USER +
-                " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\";";
+                " WHERE " + COLUMN_USER_USERNAME + "=\"" + user.getUsername() + "\";";
         Cursor c = db.rawQuery(checkUnique, null);
         c.moveToFirst();
         if (c.getCount() > 0){
@@ -221,14 +224,25 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_USERNAME, username);
-        values.put(COLUMN_USER_PASSWORD, password);
-        values.put(COLUMN_USER_EMAIL, email);
-        values.put(COLUMN_USER_PHONE, phone);
+        values.put(COLUMN_USER_USERNAME, user.getUsername());
+        values.put(COLUMN_USER_FIRSTNAME, user.getFirstName());
+        values.put(COLUMN_USER_LASTNAME, user.getLastName());
+        values.put(COLUMN_USER_PASSWORD, user.getPassword());
+        values.put(COLUMN_USER_EMAIL, user.getEmail());
+        values.put(COLUMN_USER_PHONE, user.getPhone());
+
+        if(user.getImage() == null){
+            values.put(COLUMN_USER_PICTURE, "");
+        }
+        else {
+            Bitmap yourBitmap = null;
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            yourBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] bArray = bos.toByteArray();
+            values.put(COLUMN_USER_PICTURE, bArray);
+        }
+
         db.insert(TABLE_USER, null, values);
-
-
-
 
         int id=0;
         c = db.rawQuery(checkUnique, null);
@@ -237,40 +251,65 @@ public class DBHelper extends SQLiteOpenHelper {
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
         }
 
+        ContentValues addressValues = new ContentValues();
+        addressValues.put(COLUMN_ADDRESS_USER_ID, id);
+        addressValues.put(COLUMN_ADDRESS_STREET, address.getAddress());
+        addressValues.put(COLUMN_ADDRESS_RECT_X, address.getRectX());
+        addressValues.put(COLUMN_ADDRESS_RECT_Y, address.getRextY());
+        db.insert(TABLE_ADDRESS, null, addressValues);
+
         ContentValues ratingValues = new ContentValues();
         ratingValues.put(COLUMN_RATING_USER_ID, id);
         ratingValues.put(COLUMN_RATING_AS_REQUESTER, 0);
         ratingValues.put(COLUMN_RATING_AS_APPLICANT, 0);
         ratingValues.put(COLUMN_RATING_ENDORCEDBY, 0);
+        db.insert(TABLE_RATING, null, ratingValues);
 
         c.close();
         db.close();
-        return new User(id, username, password, phone, email);
+        return new User(id, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(),user.getEmail(), user.getPhone(), user.getImage());
     }
 
     public User getUser(String username, String password) {
         int id;
         String email = "";
         String phone = "";
-        //String picture = "";
+        String fName = "";
+        String lName = "";
+        Bitmap image = null;
+
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
                 " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\" " +
                 " AND " + COLUMN_USER_PASSWORD + "=\"" + password + "\" " + ";";
+
         Cursor c = db.rawQuery(authenticate, null);
         c.moveToFirst();
         if (c.getCount() > 0){
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
+            }
             if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
                 email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
             }
             if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
+
+            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
+                image = BitmapFactory.decodeByteArray(p, 0, p.length);
+            }
+
             c.close();
             db.close();
-            return new User(id, username, password, phone, email);
+
+            return new User(id, username, fName, lName, password, email, phone, image);
         }
         c.close();
         db.close();
@@ -280,9 +319,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public User getUser(int lastLoginUserId) {
         String username= "";
         String password = "";
+        String fName = "";
+        String lName = "";
         String email = "";
         String phone = "";
-        //String picture = "";
+        Bitmap image = null;
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
@@ -293,6 +334,12 @@ public class DBHelper extends SQLiteOpenHelper {
             if(c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null){
                 username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
             }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
+            }
             if(c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null){
                 password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
             }
@@ -302,14 +349,67 @@ public class DBHelper extends SQLiteOpenHelper {
             if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
+            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
+                image = BitmapFactory.decodeByteArray(p, 0, p.length);
+            }
             c.close();
             db.close();
-            return new User(lastLoginUserId, username, password, phone, email);
+            return new User(lastLoginUserId, username, fName, lName, password, email, phone, image);
         }
         c.close();
         db.close();
         return null;
     }
+
+    public ArrayList<User> getUsers(){
+        int id;
+        String username= "";
+        String password = "";
+        String fName = "";
+        String lName = "";
+        String email = "";
+        String phone = "";
+        Bitmap image = null;
+        ArrayList<User> toReturn = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String authenticate =
+                "SELECT * FROM " + TABLE_USER + ";";
+        Cursor c = db.rawQuery(authenticate, null);
+        c.moveToFirst();
+        if (c.getCount() > 0){
+            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            if(c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null){
+                username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null){
+                password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
+            }
+            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
+            }
+            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
+                image = BitmapFactory.decodeByteArray(p, 0, p.length);
+            }
+            c.close();
+            db.close();
+            toReturn.add(new User(id, username, fName, lName, password, email, phone, image));
+        }
+        c.close();
+        db.close();
+        return toReturn;
+    }
+
 
     public void addRequest(Request request){
         ContentValues values = new ContentValues();

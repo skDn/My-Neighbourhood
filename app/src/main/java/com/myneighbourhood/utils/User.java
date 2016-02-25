@@ -1,33 +1,39 @@
 package com.myneighbourhood.utils;
 
-/**
- * Created by kirchoni on 19/02/16.
- */
+import android.graphics.Bitmap;
+
 public class User {
     private static int ids = 0;
 
     private int id;
     private String username;
     private String password;
-    private String image;
+    private String firstName;
+    private String lastName;
+    private Bitmap image;
     private String phone;
     private String email;
 
 
-    public User(String username, String password, String phone, String email) {
-        this.id = ids++;
+    public User(String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.image = image;
     }
 
-    public User(int id, String username, String password, String phone, String email) {
+    public User(int id, String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
         this.id = id;
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.image = image;
     }
 
     public String getPhone() {
@@ -70,13 +76,28 @@ public class User {
         this.password = password;
     }
 
-    public String getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
 }

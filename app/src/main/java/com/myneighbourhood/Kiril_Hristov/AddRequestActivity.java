@@ -18,14 +18,11 @@ import com.myneighbourhood.Velin_Kerkov.MainActivity;
 public class AddRequestActivity extends BaseActivity implements NumberPicker.OnValueChangeListener {
 
     LinearLayout addRequestLayout;
-    EditText titleField;
-    EditText descriptionField;
-    DatePicker datePicker;
-    Button postButton;
-    Button selectNumberPeople;
-    Button selectDate;
+    EditText titleField, descriptionField;
+    Button postButton, selectNumberPeople, selectExpiresIn;
 
     private int numberOfPeopleSelected;
+    private int hourSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +33,9 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         titleField = (EditText) findViewById(R.id.AddRequestTitle);
         descriptionField = (EditText) findViewById(R.id.AddRequestDescription);
 
-        datePicker = (DatePicker) findViewById(R.id.AddRequestDatePicker);
         postButton = (Button) findViewById(R.id.AddRequestPostButton);
         selectNumberPeople = (Button) findViewById(R.id.selectNumberPeopleButton);
-        selectDate = (Button) findViewById(R.id.selectDateButton);
+        selectExpiresIn = (Button) findViewById(R.id.selectExpiresIn);
 
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,10 +55,10 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
             }
         });
 
-        selectDate.setOnClickListener(new View.OnClickListener() {
+        selectExpiresIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showExpirePicker();
             }
         });
 
@@ -79,8 +75,14 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        numberOfPeopleSelected = newVal;
-        System.out.println(numberOfPeopleSelected);
+        if(picker.getId()==R.id.NumberPickerPeople) {
+            numberOfPeopleSelected = newVal;
+            System.out.println(" PEOPLE " + numberOfPeopleSelected);
+        }
+        else if(picker.getId()==R.id.ExpiresPicker){
+            hourSelected = newVal;
+            System.out.println(" HORS " + hourSelected);
+        }
     }
 
     public void showNumberPicker() {
@@ -101,6 +103,26 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
             }
         });
         d.show();
+    }
+
+    public void showExpirePicker() {
+        final Dialog exDialog = new Dialog(AddRequestActivity.this);
+        exDialog.setTitle("Expires in(h):");
+        exDialog.setContentView(R.layout.dialog_expires_picker);
+        Button done = (Button) exDialog.findViewById(R.id.ExpiresPickerButton);
+        final NumberPicker expiresPicker = (NumberPicker) exDialog.findViewById(R.id.ExpiresPicker);
+        expiresPicker.setMaxValue(10);
+        expiresPicker.setMinValue(1);
+        expiresPicker.setWrapSelectorWheel(false);
+        expiresPicker.setOnValueChangedListener(this);
+        //user.getId()
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exDialog.dismiss();
+            }
+        });
+        exDialog.show();
     }
 
     @Override
