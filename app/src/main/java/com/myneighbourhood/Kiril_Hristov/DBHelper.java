@@ -500,12 +500,12 @@ public class DBHelper extends SQLiteOpenHelper {
                         " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
         String getFeedRequests =
                 "SELECT * FROM " + TABLE_REQUEST +
-                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
+                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " != " + userId + ";";
 
         String queryToExecute;
         if (feedOrMy.equals("feed")) {
-            queryToExecute = getMyRequests;
-        } else queryToExecute = getFeedRequests;
+            queryToExecute = getFeedRequests;
+        } else queryToExecute = getMyRequests;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
