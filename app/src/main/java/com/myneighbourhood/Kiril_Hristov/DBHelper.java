@@ -10,12 +10,14 @@ import android.graphics.BitmapFactory;
 
 import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.Message;
 import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Kiril on 19/02/2016.
@@ -92,7 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CHATS_REQUEST_ID = "request_id";
     private static final String COLUMN_CHATS_USER_1 = "request_user_1";
     private static final String COLUMN_CHATS_USER_2 = "request_user_2";
-    private static final String COLUMN_CHATS_LATEST_MSG = "latest_msg";
+    private static final String COLUMN_CHATS_LATEST_MSG_TIME = "latest_msg";
     private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_1 = "latest_view_by_user_1";
     private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_2 = "latest_view_by_user_2";
 
@@ -182,7 +184,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String createChats =
             "CREATE TABLE " + TABLE_CHATS + "(" +
                     COLUMN_CHATS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_CHATS_LATEST_MSG + " INTEGER, " +
+                    COLUMN_CHATS_LATEST_MSG_TIME + " INTEGER, " +
                     COLUMN_CHATS_LATEST_VIEW_BY_USER_1 + " INTEGER, " +
                     COLUMN_CHATS_LATEST_VIEW_BY_USER_2 + " INTEGER, " +
                     COLUMN_CHATS_REQUEST_ID + " INTEGER, " +
@@ -573,12 +575,71 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return toReturn;
     }
+    
+    public void addChat(User user1, User user2, Request request) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CHATS_REQUEST_ID, request.getId());
+        values.put(COLUMN_CHATS_USER_1, user1.getId());
+        values.put(COLUMN_CHATS_USER_2, user2.getId());
+        values.putNull(COLUMN_CHATS_LATEST_MSG_TIME);
+        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_1, System.currentTimeMillis());
+        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, System.currentTimeMillis());
+
+        getWritableDatabase().insert(TABLE_CHATS, null, values);
+    }
+
+    public void addMessage(Chat chat, Message msg) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MESSAGES_TEXT, msg.getText());
+        values.put(COLUMN_MESSAGES_TIMESTAMP, System.currentTimeMillis());
+        values.put(COLUMN_MESSAGES_CHAT_FK, chat.getId());
+    }
 
     public ArrayList<Chat> getChatsForUser(User user) {
         ArrayList<Chat> chats = new ArrayList<>();
 
-        String query = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_USER_1 + " = " + user.getId() + " OR " + COLUMN_CHATS_USER_2 + " = " + user.getId();
+        SQLiteDatabase db = getWritableDatabase();
 
+        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_USER_1 + " = " + user.getId() + " OR " + COLUMN_CHATS_USER_2 + " = " + user.getId() + " ORDER_BY " + COLUMN_CHATS_LATEST_MSG_TIME + " DESC ";
+
+        Cursor cChats = db.rawQuery(queryChats, null);
+        if (cChats.getCount() > 0) {
+            cChats.moveToFirst();
+            while (!cChats.isAfterLast()) {
+                int chatId = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_ID));
+                int requestId = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_REQUEST_ID));
+                int userId1 = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_USER_1));
+                int userId2 = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_USER_2));
+                int latestMsgTime = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_MSG_TIME));
+                int latestViewByUser1Time = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_1));
+                int latestViewByUser2Time = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_2));
+
+                Request request = getRequest(requestId);
+                User user1 = getUser(userId1);
+                User user2 = getUser(userId2);
+                Date latestMsg = new Date(latestMsgTime);
+                Date latestViewByUser1 = new Date(latestViewByUser1Time);
+                Date latestViewByUser2 = new Date(latestViewByUser2Time);
+
+
+                Chat chat = new Chat(chatId, request, user1, user2, latestMsg, latestViewByUser1, latestViewByUser2, null);
+                String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER_BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
+
+                Cursor cMsg = db.rawQuery(queryMsg, null);
+                if (cMsg.getCount() > 0) {
+                    cMsg.moveToFirst();
+                    while (!cMsg.isAfterLast()) {
+                        int msgId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGE_MESSAGE_ID));
+                        int msgTime = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TIMESTAMP));
+                        String msgText = cMsg.getString(cMsg.getColumnIndex(COLUMN_MESSAGES_TEXT));
+                        Date msgDate = new Date(msgTime);
+                        Message msg = new Message(msgId, msgDate, chat, msgText);
+                        chat.addMsg(msg);
+                    }
+                }
+                chats.add(chat);
+            }
+        }
         return chats;
     }
 }

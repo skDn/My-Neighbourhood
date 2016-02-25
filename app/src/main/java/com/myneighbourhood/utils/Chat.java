@@ -28,5 +28,19 @@ public class Chat {
     }
 
 
+    public Chat() {
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void addMsg(Message msg) {
+        if (msg != null) {
+            if (messages == null) {
+                messages = new ArrayList<>();
+            }
+            messages.add(msg);
+        }
+    }
 }
