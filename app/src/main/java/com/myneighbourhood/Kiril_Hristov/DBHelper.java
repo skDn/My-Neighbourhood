@@ -25,7 +25,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -442,7 +442,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_REQUEST_EXPIRES, request.getExpires());
         values.put(COLUMN_REQUEST_ACCEPTED, request.getAccepted());
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_USER, null, values);
+        db.insert(TABLE_REQUEST, null, values);
         db.close();
     }
 
@@ -452,7 +452,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String description = "";
         int peopleNeeded;
         long timestamp = 0;
-        String expires = "";
+        long expires = 0;
         int accepted;
         SQLiteDatabase db = getWritableDatabase();
         String getRequest =
@@ -472,9 +472,7 @@ public class DBHelper extends SQLiteOpenHelper {
             if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
-            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null) {
-                expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
-            }
+            expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
             accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
             c.close();
             db.close();
@@ -493,7 +491,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String description = "";
         int peopleNeeded;
         long timestamp = 0;
-        String expires = "";
+        long expires = 0;
         int accepted;
         ArrayList<Request> toReturn = new ArrayList<>();
 
@@ -525,9 +523,8 @@ public class DBHelper extends SQLiteOpenHelper {
             if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
-            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null) {
-                expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
-            }
+            expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
+
             accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
 
             toReturn.add(new Request(requestId, creatorId, title, description, peopleNeeded, timestamp, expires, accepted));

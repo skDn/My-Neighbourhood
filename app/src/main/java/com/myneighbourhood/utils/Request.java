@@ -11,11 +11,11 @@ public class Request {
     private String description;
     private int peopleNeeded;
     private long timestamp;
-    private String expires;
+    private long expires;
     private int accepted;
 
     // to use when creating Request
-    public Request(int creatorId, String title, String description, int peopleNeeded, String expires){
+    public Request(int creatorId, String title, String description, int peopleNeeded, long expires){
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
@@ -26,7 +26,7 @@ public class Request {
     }
 
     // to use when fetching from DB
-    public Request(int id, int creatorId, String title, String description, int peopleNeeded, long timestamp, String expires, int accepted){
+    public Request(int id, int creatorId, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted){
         this.id = id;
         this.creatorId = creatorId;
         this.title = title;
@@ -85,11 +85,11 @@ public class Request {
         this.timestamp = timestamp;
     }
 
-    public String getExpires() {
+    public long getExpires() {
         return expires;
     }
 
-    public void setExpires(String expires) {
+    public void setExpires(long expires) {
         this.expires = expires;
     }
 

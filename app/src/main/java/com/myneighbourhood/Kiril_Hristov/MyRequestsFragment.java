@@ -47,17 +47,18 @@ public class MyRequestsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DBHelper dbHelper = DBHelper.getInstance(mainActivity);
 
         ProgressDialog progressDialog = new ProgressDialog(mainActivity,R.style.AppTheme);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
-        myRequests = dbHelper.getRequests(mainActivity.getUser().getId(), "my");
+        myRequests = mainActivity.getDB().getRequests(mainActivity.getUser().getId(), "my");
+        System.out.println("current user id " + mainActivity.getUser().getId());
         progressDialog.dismiss();
 
         String[] titles = new String[myRequests.size()];
         for (int i = 0; i < myRequests.size(); i++) {
+            System.out.println(" title " + titles[i]);
             titles[i] = myRequests.get(i).getTitle();
         }
 
