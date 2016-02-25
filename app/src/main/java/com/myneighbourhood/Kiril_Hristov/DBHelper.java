@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Message;
 
 import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.News;
@@ -555,4 +556,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return toReturn;
     }
+
+    //public ArrayList<Message>
 }
