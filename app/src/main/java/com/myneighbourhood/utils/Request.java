@@ -10,23 +10,23 @@ public class Request {
     private String title;
     private String description;
     private int peopleNeeded;
-    private String timestamp;
+    private long timestamp;
     private String expires;
     private int accepted;
 
     // to use when creating Request
-    public Request(int creatorId, String title, String description, int peopleNeeded, String timestamp, String expires){
+    public Request(int creatorId, String title, String description, int peopleNeeded, String expires){
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
         this.peopleNeeded = peopleNeeded;
-        this.timestamp = timestamp;
+        this.timestamp = System.currentTimeMillis();
         this.expires = expires;
         this.accepted = 0;
     }
 
     // to use when fetching from DB
-    public Request(int id, int creatorId, String title, String description, int peopleNeeded, String timestamp, String expires, int accepted){
+    public Request(int id, int creatorId, String title, String description, int peopleNeeded, long timestamp, String expires, int accepted){
         this.id = id;
         this.creatorId = creatorId;
         this.title = title;
@@ -77,11 +77,11 @@ public class Request {
         this.peopleNeeded = peopleNeeded;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

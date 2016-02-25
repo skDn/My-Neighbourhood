@@ -93,7 +93,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         peoplePicker.setMinValue(1);
         peoplePicker.setWrapSelectorWheel(false);
         peoplePicker.setOnValueChangedListener(this);
-
+        //user.getId()
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

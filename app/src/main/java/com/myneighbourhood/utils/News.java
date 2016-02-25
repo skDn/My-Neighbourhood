@@ -8,10 +8,10 @@ public class News {
     private int userId;
     private String title;
     private String text;
-    private String timestamp;
+    private long timestamp;
 //    private String picture;
 
-    public News(int newsId, int userId, String title, String text, String timestamp) {
+    public News(int newsId, int userId, String title, String text, long timestamp) {
         this.newsId = newsId;
         this.userId = userId;
         this.title = title;
@@ -52,11 +52,11 @@ public class News {
         this.text = text;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

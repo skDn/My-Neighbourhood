@@ -18,17 +18,26 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "Database.db";
 
     //User table
     private static final String TABLE_USER = "User";
-    private static final String COLUMN_USER_ID = "userId";;
+    private static final String COLUMN_USER_ID = "userId";
     private static final String COLUMN_USER_USERNAME = "username";
+    private static final String COLUMN_USER_FIRSTNAME = "firstName";
+    private static final String COLUMN_USER_LASTNAME = "lastName";
     private static final String COLUMN_USER_PASSWORD = "password";
     private static final String COLUMN_USER_EMAIL = "email";
     private static final String COLUMN_USER_PHONE = "phone";
     private static final String COLUMN_USER_PICTURE = "picture";
+
+    //Rating table
+    private static final String TABLE_RATING = "Rating";
+    private static final String COLUMN_RATING_USER_ID = "userId";
+    private static final String COLUMN_RATING_AS_REQUESTER = "ratingRequester";
+    private static final String COLUMN_RATING_AS_APPLICANT = "ratingApplicant";
+    private static final String COLUMN_RATING_ENDORCEDBY = "endorcedBy";
 
     //Address table
     private static final String TABLE_ADDRESS = "Address";
@@ -80,10 +89,22 @@ public class DBHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_USER + "(" +
             COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_USER_USERNAME + " TEXT, " +
+            COLUMN_USER_FIRSTNAME + " TEXT, " +
+            COLUMN_USER_LASTNAME + " TEXT, " +
             COLUMN_USER_PASSWORD + " TEXT, " +
             COLUMN_USER_EMAIL + " TEXT, " +
             COLUMN_USER_PHONE + " TEXT, " +
-            COLUMN_USER_PICTURE + " TEXT" + ");";
+            COLUMN_USER_PICTURE + " BLOB" + ");";
+
+    private static final String createRating =
+            "CREATE TABLE " + TABLE_RATING + "(" +
+            COLUMN_RATING_USER_ID + " INTEGER, " +
+            COLUMN_RATING_AS_REQUESTER + " INTEGER, "+
+            COLUMN_RATING_AS_APPLICANT + " INTEGER, " +
+            COLUMN_RATING_ENDORCEDBY + " INTEGER, " +
+            "FOREIGN KEY (" + COLUMN_RATING_USER_ID + ") REFERENCES " +
+            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
+            ");";
 
     private static final String createAddress =
             "CREATE TABLE " + TABLE_ADDRESS + "(" +
@@ -103,8 +124,8 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_REQUEST_TITLE + " TEXT, " +
             COLUMN_REQUEST_DESCRIPTION + " TEXT, " +
             COLUMN_REQUEST_PEOPLE_NEEDED + " INTEGER, " +
-            COLUMN_REQUEST_TIMESTAMP + " TEXT, " +
-            COLUMN_REQUEST_EXPIRES + " TEXT, " +
+            COLUMN_REQUEST_TIMESTAMP + " INTEGER, " +
+            COLUMN_REQUEST_EXPIRES + " INTEGER, " +
             COLUMN_REQUEST_ACCEPTED + " INTEGER, " +
             "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " +
             TABLE_USER + "(" + COLUMN_USER_ID + ")"+
@@ -116,8 +137,8 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_NEWS_CREATED_BY_ID + " INTEGER, " +
             COLUMN_NEWS_TITLE + " TEXT, " +
             COLUMN_NEWS_TEXT + " TEXT, " +
-            COLUMN_NEWS_TIMESTAMP + " TEXT, " +
-            COLUMN_NEWS_PICTURE + " TEXT, " +
+            COLUMN_NEWS_TIMESTAMP + " INTEGER, " +
+            COLUMN_NEWS_PICTURE + " BLOB, " +
             "FOREIGN KEY (" + COLUMN_NEWS_CREATED_BY_ID + ") REFERENCES " +
             TABLE_USER + "(" + COLUMN_USER_ID + ")"+
             ");";
@@ -128,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_APPLICANT_APPLICANT_ID + " INTEGER, " +
             COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
             COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
-            COLUMN_APPLICANT_TIMESTAMP + " TEXT, " +
+            COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
             "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " +
             TABLE_USER + "(" + COLUMN_USER_ID + "), "+
             "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " +
@@ -144,7 +165,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_MESSAGES_RECEIVER_ID + " INTEGER, " +
             COLUMN_MESSAGES_REQUEST_ID + " INTEGER, " +
             COLUMN_MESSAGES_TEXT + " TEXT, " +
-            COLUMN_MESSAGES_TIMESTAMP + " TEXT, " +
+            COLUMN_MESSAGES_TIMESTAMP + " INTEGER, " +
             "FOREIGN KEY (" + COLUMN_MESSAGES_SENDER_ID + ") REFERENCES " +
             TABLE_USER + "(" + COLUMN_USER_ID + "), "+
             "FOREIGN KEY (" + COLUMN_MESSAGES_REQUEST_ID + ") REFERENCES " +
@@ -167,6 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createUser);
+        db.execSQL(createRating);
         db.execSQL(createAddress);
         db.execSQL(createRequest);
         db.execSQL(createNews);
@@ -177,6 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RATING);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDRESS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REQUEST);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NEWS);
@@ -297,7 +320,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String title= "";
         String description = "";
         int peopleNeeded;
-        String timestamp = "";
+        long timestamp = 0;
         String expires = "";
         int accepted;
         SQLiteDatabase db = getWritableDatabase();
@@ -316,7 +339,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
             peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
             if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
-                timestamp = c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
+                timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
             if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
                 expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
@@ -338,7 +361,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String title="";
         String description="";
         int peopleNeeded;
-        String timestamp = "";
+        long timestamp = 0;
         String expires = "";
         int accepted;
         ArrayList<Request> toReturn = new ArrayList<>();
@@ -370,7 +393,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
             peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
             if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
-                timestamp = c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
+                timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
             if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
                 expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
@@ -391,7 +414,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int userId;
         String title = "";
         String text = "";
-        String timestamp = "";
+        long timestamp = 0;
 //        String picture;
         ArrayList<News> toReturn = new ArrayList<>();
 
@@ -411,7 +434,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
             }
             if(c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null){
-                timestamp = c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
+                timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
             }
 
             toReturn.add(new News(newsId, userId, title, text, timestamp));
