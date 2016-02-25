@@ -14,7 +14,6 @@ import com.myneighbourhood.Kiril_Hristov.RequestFeedFragment;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.NewsFeedFragment;
 import com.myneighbourhood.utils.User;
-import com.myneighbourhood.utils.UserSharedPref;
 import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
@@ -99,10 +98,6 @@ public class MainActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-    public UserSharedPref getSP() {
-        return SP;
     }
 
     public DBHelper getDB() {

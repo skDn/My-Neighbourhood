@@ -15,7 +15,6 @@ import android.widget.ListView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.Request;
-import com.myneighbourhood.utils.UserSharedPref;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,6 @@ public class RequestFeedFragment extends Fragment{
     ListView RequestFeedListView;
     private ArrayList<Request> requestFeed;
     private DBHelper dbHelper;
-    private UserSharedPref sp;
 
     public RequestFeedFragment(){}
 
@@ -39,7 +37,6 @@ public class RequestFeedFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_request_feed, container, false);
         mainActivity = (MainActivity) getActivity();
         dbHelper = mainActivity.getDB();
-        sp = mainActivity.getSP();
         RequestFeedListView = (ListView) v.findViewById(R.id.RequestFeedListView);
         return v;
     }
@@ -53,7 +50,7 @@ public class RequestFeedFragment extends Fragment{
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
-        requestFeed = dbHelper.getRequests(sp.getUserLoggedIn().getId(), "feed");
+        requestFeed = dbHelper.getRequests(mainActivity.getUser().getId(), "feed");
         progressDialog.dismiss();
 
         String[] titles = new String[requestFeed.size()];

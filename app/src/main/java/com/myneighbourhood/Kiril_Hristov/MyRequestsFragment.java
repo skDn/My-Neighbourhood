@@ -17,7 +17,6 @@ import android.widget.ListView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.Request;
-import com.myneighbourhood.utils.UserSharedPref;
 
 import java.util.ArrayList;
 
@@ -49,13 +48,12 @@ public class MyRequestsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         DBHelper dbHelper = DBHelper.getInstance(mainActivity);
-        UserSharedPref sp = UserSharedPref.getInstance(mainActivity);
 
         ProgressDialog progressDialog = new ProgressDialog(mainActivity,R.style.AppTheme);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
-        myRequests = dbHelper.getRequests(sp.getUserLoggedIn().getId(), "my");
+        myRequests = dbHelper.getRequests(mainActivity.getUser().getId(), "my");
         progressDialog.dismiss();
 
         String[] titles = new String[myRequests.size()];

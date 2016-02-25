@@ -44,7 +44,6 @@ public class ProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ProfileActivity.user = null;
-                SP.setUserLoggedIn(false);
                 SP_VILI_EDITOR.remove(Utils.SP_LAST_USER_ID);
                 SP_VILI_EDITOR.apply();
 

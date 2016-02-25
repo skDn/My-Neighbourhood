@@ -22,7 +22,6 @@ import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.MessagesActivity;
 import com.myneighbourhood.utils.User;
-import com.myneighbourhood.utils.UserSharedPref;
 import com.myneighbourhood.utils.Utils;
 
 import java.io.FileNotFoundException;
@@ -30,7 +29,6 @@ import java.io.FileNotFoundException;
 public class BaseActivity extends AppCompatActivity {
 
     // shared globals
-    protected static UserSharedPref SP;
     protected static SharedPreferences SP_VILI;
     protected static SharedPreferences.Editor SP_VILI_EDITOR;
     protected static User user;
@@ -144,10 +142,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (SP == null) {
-            SP = UserSharedPref.getInstance(this);
-        }
 
         if (SP_VILI == null) {
             SP_VILI = getSharedPreferences(Utils.SP, MODE_PRIVATE);

@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 
 import com.google.android.gms.maps.MapView;
 import com.myneighbourhood.R;
+import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
@@ -65,11 +66,10 @@ public class RegisterActivity extends BaseActivity {
                 String username = usernameET.getText().toString();
                 String address = addressET.getText().toString();
 
-                User user = DB.registerUser(username, password, email, phone);
+                User user = DB.registerUser(new User(username, "", "", password, email, phone, null), new Address("100 Gibson Street", 0, 0));
                 setLoggedInUser(user);
                 SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
                 SP_VILI_EDITOR.apply();
-                SP.setUserLoggedIn(true);
 
                 Intent i = new Intent(RegisterActivity.this, SMSAuthorisationActivity.class);
                 startActivity(i);

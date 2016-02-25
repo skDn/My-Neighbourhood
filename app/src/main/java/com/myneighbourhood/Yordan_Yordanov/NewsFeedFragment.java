@@ -19,7 +19,6 @@ import com.myneighbourhood.Kiril_Hristov.ViewRequestActivity;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
-import com.myneighbourhood.utils.UserSharedPref;
 
 import java.util.ArrayList;
 
@@ -34,7 +33,6 @@ public class NewsFeedFragment extends Fragment {
     FloatingActionButton addNewsActionButton;
     private DBHelper dbHelper;
     // TODO: are we displaying news, that has been created by the logged user
-    private UserSharedPref sp;
 
 
     public NewsFeedFragment() {
@@ -54,7 +52,6 @@ public class NewsFeedFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_news_feed, container, false);
         mainActivity = (MainActivity) getActivity();
         dbHelper = mainActivity.getDB();
-        sp = mainActivity.getSP();
         NewsFeedListView = (ListView) v.findViewById(R.id.newsFeedListView);
         addNewsActionButton = (FloatingActionButton) v.findViewById(R.id.addNewsActionButton);
         return v;

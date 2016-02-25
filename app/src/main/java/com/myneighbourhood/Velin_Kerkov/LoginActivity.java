@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
@@ -28,6 +29,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        DB.registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
 
         // bind to UI elements
         mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);
@@ -57,7 +60,6 @@ public class LoginActivity extends BaseActivity {
                     SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
                     SP_VILI_EDITOR.apply();
                     setLoggedInUser(user);
-                    SP.setUserLoggedIn(true);
 
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
