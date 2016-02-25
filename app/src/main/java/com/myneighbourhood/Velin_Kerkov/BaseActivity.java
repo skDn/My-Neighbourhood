@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +21,8 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.UserSharedPref;
 import com.myneighbourhood.utils.Utils;
+
+import java.io.FileNotFoundException;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -91,6 +96,25 @@ public class BaseActivity extends AppCompatActivity {
     protected void hideKeyboard(View view) {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public Bitmap getBitmapFromURI(Uri targetUri, int width, int height) {
+        Bitmap image = null;
+        try {
+            image = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(targetUri));
+
+            int desiredWidth = image.getWidth();
+            int desiredHeight = image.getHeight();
+            while (desiredWidth / 2 >= width || desiredHeight / 2 >= height) {
+                desiredWidth = desiredWidth / 2;
+                desiredHeight = desiredHeight / 2;
+            }
+
+            image = Bitmap.createScaledBitmap(image, desiredWidth, desiredHeight, true);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     @Override

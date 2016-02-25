@@ -1,6 +1,8 @@
 package com.myneighbourhood.Velin_Kerkov;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import com.myneighbourhood.utils.Utils;
 
 public class RegisterActivity extends BaseActivity {
 
+    private static final int REQUEST_BROWSE_GALLERY = 1;
     private EditText emailET;
     private EditText passwordET;
     private EditText phoneET;
@@ -64,9 +67,25 @@ public class RegisterActivity extends BaseActivity {
         profilePicIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogWithOkButton("Here you will be able to choose the picture for your profile. (TBA)");
+                browseGallery();
             }
         });
 
+    }
+
+    public void browseGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_BROWSE_GALLERY);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
+            Uri targetUri = data.getData();
+            System.out.println(targetUri.toString());
+            profilePicIV.setImageBitmap(getBitmapFromURI(targetUri, 150, 150));
+        }
     }
 }

@@ -37,7 +37,12 @@ public class MainActivity extends BaseActivity {
                 finish();
             } else {
                 User user = DB.getUser(lastLoginUserId);
-                setLoggedInUser(user);
+                if (user == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                } else {
+                    setLoggedInUser(user);
+                }
             }
         }
 
@@ -49,7 +54,7 @@ public class MainActivity extends BaseActivity {
             requestFeedFragment = RequestFeedFragment.newInstance();
         }
 
-        if (myRequestsFragment == null){
+        if (myRequestsFragment == null) {
             myRequestsFragment = MyRequestsFragment.newInstance();
         }
 
@@ -62,7 +67,7 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(newsFeedFragment, "News");
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        if(getIntent().getIntExtra("tab", 0) == 1) {
+        if (getIntent().getIntExtra("tab", 0) == 1) {
             viewPager.setCurrentItem(1);
         }
     }
