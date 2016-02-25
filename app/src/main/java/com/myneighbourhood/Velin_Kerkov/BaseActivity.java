@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.MessagesActivity;
+import com.myneighbourhood.Yordan_Yordanov.MyNeighbourhoodActivity;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
@@ -70,6 +71,9 @@ public class BaseActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.menu_action_neighbourhood:
+                i = new Intent(this, MyNeighbourhoodActivity.class);
+                startActivity(i);
             default:
                 return false;
         }
