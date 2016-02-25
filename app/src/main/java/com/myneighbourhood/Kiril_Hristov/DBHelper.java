@@ -81,106 +81,117 @@ public class DBHelper extends SQLiteOpenHelper {
     //Messages table
     private static final String TABLE_MESSAGE = "Message";
     private static final String COLUMN_MESSAGE_MESSAGE_ID = "messageId";
-    private static final String COLUMN_MESSAGES_SENDER_ID = "senderId";
-    private static final String COLUMN_MESSAGES_RECEIVER_ID = "receiverId";
-    private static final String COLUMN_MESSAGES_REQUEST_ID = "requestId";
     private static final String COLUMN_MESSAGES_TEXT = "text";
     private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
+    private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
 
     // Chat
     private static final String TABLE_CHATS = "CHATS";
+    private static final String COLUMN_CHATS_ID = "_id";
     private static final String COLUMN_CHATS_REQUEST_ID = "request_id";
-//    private static final String COLUMN_CHATS_USER
+    private static final String COLUMN_CHATS_USER_1 = "request_user_1";
+    private static final String COLUMN_CHATS_USER_2 = "request_user_2";
+    private static final String COLUMN_CHATS_LATEST_MSG = "latest_msg";
+    private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_1 = "latest_view_by_user_1";
+    private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_2 = "latest_view_by_user_2";
 
 
     // Create table queries
     private static final String createUser =
             "CREATE TABLE " + TABLE_USER + "(" +
-            COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_USER_USERNAME + " TEXT, " +
-            COLUMN_USER_FIRSTNAME + " TEXT, " +
-            COLUMN_USER_LASTNAME + " TEXT, " +
-            COLUMN_USER_PASSWORD + " TEXT, " +
-            COLUMN_USER_EMAIL + " TEXT, " +
-            COLUMN_USER_PHONE + " TEXT, " +
-            COLUMN_USER_PICTURE + " BLOB" + ");";
+                    COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_USER_USERNAME + " TEXT, " +
+                    COLUMN_USER_FIRSTNAME + " TEXT, " +
+                    COLUMN_USER_LASTNAME + " TEXT, " +
+                    COLUMN_USER_PASSWORD + " TEXT, " +
+                    COLUMN_USER_EMAIL + " TEXT, " +
+                    COLUMN_USER_PHONE + " TEXT, " +
+                    COLUMN_USER_PICTURE + " BLOB" + ");";
 
     private static final String createRating =
             "CREATE TABLE " + TABLE_RATING + "(" +
-            COLUMN_RATING_USER_ID + " INTEGER, " +
-            COLUMN_RATING_AS_REQUESTER + " INTEGER, "+
-            COLUMN_RATING_AS_APPLICANT + " INTEGER, " +
-            COLUMN_RATING_ENDORCEDBY + " INTEGER, " +
-            "FOREIGN KEY (" + COLUMN_RATING_USER_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
-            ");";
+                    COLUMN_RATING_USER_ID + " INTEGER, " +
+                    COLUMN_RATING_AS_REQUESTER + " INTEGER, " +
+                    COLUMN_RATING_AS_APPLICANT + " INTEGER, " +
+                    COLUMN_RATING_ENDORCEDBY + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_RATING_USER_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    ");";
 
     private static final String createAddress =
             "CREATE TABLE " + TABLE_ADDRESS + "(" +
-            COLUMN_ADDRESS_USER_ID + " INTEGER, " +
-            COLUMN_ADDRESS_STREET + " TEXT, " +
-            COLUMN_ADDRESS_RECT_X + " DOUBLE, " +
-            COLUMN_ADDRESS_RECT_Y + " DOUBLE, " +
-            "FOREIGN KEY (" + COLUMN_ADDRESS_USER_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
+                    COLUMN_ADDRESS_USER_ID + " INTEGER, " +
+                    COLUMN_ADDRESS_STREET + " TEXT, " +
+                    COLUMN_ADDRESS_RECT_X + " DOUBLE, " +
+                    COLUMN_ADDRESS_RECT_Y + " DOUBLE, " +
+                    "FOREIGN KEY (" + COLUMN_ADDRESS_USER_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
                     ");";
 
     private static final String createRequest =
             "CREATE TABLE " + TABLE_REQUEST + "(" +
-            COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_REQUEST_CREATED_BY_ID + " INTEGER, " +
-            COLUMN_REQUEST_TITLE + " TEXT, " +
-            COLUMN_REQUEST_DESCRIPTION + " TEXT, " +
-            COLUMN_REQUEST_PEOPLE_NEEDED + " INTEGER, " +
-            COLUMN_REQUEST_TIMESTAMP + " INTEGER, " +
-            COLUMN_REQUEST_EXPIRES + " INTEGER, " +
-            COLUMN_REQUEST_ACCEPTED + " INTEGER, " +
-            "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
-            ");";
+                    COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_REQUEST_CREATED_BY_ID + " INTEGER, " +
+                    COLUMN_REQUEST_TITLE + " TEXT, " +
+                    COLUMN_REQUEST_DESCRIPTION + " TEXT, " +
+                    COLUMN_REQUEST_PEOPLE_NEEDED + " INTEGER, " +
+                    COLUMN_REQUEST_TIMESTAMP + " INTEGER, " +
+                    COLUMN_REQUEST_EXPIRES + " INTEGER, " +
+                    COLUMN_REQUEST_ACCEPTED + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    ");";
 
     private static final String createNews =
             "CREATE TABLE " + TABLE_NEWS + "(" +
-            COLUMN_NEWS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_NEWS_CREATED_BY_ID + " INTEGER, " +
-            COLUMN_NEWS_TITLE + " TEXT, " +
-            COLUMN_NEWS_TEXT + " TEXT, " +
-            COLUMN_NEWS_TIMESTAMP + " INTEGER, " +
-            COLUMN_NEWS_PICTURE + " BLOB, " +
-            "FOREIGN KEY (" + COLUMN_NEWS_CREATED_BY_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
-            ");";
+                    COLUMN_NEWS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NEWS_CREATED_BY_ID + " INTEGER, " +
+                    COLUMN_NEWS_TITLE + " TEXT, " +
+                    COLUMN_NEWS_TEXT + " TEXT, " +
+                    COLUMN_NEWS_TIMESTAMP + " INTEGER, " +
+                    COLUMN_NEWS_PICTURE + " BLOB, " +
+                    "FOREIGN KEY (" + COLUMN_NEWS_CREATED_BY_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    ");";
 
     private static final String createApplicant =
             "CREATE TABLE " + TABLE_APPLICANT + "(" +
-            COLUMN_APPLICANT_RECORD + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_APPLICANT_APPLICANT_ID + " INTEGER, " +
-            COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
-            COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
-            COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
-            "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + "), "+
-            "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " +
-            TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), "+
-            "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
-            ");";
+                    COLUMN_APPLICANT_RECORD + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_APPLICANT_APPLICANT_ID + " INTEGER, " +
+                    COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
+                    COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
+                    COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " +
+                    TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " +
+                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    ");";
 
     private static final String createMessage =
             "CREATE TABLE " + TABLE_MESSAGE + "(" +
-            COLUMN_MESSAGE_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_MESSAGES_SENDER_ID + " INTEGER, " +
-            COLUMN_MESSAGES_RECEIVER_ID + " INTEGER, " +
-            COLUMN_MESSAGES_REQUEST_ID + " INTEGER, " +
-            COLUMN_MESSAGES_TEXT + " TEXT, " +
-            COLUMN_MESSAGES_TIMESTAMP + " INTEGER, " +
-            "FOREIGN KEY (" + COLUMN_MESSAGES_SENDER_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + "), "+
-            "FOREIGN KEY (" + COLUMN_MESSAGES_REQUEST_ID + ") REFERENCES " +
-            TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), "+
-            "FOREIGN KEY (" + COLUMN_MESSAGES_RECEIVER_ID + ") REFERENCES " +
-            TABLE_USER + "(" + COLUMN_USER_ID + ")"+
-            ");";
+                    COLUMN_MESSAGE_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MESSAGES_TEXT + " TEXT, " +
+                    COLUMN_MESSAGES_TIMESTAMP + " INTEGER, " +
+                    COLUMN_MESSAGES_CHAT_FK + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_MESSAGES_CHAT_FK + ") REFERENCES " + TABLE_CHATS + "(" + COLUMN_CHATS_ID + ")" +
+                    ");";
+
+    private static final String createChats =
+            "CREATE TABLE " + TABLE_CHATS + "(" +
+                    COLUMN_CHATS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_CHATS_LATEST_MSG + " INTEGER, " +
+                    COLUMN_CHATS_LATEST_VIEW_BY_USER_1 + " INTEGER, " +
+                    COLUMN_CHATS_LATEST_VIEW_BY_USER_2 + " INTEGER, " +
+                    COLUMN_CHATS_REQUEST_ID + " INTEGER, " +
+                    COLUMN_CHATS_USER_1 + " INTEGER, " +
+                    COLUMN_CHATS_USER_2 + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_CHATS_USER_1 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_CHATS_USER_2 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + ") " +
+                    ");";
+
 
     public static synchronized DBHelper getInstance(Context context) {
         if (INSTANCE == null) {
@@ -202,7 +213,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createNews);
         db.execSQL(createApplicant);
         db.execSQL(createMessage);
-        registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
+        db.execSQL(createChats);
+//        registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
     }
 
     @Override
@@ -214,6 +226,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NEWS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPLICANT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHATS);
         onCreate(db);
     }
 
@@ -221,10 +234,10 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String checkUnique =
                 "SELECT * FROM " + TABLE_USER +
-                " WHERE " + COLUMN_USER_USERNAME + "=\"" + user.getUsername() + "\";";
+                        " WHERE " + COLUMN_USER_USERNAME + "=\"" + user.getUsername() + "\";";
         Cursor c = db.rawQuery(checkUnique, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
+        if (c.getCount() > 0) {
             // user with that username already exists
             return null;
         }
@@ -237,10 +250,9 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_EMAIL, user.getEmail());
         values.put(COLUMN_USER_PHONE, user.getPhone());
 
-        if(user.getImage() == null){
+        if (user.getImage() == null) {
             values.put(COLUMN_USER_PICTURE, "");
-        }
-        else {
+        } else {
             Bitmap yourBitmap = null;
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             yourBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
@@ -250,10 +262,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_USER, null, values);
 
-        int id=0;
+        int id = 0;
         c = db.rawQuery(checkUnique, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
+        if (c.getCount() > 0) {
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
         }
 
@@ -273,7 +285,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         c.close();
         db.close();
-        return new User(id, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(),user.getEmail(), user.getPhone(), user.getImage());
+        return new User(id, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getEmail(), user.getPhone(), user.getImage());
     }
 
     public User getUser(String username, String password) {
@@ -287,27 +299,27 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
-                " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\" " +
-                " AND " + COLUMN_USER_PASSWORD + "=\"" + password + "\" " + ";";
+                        " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\" " +
+                        " AND " + COLUMN_USER_PASSWORD + "=\"" + password + "\" " + ";";
 
         Cursor c = db.rawQuery(authenticate, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
+        if (c.getCount() > 0) {
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
-            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
                 fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
                 lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
                 email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
 
-            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+            if (c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE)) != null) {
                 byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
                 image = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
@@ -323,7 +335,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public User getUser(int lastLoginUserId) {
-        String username= "";
+        String username = "";
         String password = "";
         String fName = "";
         String lName = "";
@@ -333,29 +345,29 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
-                " WHERE " + COLUMN_USER_ID + " = " + lastLoginUserId + ";";
+                        " WHERE " + COLUMN_USER_ID + " = " + lastLoginUserId + ";";
         Cursor c = db.rawQuery(authenticate, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
-            if(c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null){
+        if (c.getCount() > 0) {
+            if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
                 username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
                 fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
                 lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null) {
                 password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
                 email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
-            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+            if (c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE)) != null) {
                 byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
                 image = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
@@ -368,9 +380,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public ArrayList<User> getUsers(){
+    public ArrayList<User> getUsers() {
         int id;
-        String username= "";
+        String username = "";
         String password = "";
         String fName = "";
         String lName = "";
@@ -383,27 +395,27 @@ public class DBHelper extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLE_USER + ";";
         Cursor c = db.rawQuery(authenticate, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
+        if (c.getCount() > 0) {
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
-            if(c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
                 username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
                 fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
                 lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null) {
                 password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
                 email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_USER_PHONE))!=null){
+            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
                 phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
             }
-            if(c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE))!=null){
+            if (c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE)) != null) {
                 byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
                 image = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
@@ -417,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addRequest(Request request){
+    public void addRequest(Request request) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreatorId());
         values.put(COLUMN_REQUEST_TITLE, request.getTitle());
@@ -433,7 +445,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Request getRequest(int requestId) {
         int creatorId;
-        String title= "";
+        String title = "";
         String description = "";
         int peopleNeeded;
         long timestamp = 0;
@@ -445,19 +457,19 @@ public class DBHelper extends SQLiteOpenHelper {
                         " WHERE " + COLUMN_REQUEST_ID + " = " + requestId + ";";
         Cursor c = db.rawQuery(getRequest, null);
         c.moveToFirst();
-        if (c.getCount() > 0){
+        if (c.getCount() > 0) {
             creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
                 title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null) {
                 description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
             }
             peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null) {
                 expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
             }
             accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
@@ -474,8 +486,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Request> getRequests(int userId, String feedOrMy) {
         int requestId;
         int creatorId;
-        String title="";
-        String description="";
+        String title = "";
+        String description = "";
         int peopleNeeded;
         long timestamp = 0;
         String expires = "";
@@ -490,28 +502,27 @@ public class DBHelper extends SQLiteOpenHelper {
                         " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
 
         String queryToExecute;
-        if(feedOrMy.equals("feed")){
+        if (feedOrMy.equals("feed")) {
             queryToExecute = getMyRequests;
-        }
-        else queryToExecute = getFeedRequests;
+        } else queryToExecute = getFeedRequests;
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
             requestId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ID));
             creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
                 title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null) {
                 description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
             }
             peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES)) != null) {
                 expires = c.getString(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
             }
             accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
@@ -540,16 +551,16 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
-        while (!c.isAfterLast()){
+        while (!c.isAfterLast()) {
             newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
             userId = c.getInt(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
-            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
                 title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null) {
                 text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
             }
-            if(c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null){
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
             }
 
@@ -561,6 +572,5 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return toReturn;
     }
-
 
 }
