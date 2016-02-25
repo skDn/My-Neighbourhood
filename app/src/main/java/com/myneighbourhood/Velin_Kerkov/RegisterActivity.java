@@ -22,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseActivity {
 
-    private static final int REQUEST_BROWSE_GALLERY = 1;
+
     private EditText emailET;
     private EditText passwordET;
     private EditText phoneET;
@@ -83,11 +83,6 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
-    }
-
-    public void browseGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_BROWSE_GALLERY);
     }
 
     @Override

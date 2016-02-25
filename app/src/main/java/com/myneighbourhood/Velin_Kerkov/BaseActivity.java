@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 public class BaseActivity extends AppCompatActivity {
 
     // shared globals
+    protected static final int REQUEST_BROWSE_GALLERY = 1;
     protected static SharedPreferences SP_VILI;
     protected static SharedPreferences.Editor SP_VILI_EDITOR;
     protected static User user;
@@ -108,6 +109,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void hideKeyboard(View view) {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void browseGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, REQUEST_BROWSE_GALLERY);
     }
 
     public Bitmap getBitmapFromURI(Uri targetUri, int width, int height) {

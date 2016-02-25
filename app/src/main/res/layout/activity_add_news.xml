@@ -4,7 +4,6 @@
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:scrollbars="vertical"
     tools:context="com.myneighbourhood.Yordan_Yordanov.AddNewsActivity">
 
@@ -23,17 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            android:background="#d3d3d3">
 
             <EditText
                 android:id="@+id/EditTextName"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="@string/add_news_title"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"/>
+
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
+            android:id="@+id/addNewsImage"
             android:layout_width="150dp"
             android:layout_height="150dp" />
 
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10sp"
-            android:background="@android:color/white">
+            android:background="#d3d3d3">
 
             <EditText
                 android:id="@+id/EditTextFeedbackBody"
