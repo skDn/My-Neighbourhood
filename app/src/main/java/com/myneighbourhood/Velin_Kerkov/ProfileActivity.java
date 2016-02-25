@@ -16,6 +16,14 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("Profile");
+        } catch (NullPointerException e) {
+
+        }
+
         Button logOffBTN = (Button) findViewById(R.id.profile_B_log_off);
         TextView ratingRequesterTV = (TextView) findViewById(R.id.profile_TV_rating_requester);
         TextView ratingApplicantTV = (TextView) findViewById(R.id.profile_TV_rating_applicant);
@@ -30,7 +38,6 @@ public class ProfileActivity extends BaseActivity {
         usernameTV.setText(user.getUsername());
         emailTV.setText(user.getEmail());
         phoneTV.setText(user.getPhone());
-
 
 
         logOffBTN.setOnClickListener(new View.OnClickListener() {

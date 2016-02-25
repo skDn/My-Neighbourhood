@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 
 import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
+import com.myneighbourhood.Yordan_Yordanov.MessagesActivity;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.UserSharedPref;
 import com.myneighbourhood.utils.Utils;
@@ -63,6 +64,13 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_action_profile:
                 Intent i = new Intent(this, ProfileActivity.class);
                 startActivity(i);
+                return true;
+            case R.id.menu_action_messages:
+                i = new Intent(this, MessagesActivity.class);
+                startActivity(i);
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
             default:
                 return false;
@@ -118,11 +126,11 @@ public class BaseActivity extends AppCompatActivity {
         return image;
     }
 
-    public String getRealPathFromURI( Uri contentUri) {
+    public String getRealPathFromURI(Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = this.getContentResolver().query(contentUri,  proj, null, null, null);
+            String[] proj = {MediaStore.Images.Media.DATA};
+            cursor = this.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
