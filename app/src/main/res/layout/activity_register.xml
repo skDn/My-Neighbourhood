@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/register_SV_main"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context="com.myneighbourhood.Velin_Kerkov.RegisterActivity">
@@ -13,12 +15,14 @@
         android:orientation="vertical"
         android:padding="15sp">
 
-        <ImageView
-            android:id="@+id/register_IV_profile_picture"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/register_CIV_profile_picture"
+            android:src="@drawable/ic_account_circle_black_36dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_account_circle_black_36dp" />
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -115,12 +119,19 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <fragment
-            android:id="@+id/register_CMF_map"
-            android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+        <FrameLayout
+            android:id="@+id/register_FL_map"
             android:layout_width="match_parent"
-            android:layout_height="200sp"
-            android:layout_marginBottom="10sp" />
+            android:layout_height="wrap_content">
+
+            <fragment
+                android:id="@+id/register_CMF_map"
+                android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:layout_marginBottom="10sp" />
+
+        </FrameLayout>
 
         <Button
             android:id="@+id/register_B_register"

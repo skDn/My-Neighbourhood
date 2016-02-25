@@ -1,17 +1,23 @@
 package com.myneighbourhood.Velin_Kerkov;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
 
+import com.google.android.gms.maps.MapView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterActivity extends BaseActivity {
 
@@ -21,7 +27,11 @@ public class RegisterActivity extends BaseActivity {
     private EditText phoneET;
     private EditText usernameET;
     private EditText addressET;
-    private ImageView profilePicIV;
+    private CircleImageView profilePicIV;
+    private FrameLayout mapLayout;
+    private Fragment mapFragment;
+    private ScrollView mainLayoutSV;
+    private MapView mapView;
 
     @Override
     protected boolean useToolbar() {
@@ -35,12 +45,14 @@ public class RegisterActivity extends BaseActivity {
 
         // bind UI elements
         Button registerBTN = (Button) findViewById(R.id.register_B_register);
+        mainLayoutSV = (ScrollView) findViewById(R.id.register_SV_main);
         emailET = (EditText) findViewById(R.id.register_ET_email);
         passwordET = (EditText) findViewById(R.id.register_ET_password);
         phoneET = (EditText) findViewById(R.id.register_ET_phone);
         usernameET = (EditText) findViewById(R.id.register_ET_username);
         addressET = (EditText) findViewById(R.id.register_ET_address);
-        profilePicIV = (ImageView) findViewById(R.id.register_IV_profile_picture);
+        profilePicIV = (CircleImageView) findViewById(R.id.register_CIV_profile_picture);
+
 
         // set up onClick listeners
         registerBTN.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +96,9 @@ public class RegisterActivity extends BaseActivity {
 
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
-            System.out.println(targetUri.toString());
-            profilePicIV.setImageBitmap(getBitmapFromURI(targetUri, 150, 150));
+
+            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 150, 150);
+            profilePicIV.setImageBitmap(bitmapFromURI);
         }
     }
 }
