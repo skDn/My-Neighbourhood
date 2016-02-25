@@ -25,13 +25,95 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profile_rect_background"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="Ratings"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="As requester" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_requester"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="As applicant" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_applicant"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Endorsed by" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_endorsed_by"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/separator_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profile_rect_background"
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <LinearLayout
+            <TextView
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Details"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
                 android:orientation="horizontal">
 
                 <TextView
@@ -40,12 +122,13 @@
 
                 <TextView
                     android:id="@+id/profile_TV_username"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -54,12 +137,13 @@
 
                 <TextView
                     android:id="@+id/profile_TV_first_name"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -68,12 +152,13 @@
 
                 <TextView
                     android:id="@+id/profile_TV_last_name"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -82,12 +167,13 @@
 
                 <TextView
                     android:id="@+id/profile_TV_email"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -96,12 +182,13 @@
 
                 <TextView
                     android:id="@+id/profile_TV_phone"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
+                style="@style/profileTableRow"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -110,14 +197,15 @@
 
                 <TextView
                     android:id="@+id/profile_TV_address"
-                    style="@style/ProfileActivityRowTVSettings" />
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <fragment
                 android:id="@+id/register_CMF_map"
                 android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="100sp"
+                android:layout_height="200sp"
                 android:layout_marginBottom="10sp" />
 
         </LinearLayout>
@@ -128,8 +216,9 @@
             android:id="@+id/profile_B_log_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="logOff" />
-
+            android:background="@color/colorPrimary"
+            android:text="log Out"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>

@@ -15,8 +15,9 @@
 
         <ImageView
             android:id="@+id/register_IV_profile_picture"
-            android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_account_circle_black_36dp" />
 
         <android.support.design.widget.TextInputLayout
@@ -29,8 +30,8 @@
                 android:id="@+id/register_ET_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
                 android:gravity="center"
+                android:hint="Username"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -47,8 +48,8 @@
                 android:id="@+id/register_ET_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
                 android:gravity="center"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -65,8 +66,8 @@
                 android:id="@+id/register_ET_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="email"
                 android:gravity="center"
+                android:hint="email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -83,8 +84,8 @@
                 android:id="@+id/register_ET_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="phone"
                 android:gravity="center"
+                android:hint="phone"
                 android:inputType="phone"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -101,9 +102,12 @@
                 android:id="@+id/register_ET_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
-                android:hint="address"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:gravity="center"
+                android:hint="address"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
