@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR, 10);
 
-        Request adminRequest = new Request(admin.getId(), "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
+        Request adminRequest = new Request(admin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
         adminRequest = DB.addRequestFromUI(adminRequest);
         Chat chat = DB.addChat(admin, vili, adminRequest);
 
@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity {
 
                 User user = DB.getUser(username, password);
                 if (user != null) {
-                    SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
+                    SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
                     SP_VILI_EDITOR.apply();
                     setLoggedInUser(user);
 

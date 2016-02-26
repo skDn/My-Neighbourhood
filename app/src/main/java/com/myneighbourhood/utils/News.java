@@ -6,24 +6,24 @@ import android.graphics.Bitmap;
  * Created by skDn on 23/02/2016.
  */
 public class News {
-    private int newsId;
-    private int userId;
+    private long newsId;
+    private User creator;
     private String title;
     private String text;
     private long timestamp;
     private Bitmap picture;
 
-    public News(int newsId, int userId, String title, String text, long timestamp, Bitmap picture) {
+    public News(long newsId, User creator, String title, String text, long timestamp, Bitmap picture) {
         this.newsId = newsId;
-        this.userId = userId;
+        this.creator = creator;
         this.title = title;
         this.text = text;
         this.timestamp = timestamp;
         this.picture = picture;
     }
 
-    public News(int userId, String title, String text, long timestamp, Bitmap picture) {
-        this.userId = userId;
+    public News(User creator, String title, String text, long timestamp, Bitmap picture) {
+        this.creator = creator;
         this.title = title;
         this.text = text;
         this.timestamp = timestamp;
@@ -35,7 +35,7 @@ public class News {
         return picture;
     }
 
-    public int getNewsId() {
+    public long getNewsId() {
         return newsId;
     }
 
@@ -43,12 +43,8 @@ public class News {
         this.newsId = newsId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public User getCreator() {
+        return creator;
     }
 
     public String getTitle() {

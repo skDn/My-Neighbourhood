@@ -56,7 +56,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        int idClicked = neighbours.get(position).getId();
+                        long idClicked = neighbours.get(position).getId();
                         Intent myIntent = new Intent(MyNeighbourhoodActivity.this, ProfileActivity.class);
                         myIntent.putExtra("userId", idClicked);
                         startActivity(myIntent);

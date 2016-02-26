@@ -13,9 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.myneighbourhood.Kiril_Hristov.AddRequestActivity;
 import com.myneighbourhood.Kiril_Hristov.DBHelper;
-import com.myneighbourhood.Kiril_Hristov.ViewRequestActivity;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
@@ -81,7 +79,7 @@ public class NewsFeedFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        int idClicked = newsFeed.get(position).getNewsId();
+                        long idClicked = newsFeed.get(position).getNewsId();
                         Intent myIntent = new Intent(mainActivity, NewsActivity.class);
                         myIntent.putExtra("newsId", idClicked);
                         myIntent.putExtra("tab", 2);

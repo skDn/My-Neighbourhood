@@ -1,19 +1,13 @@
 package com.myneighbourhood.Yordan_Yordanov;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
-import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.User;
 
@@ -22,7 +16,7 @@ import com.myneighbourhood.utils.User;
  */
 public class NewsActivity extends BaseActivity {
 
-    private int newsID;
+    private long newsID;
     private int tab;
 
     private News currentNews;
@@ -42,12 +36,12 @@ public class NewsActivity extends BaseActivity {
         setContentView(R.layout.activity_view_news);
 
         Intent i = getIntent();
-        newsID = i.getIntExtra("newsId", 0);
+        newsID = i.getLongExtra("newsId", 0);
         tab = i.getIntExtra("tab", 0);
 
         // getting news and user from the database
         currentNews = DB.getNews(newsID);
-        createdByUser = DB.getUser(currentNews.getUserId());
+        createdByUser = currentNews.getCreator();
 
         try {
             getSupportActionBar().setDisplayShowHomeEnabled(true);

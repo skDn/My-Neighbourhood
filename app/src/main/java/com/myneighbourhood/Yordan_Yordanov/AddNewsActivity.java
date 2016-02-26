@@ -14,7 +14,6 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
-import com.myneighbourhood.utils.Request;
 
 import java.util.Calendar;
 
@@ -58,7 +57,7 @@ public class AddNewsActivity extends BaseActivity {
                 else {
                     Calendar cal = Calendar.getInstance();
                     /// id?
-                    DB.addNews(new News(getUser().getId(), title, description, cal.getTimeInMillis(), null));
+                    DB.addNews(new News(getUser(), title, description, cal.getTimeInMillis(), null));
                     onBackPressed();
                 }
             }

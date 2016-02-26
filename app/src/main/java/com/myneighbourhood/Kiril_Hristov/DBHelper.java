@@ -273,11 +273,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_USER, null, values);
 
-        int id = 0;
+        long id = 0;
         c = db.rawQuery(checkUnique, null);
         c.moveToFirst();
         if (c.getCount() > 0) {
-            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            id = c.getLong(c.getColumnIndex(COLUMN_USER_ID));
         }
 
         ContentValues addressValues = new ContentValues();
@@ -392,7 +392,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<User> getUsers() {
-        int id;
+        long id;
         String username = "";
         String password = "";
         String fName = "";
@@ -408,7 +408,7 @@ public class DBHelper extends SQLiteOpenHelper {
         c.moveToFirst();
 
         while (!c.isAfterLast()) {
-            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            id = c.getLong(c.getColumnIndex(COLUMN_USER_ID));
             if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
                 username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
             }
@@ -476,7 +476,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public Request getRequest(int requestId) {
+    public Request getRequest(long requestId) {
         SQLiteDatabase db = getWritableDatabase();
         String getRequest =
                 "SELECT * FROM " + TABLE_REQUEST +
@@ -515,15 +515,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // get myRequests or feedRequests
-    public ArrayList<Request> getRequests(int userId, String feedOrMy) {
-        int requestId;
-        int creatorId;
-        String title = "";
-        String description = "";
-        int peopleNeeded;
-        long timestamp = 0;
-        long expires = 0;
-        int accepted;
+    public ArrayList<Request> getRequests(long userId, String feedOrMy) {
         ArrayList<Request> toReturn = new ArrayList<>();
 
         String getMyRequests =
@@ -570,8 +562,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<News> getNews() {
-        int newsId;
-        int userId;
+        long newsId;
+        long userId;
         String title = "";
         String text = "";
         long timestamp = 0;
@@ -586,7 +578,9 @@ public class DBHelper extends SQLiteOpenHelper {
         c.moveToFirst();
         while (!c.isAfterLast()) {
             newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
-            userId = c.getInt(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            userId = c.getLong(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+
+            User creator = getUser(userId);
             if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
                 title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
             }
@@ -601,7 +595,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 picture = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
 
-            toReturn.add(new News(newsId, userId, title, text, timestamp, picture));
+            toReturn.add(new News(newsId, creator, title, text, timestamp, picture));
 
             c.moveToNext();
         }
@@ -646,13 +640,13 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cChats.getCount() > 0) {
             cChats.moveToFirst();
             while (!cChats.isAfterLast()) {
-                int chatId = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_ID));
-                int requestId = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_REQUEST_ID));
-                int userId1 = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_USER_1));
-                int userId2 = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_USER_2));
-                int latestMsgTime = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_MSG_TIME));
-                int latestViewByUser1Time = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_1));
-                int latestViewByUser2Time = cChats.getInt(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_2));
+                long chatId = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_ID));
+                long requestId = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_REQUEST_ID));
+                long userId1 = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_USER_1));
+                long userId2 = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_USER_2));
+                long latestMsgTime = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_LATEST_MSG_TIME));
+                long latestViewByUser1Time = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_1));
+                long latestViewByUser2Time = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_2));
 
                 Request request = getRequest(requestId);
                 User user1 = getUser(userId1);
@@ -692,7 +686,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void addNews(News news) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NEWS_CREATED_BY_ID, news.getUserId());
+        values.put(COLUMN_NEWS_CREATED_BY_ID, news.getCreator().getId());
         values.put(COLUMN_NEWS_TITLE, news.getTitle());
         values.put(COLUMN_NEWS_TEXT, news.getText());
         values.put(COLUMN_NEWS_TIMESTAMP, news.getTimestamp());
@@ -712,9 +706,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public News getNews(int id) {
-        int newsId;
-        int userId;
+    public News getNews(long id) {
+        long newsId;
+        long userId;
         String title = "";
         String text = "";
         long timestamp = 0;
@@ -727,8 +721,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         if (c.getCount() > 0) {
-            newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
-            userId = c.getInt(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            newsId = c.getLong(c.getColumnIndex(COLUMN_NEWS_ID));
+            userId = c.getLong(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            User creator = getUser(userId);
+
             if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
                 title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
             }
@@ -743,7 +739,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 picture = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
 
-            return new News(newsId, userId, title, text, timestamp, picture);
+            return new News(newsId, creator, title, text, timestamp, picture);
         }
         c.close();
         db.close();

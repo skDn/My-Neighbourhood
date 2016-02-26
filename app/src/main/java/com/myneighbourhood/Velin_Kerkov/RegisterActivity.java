@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseActivity {
 
                 User user = DB.registerUser(new User(username, "", "", password, email, phone, null), new Address("100 Gibson Street", 0, 0));
                 setLoggedInUser(user);
-                SP_VILI_EDITOR.putInt(Utils.SP_LAST_USER_ID, user.getId());
+                SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
                 SP_VILI_EDITOR.apply();
 
                 Intent i = new Intent(RegisterActivity.this, SMSAuthorisationActivity.class);

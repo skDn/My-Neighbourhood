@@ -15,7 +15,6 @@ import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by Kiril on 19/02/16.
@@ -75,7 +74,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String>{
         String username = "";
         Integer rating;
         for(int i = 0; i < users.size(); i++){
-            if(users.get(i).getId() == feedRequests.get(position).getCreatorId()){
+            if(users.get(i).getId() == feedRequests.get(position).getCreator().getId()){
 
                 profilePicture = users.get(i).getImage();
                 username = users.get(i).getUsername();

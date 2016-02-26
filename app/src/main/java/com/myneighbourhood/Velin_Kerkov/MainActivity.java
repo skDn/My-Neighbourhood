@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (user == null) {
-            int lastLoginUserId = SP_VILI.getInt(Utils.SP_LAST_USER_ID, -1);
+            long lastLoginUserId = SP_VILI.getLong(Utils.SP_LAST_USER_ID, -1);
             if (lastLoginUserId == -1) {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
