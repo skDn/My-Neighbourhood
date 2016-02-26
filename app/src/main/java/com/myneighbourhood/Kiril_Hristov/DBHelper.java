@@ -345,7 +345,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public User getUser(int lastLoginUserId) {
+    public User getUser(long lastLoginUserId) {
         String username = "";
         String password = "";
         String fName = "";
@@ -444,7 +444,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public Request addRequestFromUI(Request request) {
         // check if request exists already
         ContentValues values = new ContentValues();
-        values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreatorId());
+        values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreator().getId());
         values.put(COLUMN_REQUEST_TITLE, request.getTitle());
         values.put(COLUMN_REQUEST_DESCRIPTION, request.getDescription());
         values.put(COLUMN_REQUEST_PEOPLE_NEEDED, request.getPeopleNeeded());
@@ -464,10 +464,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return request;
     }
 
-
-    public Request getRequest(User creator, String title) {
+    public Request getRequest(long creatorId, String title) {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_REQUEST + " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + creator.getId() + " AND " + COLUMN_REQUEST_TITLE + " = \"" + title + "\"";
+        String query = "SELECT * FROM " + TABLE_REQUEST + " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + creatorId + " AND " + COLUMN_REQUEST_TITLE + " = \"" + title + "\"";
 
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.getCount() > 0) {
@@ -496,6 +495,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private Request createRequestFromCursor(Cursor c) {
         SQLiteDatabase db = getWritableDatabase();
         long creatorId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
+        User creator = getUser(creatorId);
         String title = "";
         String description = "";
         long requestId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_ID));
@@ -511,7 +511,7 @@ public class DBHelper extends SQLiteOpenHelper {
         int accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
         c.close();
         db.close();
-        return new Request(requestId, creatorId, title, description, peopleNeeded, timestamp, expires, accepted);
+        return new Request(requestId, creator, title, description, peopleNeeded, timestamp, expires, accepted);
     }
 
     // get myRequests or feedRequests
@@ -540,25 +540,27 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
-        c.moveToFirst();
         while (!c.isAfterLast()) {
-            requestId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ID));
-            creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
-            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
-                title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null) {
-                description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
-            }
-            peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
-            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
-                timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
-            }
-            expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
+            c.moveToFirst();
 
-            accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
+            Request r = createRequestFromCursor(c);
+//            requestId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ID));
+//            creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
+//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
+//                title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
+//            }
+//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null) {
+//                description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
+//            }
+//            peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
+//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
+//                timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
+//            }
+//            expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
+//
+//            accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
 
-            toReturn.add(new Request(requestId, creatorId, title, description, peopleNeeded, timestamp, expires, accepted));
+            toReturn.add(r);
 
             c.moveToNext();
         }

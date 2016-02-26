@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 public class User {
     private static int ids = 0;
 
-    private int id;
+    private long id;
     private String username;
     private String password;
     private String firstName;
@@ -27,7 +27,7 @@ public class User {
         this.image = image;
     }
 
-    public User(int id, String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
+    public User(long id, String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -54,7 +54,7 @@ public class User {
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
