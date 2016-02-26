@@ -69,6 +69,9 @@ public class MainActivity extends BaseActivity {
         if (getIntent().getIntExtra("tab", 0) == 1) {
             viewPager.setCurrentItem(1);
         }
+        else if (getIntent().getIntExtra("tab", 0) == 2) {
+            viewPager.setCurrentItem(2);
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
