@@ -12,13 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by Kiril on 19/02/16.
@@ -27,10 +25,12 @@ import java.util.Objects;
 public class CustomRequestRowAdapter extends ArrayAdapter<String>{
 
     ArrayList<Request> feedRequests;
+    ArrayList<User> users;
 
     public CustomRequestRowAdapter(Context context, String[] titles, ArrayList<Request> feedRequest) {
         super(context, R.layout.custom_request_row, titles);
         this.feedRequests = feedRequest;
+        this.users = users;
     }
 
     static class ViewHolderItem{
@@ -59,6 +59,9 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String>{
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
             viewHolder.contact = (Button) convertView.findViewById(R.id.RowRequestContact);
             viewHolder.hide = (Button) convertView.findViewById(R.id.RowRequestHide);
+
+
+
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolderItem) convertView.getTag();
