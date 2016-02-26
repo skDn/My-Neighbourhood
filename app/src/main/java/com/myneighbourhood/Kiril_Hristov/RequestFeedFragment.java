@@ -2,7 +2,6 @@ package com.myneighbourhood.Kiril_Hristov;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,7 @@ import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
 
-public class RequestFeedFragment extends Fragment{
+public class RequestFeedFragment extends Fragment {
 
     MainActivity mainActivity;
     ListView RequestFeedListView;
@@ -28,10 +27,11 @@ public class RequestFeedFragment extends Fragment{
     private ArrayList<User> users;
     private DBHelper dbHelper;
 
-    public RequestFeedFragment(){}
+    public RequestFeedFragment() {
+    }
 
-    public static RequestFeedFragment newInstance(){
-        RequestFeedFragment requestFeedFragment= new RequestFeedFragment();
+    public static RequestFeedFragment newInstance() {
+        RequestFeedFragment requestFeedFragment = new RequestFeedFragment();
         return requestFeedFragment;
     }
 
@@ -49,11 +49,12 @@ public class RequestFeedFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        ProgressDialog progressDialog = new ProgressDialog(mainActivity,R.style.AppTheme);
+        ProgressDialog progressDialog = new ProgressDialog(mainActivity, R.style.AppTheme);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
         requestFeed = dbHelper.getRequests(mainActivity.getUser().getId(), "feed");
+        System.out.println("requestsFeed : " + requestFeed.size() + ", currUserId: " + mainActivity.getUser().getId());
         users = dbHelper.getUsers();
         progressDialog.dismiss();
 

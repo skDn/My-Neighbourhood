@@ -29,6 +29,7 @@ public class Request {
 
     // to use when fetching from DB
     public Request(long id, User creator, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted){
+        System.out.println("creator: " + creator);
         this.id = id;
         this.creator = creator;
         this.title = title;

@@ -58,7 +58,7 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -116,5 +116,10 @@ public class User {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + username;
     }
 }

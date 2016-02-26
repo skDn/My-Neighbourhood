@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Created by Kiril on 19/02/16.
  */
 
-public class CustomRequestRowAdapter extends ArrayAdapter<String>{
+public class CustomRequestRowAdapter extends ArrayAdapter<String> {
 
     ArrayList<Request> feedRequests;
     ArrayList<User> users;
@@ -33,7 +33,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String>{
         this.users = users;
     }
 
-    static class ViewHolderItem{
+    static class ViewHolderItem {
         ImageView userImage;
         TextView username;
         TextView title;
@@ -47,13 +47,13 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String>{
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.custom_request_row, parent, false);
             viewHolder = new ViewHolderItem();
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
-            viewHolder.username  = (TextView) convertView.findViewById(R.id.RowRequestUsername);
+            viewHolder.username = (TextView) convertView.findViewById(R.id.RowRequestUsername);
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.RowRequestDescription);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
@@ -61,18 +61,18 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String>{
             viewHolder.hide = (Button) convertView.findViewById(R.id.RowRequestHide);
 
 
-
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
 
-        Bitmap profilePicture = feedRequests.get(position).getCreator().getImage();
-        if(profilePicture != null) {
+        User u = feedRequests.get(position).getCreator();
+        System.out.println("CustomRequestRowAdaptor: user: " + u + ", numOfrequest : " + feedRequests.size());
+        Bitmap profilePicture = u.getImage();
+        if (profilePicture != null) {
             viewHolder.userImage.setImageBitmap(profilePicture);
-        }
-        else viewHolder.userImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
+        } else viewHolder.userImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
 
         viewHolder.username.setText(feedRequests.get(position).getCreator().getUsername());
         String title = getItem(position);

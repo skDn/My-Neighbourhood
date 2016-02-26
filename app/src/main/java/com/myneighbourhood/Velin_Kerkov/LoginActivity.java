@@ -36,16 +36,26 @@ public class LoginActivity extends BaseActivity {
 
         User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null);
         User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", null);
-        DB.registerUser(admin, new Address("100 Gibson Street", 55.8734611, -4.2890117));
-        DB.registerUser(vili, new Address("100 Gibson Street", 55.8734611, -4.2890117));
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.HOUR, 10);
+        User newAdmin = DB.getUser(admin.getUsername(), admin.getPassword());
+        User newVili = DB.getUser(vili.getUsername(), vili.getPassword());
 
-        Request adminRequest = new Request(admin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
-        adminRequest = DB.addRequestFromUI(adminRequest);
-        Chat chat = DB.addChat(admin, vili, adminRequest);
+        if (newAdmin == null && newVili == null) {
+            newAdmin = DB.registerUser(admin, new Address("100 Gibson Street", 55.8734611, -4.2890117));
+            newVili = DB.registerUser(vili, new Address("100 Gibson Street", 55.8734611, -4.2890117));
 
+            System.out.println("Admin: " + admin.getId());
+            System.out.println("Vili: " + vili.getId());
+
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.HOUR, 10);
+
+            Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
+
+            Request resultReq = DB.getRequest(adminRequest.getCreator().getId(), adminRequest.getTitle());
+            adminRequest = DB.addRequestFromUI(adminRequest);
+            Chat chat = DB.addChat(newAdmin, newVili, adminRequest);
+        }
 
         // bind to UI elements
         mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);
