@@ -27,6 +27,14 @@ public class MyNeighbourhoodActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_neighbourhood);
 
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle("My Area");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         NeighbourListView = (ListView) findViewById(R.id.MyNeighbourhoodListView);
 
         searchNeighbours = (SearchView) findViewById(R.id.searchNeighbours);
