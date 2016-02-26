@@ -75,6 +75,5 @@ public class NewsActivity extends BaseActivity {
         Intent myIntent = new Intent(this, MainActivity.class);
         myIntent.putExtra("tab", tab);
         startActivity(myIntent);
-        finish();
     }
 }

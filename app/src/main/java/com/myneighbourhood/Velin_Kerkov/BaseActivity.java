@@ -70,6 +70,7 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(i);
                 return true;
             case android.R.id.home:
+                onBackPressed();
                 finish();
                 return true;
             case R.id.menu_action_neighbourhood:
