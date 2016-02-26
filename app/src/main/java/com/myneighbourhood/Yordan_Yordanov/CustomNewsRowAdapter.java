@@ -56,6 +56,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
 //        String title = getItem(position);
         viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());
         viewHolder.newsText.setText(newsFeed.get(position).getText());
+        viewHolder.username.setText("username");
 
         return convertView;
     }

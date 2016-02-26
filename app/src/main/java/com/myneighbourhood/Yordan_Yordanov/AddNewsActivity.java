@@ -24,11 +24,15 @@ public class AddNewsActivity extends BaseActivity {
     EditText newsTitle;
     EditText newsDescription;
     Button submitNews;
+    int tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_news);
+
+        Intent i = getIntent();
+        tab = i.getIntExtra("tab", 0);
 
         newsTitle = (EditText) findViewById(R.id.addNewsTitle);
         newsDescription = (EditText) findViewById(R.id.addNewsDescription);
@@ -49,11 +53,12 @@ public class AddNewsActivity extends BaseActivity {
                 System.out.println("adding news to db");
                 String title = newsTitle.getText().toString();
                 String description = newsDescription.getText().toString();
-                if (title.equals("")) showDialogWithOkButton("Please specify a title for the request!");
-                else{
+                if (title.equals(""))
+                    showDialogWithOkButton("Please specify a title for the request!");
+                else {
                     Calendar cal = Calendar.getInstance();
                     /// id?
-                    DB.addNews(new News(getUser().getId(),title,description,cal.getTimeInMillis(),null));
+                    DB.addNews(new News(getUser().getId(), title, description, cal.getTimeInMillis(), null));
                     onBackPressed();
                 }
             }
@@ -77,7 +82,7 @@ public class AddNewsActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent myIntent = new Intent(this, MainActivity.class);
-        myIntent.putExtra("tab", 1);
+        myIntent.putExtra("tab", tab);
         startActivity(myIntent);
         finish();
     }
