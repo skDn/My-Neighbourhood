@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Home");
         if (user == null) {
             long lastLoginUserId = SP_VILI.getLong(Utils.SP_LAST_USER_ID, -1);
             if (lastLoginUserId == -1) {

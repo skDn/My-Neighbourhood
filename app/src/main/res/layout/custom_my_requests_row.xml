@@ -33,14 +33,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:background="#0F0"/>
+            android:background="#1B5E20"/>
 
         <Button
             android:id="@+id/rowDeleteRequest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
-            android:background="#F00"
+            android:background="#B71C1C"
             android:layout_toRightOf="@+id/rowEditRequest"
             android:layout_marginLeft="20dp"/>
     </RelativeLayout>
