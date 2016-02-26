@@ -6,7 +6,7 @@ package com.myneighbourhood.utils;
 public class Request {
 
     private long id;
-    private int creatorId;
+    private long creatorId;
     private String title;
     private String description;
     private int peopleNeeded;
@@ -28,7 +28,7 @@ public class Request {
     }
 
     // to use when fetching from DB
-    public Request(long id, int creatorId, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted){
+    public Request(long id, long creatorId, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted){
         this.id = id;
         this.creatorId = creatorId;
         this.title = title;
@@ -47,7 +47,7 @@ public class Request {
         this.id = id;
     }
 
-    public int getCreatorId() {
+    public long getCreatorId() {
         return creatorId;
     }
 

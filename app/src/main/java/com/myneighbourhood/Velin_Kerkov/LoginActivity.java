@@ -33,12 +33,15 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null);
         User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", null);
         DB.registerUser(admin, new Address("100 Gibson Street", 55.8734611, -4.2890117));
         DB.registerUser(vili, new Address("100 Gibson Street", 55.8734611, -4.2890117));
+
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR, 10);
+
         Request adminRequest = new Request(admin.getId(), "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
         adminRequest = DB.addRequestFromUI(adminRequest);
         Chat chat = DB.addChat(admin, vili, adminRequest);
