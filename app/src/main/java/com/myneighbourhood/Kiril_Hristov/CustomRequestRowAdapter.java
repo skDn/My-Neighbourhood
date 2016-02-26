@@ -73,7 +73,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
 
 
         User u = feedRequests.get(position).getCreator();
-        String title = getItem(position);
+        String title = feedRequests.get(position).getTitle();
         Integer rating = feedRequests.get(position).getCreator().getRating().getRatingAsRequester();
         Bitmap profilePicture = u.getImage();
 
