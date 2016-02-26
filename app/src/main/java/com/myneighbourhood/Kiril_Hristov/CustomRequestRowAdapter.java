@@ -80,6 +80,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
         viewHolder.description.setText(feedRequests.get(position).getDescription());
         Integer rating = feedRequests.get(position).getCreator().getRating().getRatingAsRequester();
         viewHolder.rating.setText(rating.toString());
+
         viewHolder.contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
