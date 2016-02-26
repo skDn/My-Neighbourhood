@@ -33,6 +33,11 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
         this.users = users;
     }
 
+    @Override
+    public int getCount() {
+        return feedRequests.size();
+    }
+
     static class ViewHolderItem {
         ImageView userImage;
         TextView username;
@@ -46,6 +51,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
+
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -97,11 +103,11 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 System.out.println("clicking remove for : " + v.getTag());
-                feedRequests.remove(v.getTag());
+                feedRequests.remove((int) v.getTag());
                 CustomRequestRowAdapter.this.notifyDataSetChanged();
             }
         });
 
         return convertView;
-    }
+        }
 }

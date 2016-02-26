@@ -26,6 +26,7 @@ public class RequestFeedFragment extends Fragment {
     private ArrayList<Request> requestFeed;
     private ArrayList<User> users;
     private DBHelper dbHelper;
+    View v;
 
     public RequestFeedFragment() {
     }
@@ -37,7 +38,7 @@ public class RequestFeedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_request_feed, container, false);
+        v = inflater.inflate(R.layout.fragment_request_feed, container, false);
         mainActivity = (MainActivity) getActivity();
         dbHelper = mainActivity.getDB();
         RequestFeedListView = (ListView) v.findViewById(R.id.RequestFeedListView);
@@ -49,6 +50,7 @@ public class RequestFeedFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        System.out.println("V onResume sym");
         ProgressDialog progressDialog = new ProgressDialog(mainActivity, R.style.AppTheme);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
@@ -65,6 +67,7 @@ public class RequestFeedFragment extends Fragment {
 
         ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed);
         RequestFeedListView.setAdapter(requestFeedAdapter);
+        RequestFeedListView.setEmptyView(v.findViewById(R.id.noRequestsYet));
 
         RequestFeedListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
