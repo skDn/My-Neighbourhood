@@ -25,7 +25,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -87,6 +87,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_MESSAGES_TEXT = "text";
     private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
     private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
+    private static final String COLUMN_MESSAGES_FROM_USER_FK = "from_user_fk";
+    private static final String COLUMN_MESSAGES_TO_USER_FK = "to_user_fk";
 
     // Chat
     private static final String TABLE_CHATS = "CHATS";
@@ -178,7 +180,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_MESSAGES_TEXT + " TEXT, " +
                     COLUMN_MESSAGES_TIMESTAMP + " INTEGER, " +
                     COLUMN_MESSAGES_CHAT_FK + " INTEGER, " +
-                    "FOREIGN KEY (" + COLUMN_MESSAGES_CHAT_FK + ") REFERENCES " + TABLE_CHATS + "(" + COLUMN_CHATS_ID + ")" +
+                    COLUMN_MESSAGES_FROM_USER_FK + " INTEGER, " +
+                    COLUMN_MESSAGES_TO_USER_FK + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_MESSAGES_CHAT_FK + ") REFERENCES " + TABLE_CHATS + "(" + COLUMN_CHATS_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_MESSAGES_FROM_USER_FK + ") REFERENCES " + TABLE_USER + "(" + COLUMN_CHATS_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_MESSAGES_TO_USER_FK + ") REFERENCES " + TABLE_USER + "(" + COLUMN_CHATS_ID + ")" +
                     ");";
 
     private static final String createChats =
@@ -573,7 +579,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return toReturn;
     }
-    
+
     public void addChat(User user1, User user2, Request request) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHATS_REQUEST_ID, request.getId());
@@ -630,8 +636,14 @@ public class DBHelper extends SQLiteOpenHelper {
                         int msgId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGE_MESSAGE_ID));
                         int msgTime = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TIMESTAMP));
                         String msgText = cMsg.getString(cMsg.getColumnIndex(COLUMN_MESSAGES_TEXT));
+                        int fromUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_FROM_USER_FK));
+                        int toUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TO_USER_FK));
+
+
+                        User fromUser = getUser(fromUserId);
+                        User toUser = getUser(toUserId);
                         Date msgDate = new Date(msgTime);
-                        Message msg = new Message(msgId, msgDate, chat, msgText);
+                        Message msg = new Message(msgId, msgDate, chat, msgText, fromUser, toUser);
                         chat.addMsg(msg);
                     }
                 }
