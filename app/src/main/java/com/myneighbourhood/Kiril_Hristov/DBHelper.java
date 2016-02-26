@@ -549,7 +549,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String title = "";
         String text = "";
         long timestamp = 0;
-//        String picture;
+        Bitmap picture = null;
         ArrayList<News> toReturn = new ArrayList<>();
 
         String queryToExecute =
@@ -570,8 +570,12 @@ public class DBHelper extends SQLiteOpenHelper {
             if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
                 timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
             }
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_PICTURE)) != null) {
+                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
+                picture = BitmapFactory.decodeByteArray(p, 0, p.length);
+            }
 
-            toReturn.add(new News(newsId, userId, title, text, timestamp));
+            toReturn.add(new News(newsId, userId, title, text, timestamp, picture));
 
             c.moveToNext();
         }
@@ -651,5 +655,28 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         return chats;
+    }
+
+
+    public void addNews(News news) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NEWS_CREATED_BY_ID, news.getUserId());
+        values.put(COLUMN_NEWS_TITLE, news.getTitle());
+        values.put(COLUMN_NEWS_TEXT, news.getText());
+        values.put(COLUMN_NEWS_TIMESTAMP, news.getTimestamp());
+
+        if (news.getPicture() == null) {
+            values.put(COLUMN_NEWS_PICTURE, "");
+        } else {
+            Bitmap yourBitmap = null;
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            yourBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byte[] bArray = bos.toByteArray();
+            values.put(COLUMN_NEWS_PICTURE, bArray);
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_NEWS, null, values);
+        db.close();
     }
 }
