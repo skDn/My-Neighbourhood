@@ -429,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Request getRequest(long requestId) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String getRequest =
                 "SELECT * FROM " + TABLE_REQUEST +
                         " WHERE " + COLUMN_REQUEST_ID + " = " + requestId + ";";
@@ -446,7 +446,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private Request createRequestFromCursor(Cursor c) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         long creatorId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
         User creator = getUser(creatorId);
         System.out.println("CreateRequestFromUser user: " + creator + ", userId: " + creatorId);
@@ -568,9 +568,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Chat> getChatsForUser(User user) {
         ArrayList<Chat> chats = new ArrayList<>();
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
 
-        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_USER_1 + " = " + user.getId() + " OR " + COLUMN_CHATS_USER_2 + " = " + user.getId() + " ORDER_BY " + COLUMN_CHATS_LATEST_MSG_TIME + " DESC ";
+        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_USER_1 + " = " + user.getId() + " OR " + COLUMN_CHATS_USER_2 + " = " + user.getId() + " ORDER BY " + COLUMN_CHATS_LATEST_MSG_TIME + " DESC ";
 
         Cursor cChats = db.rawQuery(queryChats, null);
         if (cChats.getCount() > 0) {
@@ -593,8 +593,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
                 Chat chat = new Chat(chatId, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
-                String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER_BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
-
+                String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
+                if(!db.isOpen()){
+                    db = getReadableDatabase();
+                }
                 Cursor cMsg = db.rawQuery(queryMsg, null);
                 if (cMsg.getCount() > 0) {
                     cMsg.moveToFirst();
@@ -611,9 +613,11 @@ public class DBHelper extends SQLiteOpenHelper {
                         Date msgDate = new Date(msgTime);
                         Message msg = new Message(msgId, msgDate, chat, msgText, fromUser, toUser);
                         chat.addMsg(msg);
+                        cMsg.moveToNext();
                     }
                 }
                 chats.add(chat);
+                cChats.moveToNext();
             }
         }
         return chats;
