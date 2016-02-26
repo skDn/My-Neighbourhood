@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.myneighbourhood.Kiril_Hristov.DBHelper;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
@@ -47,19 +46,14 @@ public class MyNeighbourhoodActivity extends BaseActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         int idClicked = neighbours.get(position).getId();
-                        Intent myIntent = new Intent(getNeighbourhoodActivity(), ProfileActivity.class);
+                        Intent myIntent = new Intent(MyNeighbourhoodActivity.this, ProfileActivity.class);
                         myIntent.putExtra("userId", idClicked);
-                        myIntent.putExtra("tab", 1);
                         startActivity(myIntent);
-                        getNeighbourhoodActivity().finish();
+                        finish();
                     }
                 }
         );
 
-    }
-
-    private MyNeighbourhoodActivity getNeighbourhoodActivity() {
-        return this;
     }
 
 }

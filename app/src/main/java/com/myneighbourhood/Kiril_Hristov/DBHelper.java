@@ -398,7 +398,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLE_USER + ";";
         Cursor c = db.rawQuery(authenticate, null);
         c.moveToFirst();
-        if (c.getCount() > 0) {
+
+        while (!c.isAfterLast()) {
             id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
             if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
                 username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
@@ -422,10 +423,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
                 image = BitmapFactory.decodeByteArray(p, 0, p.length);
             }
-            c.close();
-            db.close();
             toReturn.add(new User(id, username, fName, lName, password, email, phone, image));
+            c.moveToNext();
         }
+
         c.close();
         db.close();
         return toReturn;
