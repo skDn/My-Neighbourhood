@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
@@ -18,6 +19,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
 
     private ArrayList<User> neighbours;
     ListView NeighbourListView;
+    SearchView searchNeighbours;
 
 
     @Override
@@ -26,6 +28,15 @@ public class MyNeighbourhoodActivity extends BaseActivity {
         setContentView(R.layout.activity_my_neighbourhood);
 
         NeighbourListView = (ListView) findViewById(R.id.MyNeighbourhoodListView);
+
+        searchNeighbours = (SearchView) findViewById(R.id.searchNeighbours);
+        searchNeighbours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchNeighbours.onActionViewExpanded();
+            }
+        });
+
 
         // getting users from the database
         neighbours = DB.getUsers();

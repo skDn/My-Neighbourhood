@@ -5,15 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="15sp"
+    android:padding="15dp"
     tools:context="com.myneighbourhood.Yordan_Yordanov.MyNeighbourhoodActivity">
 
     <fragment
         android:id="@+id/register_CMF_map"
         android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        android:layout_marginBottom="10sp" />
+        android:layout_height="200dp"
+        android:layout_marginBottom="10dp" />
+
+    <SearchView
+        android:id="@+id/searchNeighbours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d3d3d3"
+        android:queryHint="Search neighbours">
+
+    </SearchView>
 
     <ListView
         android:id="@+id/MyNeighbourhoodListView"
