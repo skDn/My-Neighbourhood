@@ -1,43 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-
+    android:orientation="vertical"
     tools:context="com.myneighbourhood.Yordan_Yordanov.MessagesActivity">
 
-    <LinearLayout
-        android:id="@+id/messages_layout"
+    <SearchView
+        android:id="@+id/messages_SV_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:background="@android:color/white"
+        android:gravity="left"
+        android:queryHint="@string/messages_search" />
 
-        <SearchView
-            android:id="@+id/messages_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:queryHint="@string/messages_search"
-            android:background="@android:color/white"/>
-
-        <ListView android:id="@+id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:paddingTop="@dimen/activity_horizontal_margin"
-            android:transcriptMode="alwaysScroll"
-            android:cacheColorHint="#00000000"
-            android:listSelector="@android:color/white"/>
+    <ListView
+        android:id="@+id/messages_LV_chats_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:listSelector="@android:color/white"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:transcriptMode="alwaysScroll" />
 
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

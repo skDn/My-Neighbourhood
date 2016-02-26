@@ -7,32 +7,36 @@ import java.util.Date;
  * Created by velin on 25/02/2016.
  */
 public class Chat {
-    int id;
+    long id;
     Request request;
     User user1;
     User user2;
-    Date latestMsg;
-    Date latestViewByUser1;
-    Date latestViewByUser2;
+    Date latestMsgDate;
+    Date latestViewByUser1Date;
+    Date latestViewByUser2Date;
     ArrayList<Message> messages;
 
-    public Chat(int id, Request request, User user1, User user2, Date latestMsg, Date latestViewByUser1, Date latestViewByUser2, ArrayList<Message> messages) {
+    public Chat(long id, Request request, User user1, User user2, Date latestMsgDate, Date latestViewByUser1Date, Date latestViewByUser2Date, ArrayList<Message> messages) {
         this.id = id;
         this.request = request;
         this.user1 = user1;
         this.user2 = user2;
-        this.latestMsg = latestMsg;
-        this.latestViewByUser1 = latestViewByUser1;
-        this.latestViewByUser2 = latestViewByUser2;
+        this.latestMsgDate = latestMsgDate;
+        this.latestViewByUser1Date = latestViewByUser1Date;
+        this.latestViewByUser2Date = latestViewByUser2Date;
         this.messages = messages;
     }
 
-
-    public Chat() {
+    public long getId() {
+        return id;
     }
 
-    public int getId() {
-        return id;
+    public User getOtherUser(User user) {
+        return user.getId() == user1.getId() ? user2 : user1;
+    }
+
+    public Date getLatestMsgDate() {
+        return latestMsgDate;
     }
 
     public void addMsg(Message msg) {
@@ -42,5 +46,9 @@ public class Chat {
             }
             messages.add(msg);
         }
+    }
+
+    public Request getRequest() {
+        return request;
     }
 }

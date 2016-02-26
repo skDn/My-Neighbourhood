@@ -25,7 +25,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 10;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -245,9 +245,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "SELECT * FROM " + TABLE_USER +
                         " WHERE " + COLUMN_USER_USERNAME + "=\"" + user.getUsername() + "\";";
         Cursor c = db.rawQuery(checkUnique, null);
-        c.moveToFirst();
         if (c.getCount() > 0) {
             // user with that username already exists
+            c.moveToFirst();
+            int userId = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
+            user.setId(userId);
             return null;
         }
 
@@ -439,7 +441,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void addRequest(Request request) {
+    public Request addRequestFromUI(Request request) {
+        // check if request exists already
         ContentValues values = new ContentValues();
         values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreatorId());
         values.put(COLUMN_REQUEST_TITLE, request.getTitle());
@@ -449,8 +452,16 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_REQUEST_EXPIRES, request.getExpires());
         values.put(COLUMN_REQUEST_ACCEPTED, request.getAccepted());
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_REQUEST, null, values);
+        long insertedId = db.insert(TABLE_REQUEST, null, values);
         db.close();
+
+
+        if (insertedId == -1) {
+            return null;
+        } else {
+            request.setId(insertedId);
+        }
+        return request;
     }
 
     public Request getRequest(int requestId) {
@@ -584,7 +595,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
 
-    public void addChat(User user1, User user2, Request request) {
+    public Chat addChat(User user1, User user2, Request request) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHATS_REQUEST_ID, request.getId());
         values.put(COLUMN_CHATS_USER_1, user1.getId());
@@ -593,7 +604,13 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_1, System.currentTimeMillis());
         values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, System.currentTimeMillis());
 
-        getWritableDatabase().insert(TABLE_CHATS, null, values);
+        long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
+        if (insertedChatId == -1) {
+            return null;
+        } else {
+            Chat chat = new Chat(insertedChatId, request, user1, user2, null, new Date(), new Date(), new ArrayList<Message>());
+            return chat;
+        }
     }
 
     public void addMessage(Chat chat, Message msg) {
@@ -625,12 +642,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 Request request = getRequest(requestId);
                 User user1 = getUser(userId1);
                 User user2 = getUser(userId2);
-                Date latestMsg = new Date(latestMsgTime);
-                Date latestViewByUser1 = new Date(latestViewByUser1Time);
-                Date latestViewByUser2 = new Date(latestViewByUser2Time);
+                Date latestMsgDate = new Date(latestMsgTime);
+                Date latestViewByUser1Date = new Date(latestViewByUser1Time);
+                Date latestViewByUser2Date = new Date(latestViewByUser2Time);
 
 
-                Chat chat = new Chat(chatId, request, user1, user2, latestMsg, latestViewByUser1, latestViewByUser2, null);
+                Chat chat = new Chat(chatId, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
                 String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER_BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
 
                 Cursor cMsg = db.rawQuery(queryMsg, null);

@@ -11,8 +11,12 @@ import android.widget.Toast;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Address;
+import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
+
+import java.util.Calendar;
 
 public class LoginActivity extends BaseActivity {
 
@@ -29,8 +33,16 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null);
+        User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", null);
+        DB.registerUser(admin, new Address("100 Gibson Street", 55.8734611, -4.2890117));
+        DB.registerUser(vili, new Address("100 Gibson Street", 55.8734611, -4.2890117));
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, 10);
+        Request adminRequest = new Request(admin.getId(), "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
+        adminRequest = DB.addRequestFromUI(adminRequest);
+        Chat chat = DB.addChat(admin, vili, adminRequest);
 
-        DB.registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
 
         // bind to UI elements
         mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);

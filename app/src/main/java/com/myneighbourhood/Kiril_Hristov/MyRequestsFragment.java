@@ -70,8 +70,7 @@ public class MyRequestsFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        int idClicked = myRequests.get(position).getId();
-                        System.out.println("KLIKASH NA ROW " + position);
+                        long idClicked = myRequests.get(position).getId();
                         Intent myIntent = new Intent(mainActivity, ViewRequestActivity.class);
                         myIntent.putExtra("requestId", idClicked);
                         myIntent.putExtra("tab", 1);

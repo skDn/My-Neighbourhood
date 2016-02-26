@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -58,7 +57,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 else{
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.HOUR, hourSelected);
-                    DB.addRequest(new Request(user.getId(), title, description, numberOfPeopleSelected, cal.getTimeInMillis()));
+                    DB.addRequestFromUI(new Request(user.getId(), title, description, numberOfPeopleSelected, cal.getTimeInMillis()));
                     onBackPressed();
                 }
             }

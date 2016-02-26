@@ -65,8 +65,7 @@ public class RequestFeedFragment extends Fragment{
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        int idClicked = requestFeed.get(position).getId();
-                        System.out.println("KLIKASH NA ROW " + position);
+                        long idClicked = requestFeed.get(position).getId();
                         Intent myIntent = new Intent(mainActivity, ViewRequestActivity.class);
                         myIntent.putExtra("requestId", idClicked);
                         myIntent.putExtra("tab", 0);
