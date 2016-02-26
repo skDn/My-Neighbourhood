@@ -6,7 +6,17 @@
     android:gravity="center"
     android:descendantFocusability="blocksDescendants">
 
+    <TextView
+        android:id="@+id/usernameCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Created by" />
+
     <LinearLayout
+        android:layout_below="@+id/usernameCaption"
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,14 +38,7 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/usernameCaption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Created by:" />
-            <TextView
-
                 android:id="@+id/RowRequestUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,6 +93,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/topLayout"
         android:orientation="vertical">
+
+        <include layout="@layout/separator_grey" />
+
         <TextView
             android:id="@+id/RowRequestTitle"
             android:layout_width="wrap_content"
@@ -107,8 +113,9 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
 
@@ -121,7 +128,7 @@
             android:layout_weight="0.5"
             android:layout_height="match_parent"
             android:text="Contact"
-            android:background="#1B5E20"/>
+            android:background="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/RowRequestHide"
@@ -130,7 +137,7 @@
             android:layout_height="match_parent"
             android:text="Hide"
             android:layout_marginLeft="20dp"
-            android:background="#B71C1C" />
+            android:background="@color/colorPrimaryDark" />
 
     </LinearLayout>
 </RelativeLayout>
