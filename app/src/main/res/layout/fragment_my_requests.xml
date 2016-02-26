@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.myneighbourhood.Kiril_Hristov.MyRequestsFragment"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackground"
+    android:paddingTop="5dp">
 
 
     <FrameLayout
@@ -11,16 +12,19 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addRequestActionButton"
+            android:tint="@android:color/white"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
             android:src="@android:drawable/ic_input_add" />
 
         <ListView
             android:id="@+id/myRequestsListView"
+            android:background="#F2F2F2"
+            android:elevation="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="5dp"
-            android:layout_marginTop="10dp"/>
+            android:dividerHeight="10dp"
+            android:divider="@color/colorBackground"/>
 
         <TextView
             android:id="@+id/noMyRequestsYet"

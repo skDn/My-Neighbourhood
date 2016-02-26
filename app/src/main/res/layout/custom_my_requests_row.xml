@@ -22,27 +22,30 @@
         android:text="description"/>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/rowEditRequest"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="Edit"
             android:background="#1B5E20"/>
 
         <Button
             android:id="@+id/rowDeleteRequest"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="Delete"
             android:background="#B71C1C"
             android:layout_toRightOf="@+id/rowEditRequest"
             android:layout_marginLeft="20dp"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
