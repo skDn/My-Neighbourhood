@@ -464,7 +464,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return request;
     }
 
-    
 
     public Request getRequest(User creator, String title) {
         SQLiteDatabase db = getWritableDatabase();
@@ -479,13 +478,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Request getRequest(int requestId) {
-        int creatorId;
-        String title = "";
-        String description = "";
-        int peopleNeeded;
-        long timestamp = 0;
-        long expires = 0;
-        int accepted;
         SQLiteDatabase db = getWritableDatabase();
         String getRequest =
                 "SELECT * FROM " + TABLE_REQUEST +
