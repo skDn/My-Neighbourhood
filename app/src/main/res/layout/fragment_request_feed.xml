@@ -2,14 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.myneighbourhood.Kiril_Hristov.RequestFeedFragment">
+    tools:context="com.myneighbourhood.Kiril_Hristov.RequestFeedFragment"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/colorBackground">
 
 
     <ListView
+        android:background="#F2F2F2"
+        android:elevation="5dp"
         android:id="@+id/RequestFeedListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="5dp"
-        android:layout_marginTop="10dp"/>
+        android:dividerHeight="10dp"
+        android:divider="@color/colorBackground"/>
 
 </LinearLayout>

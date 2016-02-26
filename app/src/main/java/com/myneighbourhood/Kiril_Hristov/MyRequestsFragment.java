@@ -62,15 +62,16 @@ public class MyRequestsFragment extends Fragment {
             titles[i] = myRequests.get(i).getTitle();
         }
 
-        ArrayAdapter<String> requestFeedAdapter =
+        ArrayAdapter<String> myRequestAdapter =
                 new CustomMyRequestRowAdapter(mainActivity, titles, myRequests);
-        myRequestsListView.setAdapter(requestFeedAdapter);
+        myRequestsListView.setAdapter(myRequestAdapter);
 
         myRequestsListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         int idClicked = myRequests.get(position).getId();
+                        System.out.println("KLIKASH NA ROW " + position);
                         Intent myIntent = new Intent(mainActivity, ViewRequestActivity.class);
                         myIntent.putExtra("requestId", idClicked);
                         myIntent.putExtra("tab", 1);

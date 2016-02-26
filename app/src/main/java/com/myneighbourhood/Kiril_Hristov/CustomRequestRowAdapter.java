@@ -13,12 +13,13 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Request;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Kiril on 19/02/16.
  */
 
-public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+public class CustomRequestRowAdapter extends ArrayAdapter<String>{
 
     ArrayList<Request> feedRequests;
 
@@ -66,16 +67,20 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         viewHolder.title.setText(title);
         viewHolder.description.setText(feedRequests.get(position).getDescription());
 
-        return convertView;
-    }
+        viewHolder.contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("KLIKASH NA BUTON CONTACT");
+            }
+        });
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.RowRequestContact:
-                break;
-            case R.id.RowRequestHide:
-                break;
-        }
+        viewHolder.hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("KLIKASH NA BUTON HIDE");
+            }
+        });
+
+        return convertView;
     }
 }

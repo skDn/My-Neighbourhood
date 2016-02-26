@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/RowRequestTitle"
@@ -14,8 +15,34 @@
         android:textSize="18sp"/>
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/RowRequestDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="description"/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/rowEditRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:background="#0F0"/>
+
+        <Button
+            android:id="@+id/rowDeleteRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:background="#F00"
+            android:layout_toRightOf="@+id/rowEditRequest"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+
 </LinearLayout>
