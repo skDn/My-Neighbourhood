@@ -27,10 +27,10 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
     }
 
     static class ViewHolderItem{
-        ImageView userImage;
+        ImageView newsImage;
         TextView username;
-        TextView title;
-        TextView text;
+        TextView newsTitle;
+        TextView newsText;
     }
 
     @Override
@@ -42,10 +42,10 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
             convertView = inflater.inflate(R.layout.custom_news_row, parent, false);
             viewHolder = new ViewHolderItem();
 
-            viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
-            viewHolder.username  = (TextView) convertView.findViewById(R.id.RowRequestUsername);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
-            viewHolder.text = (TextView) convertView.findViewById(R.id.RowRequestDescription);
+            viewHolder.newsImage = (ImageView) convertView.findViewById(R.id.RowNewsImage);
+            viewHolder.username  = (TextView) convertView.findViewById(R.id.RowNewsUsername);
+            viewHolder.newsTitle = (TextView) convertView.findViewById(R.id.RowNewsTitle);
+            viewHolder.newsText = (TextView) convertView.findViewById(R.id.RowNewsDescription);
 
             convertView.setTag(viewHolder);
         }else{
@@ -53,9 +53,9 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
         }
 
 
-        String title = getItem(position);
-        viewHolder.title.setText(title);
-        viewHolder.text.setText(newsFeed.get(position).getText());
+//        String title = getItem(position);
+        viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());
+        viewHolder.newsText.setText(newsFeed.get(position).getText());
 
         return convertView;
     }

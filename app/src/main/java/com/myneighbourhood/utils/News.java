@@ -1,5 +1,7 @@
 package com.myneighbourhood.utils;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by skDn on 23/02/2016.
  */
@@ -9,15 +11,28 @@ public class News {
     private String title;
     private String text;
     private long timestamp;
-//    private String picture;
+    private Bitmap picture;
 
-    public News(int newsId, int userId, String title, String text, long timestamp) {
+    public News(int newsId, int userId, String title, String text, long timestamp, Bitmap picture) {
         this.newsId = newsId;
         this.userId = userId;
         this.title = title;
         this.text = text;
         this.timestamp = timestamp;
-//        this.picture = picture;
+        this.picture = picture;
+    }
+
+    public News(int userId, String title, String text, long timestamp, Bitmap picture) {
+        this.userId = userId;
+        this.title = title;
+        this.text = text;
+        this.timestamp = timestamp;
+        this.picture = picture;
+    }
+
+
+    public Bitmap getPicture() {
+        return picture;
     }
 
     public int getNewsId() {
