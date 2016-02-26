@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by yordanyordanov on 25/02/2016.
  */
-public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String> implements View.OnClickListener {
+public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
 
     private ArrayList<User> neighbours;
 
@@ -55,11 +55,4 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String> implemen
 
         return convertView;
     }
-
-    @Override
-    public void onClick(View v) {
-        //SHOW USER
-    }
-
-
 }
