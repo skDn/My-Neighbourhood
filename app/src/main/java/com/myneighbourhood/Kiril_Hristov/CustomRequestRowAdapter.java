@@ -25,12 +25,10 @@ import java.util.ArrayList;
 public class CustomRequestRowAdapter extends ArrayAdapter<String> {
 
     ArrayList<Request> feedRequests;
-    ArrayList<User> users;
 
     public CustomRequestRowAdapter(Context context, String[] titles, ArrayList<Request> feedRequest) {
         super(context, R.layout.custom_request_row, titles);
         this.feedRequests = feedRequest;
-        this.users = users;
     }
 
     @Override

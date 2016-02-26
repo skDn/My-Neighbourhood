@@ -27,7 +27,7 @@ public class MyRequestsFragment extends Fragment {
     ListView myRequestsListView;
     FloatingActionButton addRequestActionButton;
     private ArrayList<Request> myRequests;
-
+    View v;
     public MyRequestsFragment(){}
 
     public static MyRequestsFragment newInstance(){
@@ -37,7 +37,7 @@ public class MyRequestsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_my_requests, container, false);
+        v = inflater.inflate(R.layout.fragment_my_requests, container, false);
         mainActivity = (MainActivity) getActivity();
         myRequestsListView = (ListView) v.findViewById(R.id.myRequestsListView);
         addRequestActionButton = (FloatingActionButton) v.findViewById(R.id.addRequestActionButton);
@@ -65,7 +65,7 @@ public class MyRequestsFragment extends Fragment {
         ArrayAdapter<String> myRequestAdapter =
                 new CustomMyRequestRowAdapter(mainActivity, titles, myRequests);
         myRequestsListView.setAdapter(myRequestAdapter);
-
+        myRequestsListView.setEmptyView(v.findViewById(R.id.noMyRequestsYet));
         myRequestsListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override

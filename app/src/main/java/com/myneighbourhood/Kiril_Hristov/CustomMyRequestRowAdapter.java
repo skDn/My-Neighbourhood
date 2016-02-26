@@ -25,6 +25,11 @@ public class CustomMyRequestRowAdapter extends ArrayAdapter<String>{
         this.feedRequests = feedRequest;
     }
 
+    @Override
+    public int getCount() {
+        return feedRequests.size();
+    }
+
     static class ViewHolderItem{
         TextView title;
         TextView description;

@@ -24,7 +24,6 @@ public class RequestFeedFragment extends Fragment {
     MainActivity mainActivity;
     ListView RequestFeedListView;
     private ArrayList<Request> requestFeed;
-    private ArrayList<User> users;
     private DBHelper dbHelper;
     View v;
 
@@ -56,8 +55,6 @@ public class RequestFeedFragment extends Fragment {
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
         requestFeed = dbHelper.getRequests(mainActivity.getUser().getId(), "feed");
-        System.out.println("requestsFeed : " + requestFeed.size() + ", currUserId: " + mainActivity.getUser().getId());
-        users = dbHelper.getUsers();
         progressDialog.dismiss();
 
         String[] titles = new String[requestFeed.size()];
@@ -67,7 +64,7 @@ public class RequestFeedFragment extends Fragment {
 
         ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed);
         RequestFeedListView.setAdapter(requestFeedAdapter);
-        RequestFeedListView.setEmptyView(v.findViewById(R.id.noRequestsYet));
+        RequestFeedListView.setEmptyView(v.findViewById(R.id.noFeedRequestsYet));
 
         RequestFeedListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
