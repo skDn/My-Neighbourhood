@@ -696,4 +696,42 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NEWS, null, values);
         db.close();
     }
+
+    public News getNews(int id) {
+        int newsId;
+        int userId;
+        String title = "";
+        String text = "";
+        long timestamp = 0;
+        Bitmap picture = null;
+
+        String queryToExecute =
+                "SELECT * FROM " + TABLE_NEWS + " WHERE " + COLUMN_NEWS_ID + "=\"" + id + "\" " + ";";
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor c = db.rawQuery(queryToExecute, null);
+        c.moveToFirst();
+        if (c.getCount() > 0) {
+            newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
+            userId = c.getInt(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
+                title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
+            }
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null) {
+                text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
+            }
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
+                timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
+            }
+            if (c.getString(c.getColumnIndex(COLUMN_NEWS_PICTURE)) != null) {
+                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
+                picture = BitmapFactory.decodeByteArray(p, 0, p.length);
+            }
+
+            return new News(newsId, userId, title, text, timestamp, picture);
+        }
+        c.close();
+        db.close();
+        return null;
+    }
 }

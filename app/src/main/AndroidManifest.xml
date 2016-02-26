@@ -54,6 +54,7 @@
         <activity android:name=".Yordan_Yordanov.MessagesActivity" />
         <activity android:name=".Velin_Kerkov.SMSAuthorisationActivity" />
         <activity android:name=".Yordan_Yordanov.MyNeighbourhoodActivity" />
+        <activity android:name=".Yordan_Yordanov.NewsActivity" />
         <activity android:name=".Kiril_Hristov.AddRequestActivity" />
         <activity android:name=".Kiril_Hristov.ViewRequestActivity" />
     </application>
