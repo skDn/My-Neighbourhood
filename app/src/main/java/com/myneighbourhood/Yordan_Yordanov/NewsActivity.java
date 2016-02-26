@@ -32,6 +32,7 @@ public class NewsActivity extends BaseActivity {
     TextView userName;
 
     ImageView newsImage;
+    TextView newsTitle;
     TextView newsDescription;
 
 
@@ -42,7 +43,7 @@ public class NewsActivity extends BaseActivity {
 
         Intent i = getIntent();
         newsID = i.getIntExtra("newsId", 0);
-        tab = i.getIntExtra("tab",0);
+        tab = i.getIntExtra("tab", 0);
 
         // getting news and user from the database
         currentNews = DB.getNews(newsID);
@@ -60,10 +61,12 @@ public class NewsActivity extends BaseActivity {
 
 //        newsImage = (ImageView) findViewById(R.id.newsCoverImage);
         newsDescription = (TextView) findViewById(R.id.newsDescriptionText);
+        newsTitle = (TextView) findViewById(R.id.newsDescriptionTitle);
 
         userName.setText(createdByUser.getUsername());
 
         newsDescription.setText(currentNews.getText());
+        newsTitle.setText(currentNews.getTitle());
     }
 
     @Override

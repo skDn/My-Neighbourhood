@@ -77,19 +77,19 @@ public class NewsFeedFragment extends Fragment {
                 new CustomNewsRowAdapter(mainActivity, titles, newsFeed);
         NewsFeedListView.setAdapter(requestFeedAdapter);
 
-//        NewsFeedListView.setOnItemClickListener(
-//                new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        int idClicked = newsFeed.get(position).getNewsId();
-//                        Intent myIntent = new Intent(mainActivity, ViewRequestActivity.class);
-//                        myIntent.putExtra("newsId", idClicked);
-//                        myIntent.putExtra("tab", 1);
-//                        startActivity(myIntent);
-//                        mainActivity.finish();
-//                    }
-//                }
-//        );
+        NewsFeedListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        int idClicked = newsFeed.get(position).getNewsId();
+                        Intent myIntent = new Intent(mainActivity, NewsActivity.class);
+                        myIntent.putExtra("newsId", idClicked);
+                        myIntent.putExtra("tab", 2);
+                        startActivity(myIntent);
+                        mainActivity.finish();
+                    }
+                }
+        );
         addNewsActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
