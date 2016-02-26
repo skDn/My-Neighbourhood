@@ -27,14 +27,15 @@ public class User {
         this.image = image;
     }
 
+    // from db
     public User(long id, String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
         this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
+        this.username = username != null ? username : "";
+        this.firstName = firstName != null ? firstName : "";
+        this.lastName = lastName != null ? lastName : "";
+        this.password = password != null ? password : "";
+        this.email = email != null ? password : "";
+        this.phone = phone != null ? password : "";
         this.image = image;
     }
 

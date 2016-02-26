@@ -5,13 +5,13 @@ package com.myneighbourhood.utils;
  */
 public class Address {
 
-    private int userId;
+    private User user;
     private String address;
     private double rectX;
     private double rextY;
 
-    public Address(int userId, String address, double rectX, double rectY){
-        this.userId = userId;
+    public Address(User user, String address, double rectX, double rectY){
+        this.user= user;
         this.address = address;
         this.rectX = rectX;
         this.rextY = rectY;
@@ -21,14 +21,6 @@ public class Address {
         this.address = address;
         this.rectX = rectX;
         this.rextY = rectY;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getAddress() {

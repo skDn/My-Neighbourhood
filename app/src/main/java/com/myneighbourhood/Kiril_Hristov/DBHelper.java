@@ -12,6 +12,7 @@ import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Message;
 import com.myneighbourhood.utils.News;
+import com.myneighbourhood.utils.Rating;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
@@ -25,7 +26,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 14;
+    private static final int DB_VERSION = 15;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -270,15 +271,9 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         long insertedUserId = db.insert(TABLE_USER, null, values);
-        System.out.println("registering new User: " + insertedUserId);
+        User resultUser = new User(insertedUserId, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getEmail(), user.getPhone(), user.getImage());
 
-//        long id = 0;
-//        c = db.rawQuery(checkUnique, null);
-//        c.moveToFirst();
-//        if (c.getCount() > 0) {
-//            id = c.getLong(c.getColumnIndex(COLUMN_USER_ID));
-//        }
-
+        // log address
         ContentValues addressValues = new ContentValues();
         addressValues.put(COLUMN_ADDRESS_USER_ID, insertedUserId);
         addressValues.put(COLUMN_ADDRESS_STREET, address.getAddress());
@@ -286,26 +281,25 @@ public class DBHelper extends SQLiteOpenHelper {
         addressValues.put(COLUMN_ADDRESS_RECT_Y, address.getRextY());
         db.insert(TABLE_ADDRESS, null, addressValues);
 
+        // create default rating
+        Rating defaultRating = new Rating(resultUser, 0, 0, 0);
         ContentValues ratingValues = new ContentValues();
-        ratingValues.put(COLUMN_RATING_USER_ID, insertedUserId);
-        ratingValues.put(COLUMN_RATING_AS_REQUESTER, 0);
-        ratingValues.put(COLUMN_RATING_AS_APPLICANT, 0);
-        ratingValues.put(COLUMN_RATING_ENDORCEDBY, 0);
+        ratingValues.put(COLUMN_RATING_USER_ID, defaultRating.getUser().getId());
+        ratingValues.put(COLUMN_RATING_AS_REQUESTER, defaultRating.getRatingAsRequester());
+        ratingValues.put(COLUMN_RATING_AS_APPLICANT, defaultRating.getRatingAsApplicant());
+        ratingValues.put(COLUMN_RATING_ENDORCEDBY, defaultRating.getEndorsedBy());
         db.insert(TABLE_RATING, null, ratingValues);
 
         c.close();
         db.close();
-        return new User(insertedUserId, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getEmail(), user.getPhone(), user.getImage());
+
+        resultUser.setRating(defaultRating);
+        resultUser.setAddress(address);
+
+        return resultUser;
     }
 
     public User getUser(String username, String password) {
-        int id;
-        String email = "";
-        String phone = "";
-        String fName = "";
-        String lName = "";
-        Bitmap image = null;
-
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
@@ -313,31 +307,9 @@ public class DBHelper extends SQLiteOpenHelper {
                         " AND " + COLUMN_USER_PASSWORD + "=\"" + password + "\" " + ";";
 
         Cursor c = db.rawQuery(authenticate, null);
-        c.moveToFirst();
         if (c.getCount() > 0) {
-            id = c.getInt(c.getColumnIndex(COLUMN_USER_ID));
-            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
-                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
-                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
-                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
-                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
-            }
-
-            if (c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE)) != null) {
-                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
-                image = BitmapFactory.decodeByteArray(p, 0, p.length);
-            }
-
-            c.close();
-            db.close();
-
-            return new User(id, username, fName, lName, password, email, phone, image);
+            c.moveToFirst();
+            return createUserFromCursor(c);
         }
         c.close();
         db.close();
@@ -345,59 +317,63 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public User getUser(long userId) {
-        String username = "";
-        String password = "";
-        String fName = "";
-        String lName = "";
-        String email = "";
-        String phone = "";
-        Bitmap image = null;
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
                         " WHERE " + COLUMN_USER_ID + " = " + userId + ";";
         Cursor c = db.rawQuery(authenticate, null);
-        c.moveToFirst();
-        if (c.getCount() > 0) {
-            if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
-                username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
-                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
-                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null) {
-                password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
-                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
-                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
-            }
 
-            byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
-            image = BitmapFactory.decodeByteArray(p, 0, p.length);
-            c.close();
-            db.close();
-            return new User(userId, username, fName, lName, password, email, phone, image);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            return createUserFromCursor(c);
         }
         c.close();
         db.close();
         return null;
     }
 
+    private User createUserFromCursor(Cursor c) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        long userId = c.getLong(c.getColumnIndex(COLUMN_USER_ID));
+        String username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
+        String fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
+        String lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
+        String password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
+        String email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
+        String phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
+
+        byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
+        Bitmap image = BitmapFactory.decodeByteArray(p, 0, p.length);
+
+        User user = new User(userId, username, fName, lName, password, email, phone, image);
+
+        String ratingQuery = "SELECT * FROM " + TABLE_RATING + " WHERE " + COLUMN_RATING_USER_ID + " = " + userId;
+        String addressQuery = "SELECT * FROM " + TABLE_ADDRESS + " WHERE " + COLUMN_RATING_USER_ID + " = " + userId;
+
+        Cursor ratingC = db.rawQuery(ratingQuery, null);
+        ratingC.moveToFirst();
+        int ratingAsRequester = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_AS_REQUESTER));
+        int ratingAsApplicatant = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_AS_APPLICANT));
+        int endorsedBy = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_ENDORCEDBY));
+        Rating userRating = new Rating(user, ratingAsRequester, ratingAsApplicatant, endorsedBy);
+
+        Cursor addressC = db.rawQuery(addressQuery, null);
+        addressC.moveToFirst();
+        String street = addressC.getString(addressC.getColumnIndex(COLUMN_ADDRESS_STREET));
+        double rectX = addressC.getDouble(addressC.getColumnIndex(COLUMN_ADDRESS_RECT_X));
+        double rectY = addressC.getDouble(addressC.getColumnIndex(COLUMN_ADDRESS_RECT_Y));
+        Address address = new Address(user, street, rectX, rectY);
+
+        user.setAddress(address);
+        user.setRating(userRating);
+
+
+        db.close();
+        return user;
+    }
+
     public ArrayList<User> getUsers() {
-        long id;
-        String username = "";
-        String password = "";
-        String fName = "";
-        String lName = "";
-        String email = "";
-        String phone = "";
-        Bitmap image = null;
         ArrayList<User> toReturn = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         String authenticate =
@@ -406,30 +382,8 @@ public class DBHelper extends SQLiteOpenHelper {
         c.moveToFirst();
 
         while (!c.isAfterLast()) {
-            id = c.getLong(c.getColumnIndex(COLUMN_USER_ID));
-            if (c.getString(c.getColumnIndex(COLUMN_USER_USERNAME)) != null) {
-                username = c.getString(c.getColumnIndex(COLUMN_USER_USERNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME)) != null) {
-                fName = c.getString(c.getColumnIndex(COLUMN_USER_FIRSTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME)) != null) {
-                lName = c.getString(c.getColumnIndex(COLUMN_USER_LASTNAME));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD)) != null) {
-                password = c.getString(c.getColumnIndex(COLUMN_USER_PASSWORD));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_EMAIL)) != null) {
-                email = c.getString(c.getColumnIndex(COLUMN_USER_EMAIL));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_USER_PHONE)) != null) {
-                phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
-            }
-            if (c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE)) != null) {
-                byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
-                image = BitmapFactory.decodeByteArray(p, 0, p.length);
-            }
-            toReturn.add(new User(id, username, fName, lName, password, email, phone, image));
+            User u = createUserFromCursor(c);
+            toReturn.add(u);
             c.moveToNext();
         }
 
@@ -535,22 +489,6 @@ public class DBHelper extends SQLiteOpenHelper {
             c.moveToFirst();
 
             Request r = createRequestFromCursor(c);
-//            requestId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ID));
-//            creatorId = c.getInt(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
-//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
-//                title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
-//            }
-//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION)) != null) {
-//                description = c.getString(c.getColumnIndex(COLUMN_REQUEST_DESCRIPTION));
-//            }
-//            peopleNeeded = c.getInt(c.getColumnIndex(COLUMN_REQUEST_PEOPLE_NEEDED));
-//            if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP)) != null) {
-//                timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
-//            }
-//            expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
-//
-//            accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
-
             toReturn.add(r);
 
             c.moveToNext();
@@ -745,7 +683,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public void deleteDB(){
+    public void deleteDB() {
 
     }
 }

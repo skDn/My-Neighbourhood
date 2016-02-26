@@ -5,24 +5,20 @@ package com.myneighbourhood.utils;
  */
 public class Rating {
 
-    private int userId;
+    private User user;
     private int ratingAsRequester;
     private int ratingAsApplicant;
     private int endorsedBy;
 
-    public Rating (int userId, int ratingAsRequester, int ratingAsApplicant, int endorsedBy){
-        this.userId = userId;
+    public Rating (User user, int ratingAsRequester, int ratingAsApplicant, int endorsedBy){
+        this.user = user;
         this.ratingAsRequester = ratingAsRequester;
         this.ratingAsApplicant = ratingAsApplicant;
         this.endorsedBy = endorsedBy;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public User getUser() {
+        return user;
     }
 
     public int getRatingAsRequester() {
