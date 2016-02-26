@@ -438,6 +438,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (c.getCount() > 0) {
             c.moveToFirst();
             return createRequestFromCursor(c);
+
         }
         c.close();
         db.close();
@@ -462,7 +463,6 @@ public class DBHelper extends SQLiteOpenHelper {
         long timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
         long expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
         int accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
-        c.close();
         db.close();
         return new Request(requestId, creator, title, description, peopleNeeded, timestamp, expires, accepted);
     }
@@ -485,9 +485,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
+        c.moveToFirst();
         while (!c.isAfterLast()) {
-            c.moveToFirst();
-
             Request r = createRequestFromCursor(c);
             toReturn.add(r);
 

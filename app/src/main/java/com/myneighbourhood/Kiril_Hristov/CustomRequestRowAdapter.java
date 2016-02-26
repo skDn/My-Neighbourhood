@@ -44,7 +44,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
 
         if (convertView == null) {
@@ -59,6 +59,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
             viewHolder.contact = (Button) convertView.findViewById(R.id.RowRequestContact);
             viewHolder.hide = (Button) convertView.findViewById(R.id.RowRequestHide);
+            viewHolder.hide.setTag(position);
 
 
             convertView.setTag(viewHolder);
@@ -68,17 +69,19 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
 
 
         User u = feedRequests.get(position).getCreator();
-        System.out.println("CustomRequestRowAdaptor: user: " + u + ", numOfrequest : " + feedRequests.size());
+        String title = getItem(position);
+        Integer rating = feedRequests.get(position).getCreator().getRating().getRatingAsRequester();
         Bitmap profilePicture = u.getImage();
+
+
         if (profilePicture != null) {
             viewHolder.userImage.setImageBitmap(profilePicture);
-        } else viewHolder.userImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
-
+        } else {
+            viewHolder.userImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
+        }
         viewHolder.username.setText(feedRequests.get(position).getCreator().getUsername());
-        String title = getItem(position);
         viewHolder.title.setText(title);
         viewHolder.description.setText(feedRequests.get(position).getDescription());
-        Integer rating = feedRequests.get(position).getCreator().getRating().getRatingAsRequester();
         viewHolder.rating.setText(rating.toString());
 
         viewHolder.contact.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +96,9 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
         viewHolder.hide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                feedRequests.remove(position);
+                System.out.println("clicking remove for : " + v.getTag());
+                feedRequests.remove(v.getTag());
+                CustomRequestRowAdapter.this.notifyDataSetChanged();
             }
         });
 
