@@ -14,6 +14,8 @@ public class User {
     private String phone;
     private String email;
 
+    private Rating rating;
+    private Address address;
 
     public User(String username, String firstName, String lastName, String password, String email, String phone, Bitmap image) {
         this.username = username;
@@ -100,4 +102,19 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

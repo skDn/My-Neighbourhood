@@ -2,6 +2,7 @@ package com.myneighbourhood.Kiril_Hristov;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.Request;
+import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class RequestFeedFragment extends Fragment{
     MainActivity mainActivity;
     ListView RequestFeedListView;
     private ArrayList<Request> requestFeed;
+    private ArrayList<User> users;
     private DBHelper dbHelper;
 
     public RequestFeedFragment(){}
@@ -51,6 +54,7 @@ public class RequestFeedFragment extends Fragment{
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
         requestFeed = dbHelper.getRequests(mainActivity.getUser().getId(), "feed");
+        users = dbHelper.getUsers();
         progressDialog.dismiss();
 
         String[] titles = new String[requestFeed.size()];
@@ -58,7 +62,7 @@ public class RequestFeedFragment extends Fragment{
             titles[i] = requestFeed.get(i).getTitle();
         }
 
-        ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed);
+        ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed, users);
         RequestFeedListView.setAdapter(requestFeedAdapter);
 
         RequestFeedListView.setOnItemClickListener(
