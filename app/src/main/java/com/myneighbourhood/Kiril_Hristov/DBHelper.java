@@ -85,7 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Messages table
     private static final String TABLE_MESSAGE = "Message";
-    private static final String COLUMN_MESSAGE_MESSAGE_ID = "messageId";
+    private static final String COLUMN_MESSAGE_ID = "messageId";
     private static final String COLUMN_MESSAGES_TEXT = "text";
     private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
     private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
@@ -179,7 +179,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String createMessage =
             "CREATE TABLE " + TABLE_MESSAGE + "(" +
-                    COLUMN_MESSAGE_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_MESSAGES_TEXT + " TEXT, " +
                     COLUMN_MESSAGES_TIMESTAMP + " INTEGER, " +
                     COLUMN_MESSAGES_CHAT_FK + " INTEGER, " +
@@ -567,7 +567,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (insertedChatId == -1) {
             return null;
         } else {
-            Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date(), new ArrayList<Message>());
+            Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date());
             return chat;
         }
     }
@@ -608,37 +608,36 @@ public class DBHelper extends SQLiteOpenHelper {
                 Date latestViewByUser2Date = new Date(latestViewByUser2Time);
 
 
-                Chat chat = new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
-                String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
-                if (!db.isOpen()) {
-                    db = getReadableDatabase();
-                }
-                Cursor cMsg = db.rawQuery(queryMsg, null);
-                if (cMsg.getCount() > 0) {
-                    cMsg.moveToFirst();
-                    while (!cMsg.isAfterLast()) {
-                        int msgId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGE_MESSAGE_ID));
-                        int msgTime = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TIMESTAMP));
-                        String msgText = cMsg.getString(cMsg.getColumnIndex(COLUMN_MESSAGES_TEXT));
-                        int fromUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_FROM_USER_FK));
-                        int toUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TO_USER_FK));
-
-
-                        User fromUser = getUser(fromUserId);
-                        User toUser = getUser(toUserId);
-                        Date msgDate = new Date(msgTime);
-                        Message msg = new Message(msgId, msgDate, chat, msgText, fromUser, toUser);
-                        chat.addMsg(msg);
-                        cMsg.moveToNext();
-                    }
-                }
+                Chat chat = new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date);
+//                String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
+//                if (!db.isOpen()) {
+//                    db = getReadableDatabase();
+//                }
+//                Cursor cMsg = db.rawQuery(queryMsg, null);
+//                if (cMsg.getCount() > 0) {
+//                    cMsg.moveToFirst();
+//                    while (!cMsg.isAfterLast()) {
+//                        int msgId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGE_ID));
+//                        int msgTime = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TIMESTAMP));
+//                        String msgText = cMsg.getString(cMsg.getColumnIndex(COLUMN_MESSAGES_TEXT));
+//                        int fromUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_FROM_USER_FK));
+//                        int toUserId = cMsg.getInt(cMsg.getColumnIndex(COLUMN_MESSAGES_TO_USER_FK));
+//
+//
+//                        User fromUser = getUser(fromUserId);
+//                        User toUser = getUser(toUserId);
+//                        Date msgDate = new Date(msgTime);
+//                        Message msg = new Message(msgId, msgDate, chat, msgText, fromUser, toUser);
+//                        chat.addMsg(msg);
+//                        cMsg.moveToNext();
+//                    }
+//                }
                 chats.add(chat);
                 cChats.moveToNext();
             }
         }
         return chats;
     }
-
 
     public void addNews(News news) {
         ContentValues values = new ContentValues();
@@ -717,5 +716,36 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
         db.close();
+    }
+
+//    private static final String TABLE_MESSAGE = "Message";
+//    private static final String COLUMN_MESSAGE_ID = "messageId";
+//    private static final String COLUMN_MESSAGES_TEXT = "text";
+//    private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
+//    private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
+//    private static final String COLUMN_MESSAGES_FROM_USER_FK = "from_user_fk";
+//    private static final String COLUMN_MESSAGES_TO_USER_FK = "to_user_fk";
+
+
+    public ArrayList<Message> getMessagesForChat(long chatId) {
+        ArrayList<Message> messages = new ArrayList<>();
+
+        String query = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chatId + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " ASC ";
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            long msgId = c.getLong(c.getColumnIndex(COLUMN_MESSAGE_ID));
+            String msgText = c.getString(c.getColumnIndex(COLUMN_MESSAGES_TEXT));
+            long timestamp = c.getLong(c.getColumnIndex(COLUMN_MESSAGES_TIMESTAMP));
+            long fromUserId = c.getLong(c.getColumnIndex(COLUMN_MESSAGES_FROM_USER_FK));
+            long toUserId = c.getLong(c.getColumnIndex(COLUMN_MESSAGES_TO_USER_FK));
+
+            Message msg = new Message(msgId, new Date(timestamp), chatId, msgText, getUser(fromUserId), getUser(toUserId));
+            messages.add(msg);
+        }
+
+        return messages;
     }
 }

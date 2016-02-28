@@ -1,10 +1,12 @@
 package com.myneighbourhood.Yordan_Yordanov;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,6 +18,7 @@ import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +48,15 @@ public class MessagesActivity extends BaseActivity {
         chatsForUser = new ArrayList<>();
         adapter = new ChatsListArrayAdapter(this, R.layout.chats_list_row_layout, chatsForUser);
         chatsLV.setAdapter(adapter);
+        chatsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                long chatId = chatsForUser.get(position).getId();
+                Intent i = new Intent(MessagesActivity.this, ChatActivity.class);
+                i.putExtra(Utils.EXTRA_CHAT_ID, chatId);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
