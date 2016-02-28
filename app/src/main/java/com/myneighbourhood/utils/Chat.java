@@ -11,13 +11,15 @@ public class Chat {
     Request request;
     User user1;
     User user2;
+    Date createdAt;
     Date latestMsgDate;
     Date latestViewByUser1Date;
     Date latestViewByUser2Date;
     ArrayList<Message> messages;
 
-    public Chat(long id, Request request, User user1, User user2, Date latestMsgDate, Date latestViewByUser1Date, Date latestViewByUser2Date, ArrayList<Message> messages) {
+    public Chat(long id, Date createdAt, Request request, User user1, User user2, Date latestMsgDate, Date latestViewByUser1Date, Date latestViewByUser2Date, ArrayList<Message> messages) {
         this.id = id;
+        this.createdAt = createdAt;
         this.request = request;
         this.user1 = user1;
         this.user2 = user2;
@@ -53,5 +55,9 @@ public class Chat {
 
     public Request getRequest() {
         return request;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

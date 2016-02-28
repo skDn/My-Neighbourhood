@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Address;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Message;
@@ -26,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 15;
+    private static final int DB_VERSION = 17;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -94,6 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Chat
     private static final String TABLE_CHATS = "CHATS";
     private static final String COLUMN_CHATS_ID = "_id";
+    private static final String COLUMN_CHATS_CREATED_AT = "created_at";
     private static final String COLUMN_CHATS_REQUEST_ID = "request_id";
     private static final String COLUMN_CHATS_USER_1 = "request_user_1";
     private static final String COLUMN_CHATS_USER_2 = "request_user_2";
@@ -191,6 +193,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String createChats =
             "CREATE TABLE " + TABLE_CHATS + "(" +
                     COLUMN_CHATS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_CHATS_CREATED_AT + " INTEGER, " +
                     COLUMN_CHATS_LATEST_MSG_TIME + " INTEGER, " +
                     COLUMN_CHATS_LATEST_VIEW_BY_USER_1 + " INTEGER, " +
                     COLUMN_CHATS_LATEST_VIEW_BY_USER_2 + " INTEGER, " +
@@ -203,6 +206,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     ");";
 
 
+    private final Bitmap DEFAULT_PROFILE_PIC;
+
+
     public static synchronized DBHelper getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = new DBHelper(context.getApplicationContext());
@@ -212,6 +218,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        DEFAULT_PROFILE_PIC = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_account_circle_black_36dp);
     }
 
     @Override
@@ -261,9 +268,9 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_PHONE, user.getPhone());
 
         if (user.getImage() == null) {
-            values.put(COLUMN_USER_PICTURE, "");
+            values.putNull(COLUMN_USER_PICTURE);
         } else {
-            Bitmap yourBitmap = null;
+            Bitmap yourBitmap = user.getImage();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             yourBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
             byte[] bArray = bos.toByteArray();
@@ -344,8 +351,12 @@ public class DBHelper extends SQLiteOpenHelper {
         String phone = c.getString(c.getColumnIndex(COLUMN_USER_PHONE));
 
         byte[] p = c.getBlob(c.getColumnIndex(COLUMN_USER_PICTURE));
-        Bitmap image = BitmapFactory.decodeByteArray(p, 0, p.length);
-
+        Bitmap image;
+        if (p != null) {
+            image = BitmapFactory.decodeByteArray(p, 0, p.length);
+        } else {
+            image = DEFAULT_PROFILE_PIC;
+        }
         User user = new User(userId, username, fName, lName, password, email, phone, image);
 
         String ratingQuery = "SELECT * FROM " + TABLE_RATING + " WHERE " + COLUMN_RATING_USER_ID + " = " + userId;
@@ -542,19 +553,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Chat addChat(User user1, User user2, Request request) {
         ContentValues values = new ContentValues();
+        long now = System.currentTimeMillis();
+        values.put(COLUMN_CHATS_CREATED_AT, now);
         values.put(COLUMN_CHATS_REQUEST_ID, request.getId());
         values.put(COLUMN_CHATS_USER_1, user1.getId());
         values.put(COLUMN_CHATS_USER_2, user2.getId());
         values.putNull(COLUMN_CHATS_LATEST_MSG_TIME);
-        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_1, System.currentTimeMillis());
-        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, System.currentTimeMillis());
+        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_1, now);
+        values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, now);
 
         long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
         System.out.println("chat added : " + insertedChatId);
         if (insertedChatId == -1) {
             return null;
         } else {
-            Chat chat = new Chat(insertedChatId, request, user1, user2, null, new Date(), new Date(), new ArrayList<Message>());
+            Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date(), new ArrayList<Message>());
             return chat;
         }
     }
@@ -578,6 +591,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cChats.moveToFirst();
             while (!cChats.isAfterLast()) {
                 long chatId = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_ID));
+                long createdAtTime = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_CREATED_AT));
                 long requestId = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_REQUEST_ID));
                 long userId1 = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_USER_1));
                 long userId2 = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_USER_2));
@@ -585,6 +599,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 long latestViewByUser1Time = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_1));
                 long latestViewByUser2Time = cChats.getLong(cChats.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_2));
 
+                Date createdAt = new Date(createdAtTime);
                 Request request = getRequest(requestId);
                 User user1 = getUser(userId1);
                 User user2 = getUser(userId2);
@@ -593,7 +608,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Date latestViewByUser2Date = new Date(latestViewByUser2Time);
 
 
-                Chat chat = new Chat(chatId, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
+                Chat chat = new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
                 String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
                 if (!db.isOpen()) {
                     db = getReadableDatabase();
@@ -694,5 +709,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase writableDatabase = getWritableDatabase();
         writableDatabase.execSQL(query);
         writableDatabase.close();
+    }
+
+    public void deleteUser(User user) {
+        System.out.println("deleting user : " + user.getUsername());
+        String query = "DELETE FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + user.getUsername();
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
     }
 }

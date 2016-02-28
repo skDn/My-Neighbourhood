@@ -90,8 +90,9 @@ public class MessagesActivity extends BaseActivity {
             ViewHolderItem viewHolder;
 
             if (convertView == null) {
+                System.out.println("convertView == null");
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(R.layout.custom_news_row, parent, false);
+                convertView = inflater.inflate(R.layout.chats_list_row_layout, parent, false);
                 viewHolder = new ViewHolderItem();
 
                 viewHolder.profileImageIV = (ImageView) convertView.findViewById(R.id.chats_list_row_CIV_profile_pic);
@@ -102,6 +103,7 @@ public class MessagesActivity extends BaseActivity {
 
                 convertView.setTag(viewHolder);
             } else {
+                System.out.println("convertView != null");
                 viewHolder = (ViewHolderItem) convertView.getTag();
             }
 
@@ -109,6 +111,10 @@ public class MessagesActivity extends BaseActivity {
             User otherUser = chat.getOtherUser(user);
             Request request = chat.getRequest();
             Date latestMsgDate = chat.getLatestMsgDate();
+            if (latestMsgDate.getTime() == 0) {
+                latestMsgDate = chat.getCreatedAt();
+            }
+            System.out.println("latestMsgDate: " + latestMsgDate.getTime());
             String dateDate = dateFormat.format(latestMsgDate);
             String dateTime = timeFormat.format(latestMsgDate);
 

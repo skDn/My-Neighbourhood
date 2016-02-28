@@ -1,6 +1,8 @@
 package com.myneighbourhood.Velin_Kerkov;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,9 +36,13 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null);
-        User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", null);
+        Bitmap defaultProfPicture = BitmapFactory.decodeResource(getResources(), R.drawable.ic_account_circle_black_36dp);
 
+
+        User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
+        User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
+        DB.deleteUser(admin);
+        DB.deleteUser(vili);
         User newAdmin = DB.getUser(admin.getUsername(), admin.getPassword());
         User newVili = DB.getUser(vili.getUsername(), vili.getPassword());
 
