@@ -46,16 +46,21 @@ public class LoginActivity extends BaseActivity {
 
             System.out.println("Admin: " + admin.getId());
             System.out.println("Vili: " + vili.getId());
-
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.HOUR, 10);
-
-            Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
-
-            Request resultReq = DB.getRequest(adminRequest.getCreator().getId(), adminRequest.getTitle());
-            adminRequest = DB.addRequestFromUI(adminRequest);
-            Chat chat = DB.addChat(newAdmin, newVili, adminRequest);
         }
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, 10);
+
+        Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
+
+        Request adminRequestRes = DB.addRequestFromUI(adminRequest);
+        if (adminRequestRes == null) {
+            // zna4i ima ve4e takav
+            adminRequestRes = DB.getRequest(adminRequest.getCreator().getId(), adminRequest.getTitle());
+        }
+        DB.deleteAdminViliChat(admin, vili);
+        Chat chat = DB.addChat(newAdmin, newVili, adminRequestRes);
+
 
         // bind to UI elements
         mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);

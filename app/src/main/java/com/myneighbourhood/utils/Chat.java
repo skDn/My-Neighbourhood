@@ -25,6 +25,9 @@ public class Chat {
         this.latestViewByUser1Date = latestViewByUser1Date;
         this.latestViewByUser2Date = latestViewByUser2Date;
         this.messages = messages;
+
+        System.out.println("new chat between : " + user1.getUsername() + " and " + user2.getUsername());
+
     }
 
     public long getId() {

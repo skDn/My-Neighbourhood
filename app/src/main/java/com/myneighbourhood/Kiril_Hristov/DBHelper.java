@@ -550,6 +550,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, System.currentTimeMillis());
 
         long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
+        System.out.println("chat added : " + insertedChatId);
         if (insertedChatId == -1) {
             return null;
         } else {
@@ -594,7 +595,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 Chat chat = new Chat(chatId, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, null);
                 String queryMsg = "SELECT * FROM " + TABLE_MESSAGE + " WHERE " + COLUMN_MESSAGES_CHAT_FK + " = " + chat.getId() + " ORDER BY " + COLUMN_MESSAGES_TIMESTAMP + " DESC ";
-                if(!db.isOpen()){
+                if (!db.isOpen()) {
                     db = getReadableDatabase();
                 }
                 Cursor cMsg = db.rawQuery(queryMsg, null);
@@ -686,7 +687,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public void deleteDB() {
+    public void deleteAdminViliChat(User admin, User vili) {
+        String query = "DELETE FROM " + TABLE_CHATS + " WHERE ( " + COLUMN_CHATS_USER_1 + " = " + admin.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + vili.getId() + " ) OR ( " +
+                COLUMN_CHATS_USER_1 + " = " + vili.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + admin.getId() + " ) ";
 
+        SQLiteDatabase writableDatabase = getWritableDatabase();
+        writableDatabase.execSQL(query);
+        writableDatabase.close();
     }
 }

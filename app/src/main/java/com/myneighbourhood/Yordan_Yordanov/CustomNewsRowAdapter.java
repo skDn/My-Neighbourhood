@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +44,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
             viewHolder.newsImage = (ImageView) convertView.findViewById(R.id.RowNewsImage);
             viewHolder.username  = (TextView) convertView.findViewById(R.id.RowNewsUsername);
             viewHolder.newsTitle = (TextView) convertView.findViewById(R.id.RowNewsTitle);
-            viewHolder.newsText = (TextView) convertView.findViewById(R.id.RowNewsDescription);
+//            viewHolder.newsText = (TextView) convertView.findViewById(R.id.RowNewsDescription);
 
             convertView.setTag(viewHolder);
         }else{
@@ -55,7 +54,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
 
 //        String title = getItem(position);
         viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());
-        viewHolder.newsText.setText(newsFeed.get(position).getText());
+//        viewHolder.newsText.setText(newsFeed.get(position).getText());
         viewHolder.username.setText("username");
 
         return convertView;

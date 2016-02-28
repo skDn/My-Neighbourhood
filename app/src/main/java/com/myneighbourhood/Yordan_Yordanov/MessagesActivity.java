@@ -23,6 +23,10 @@ import java.util.Date;
 
 public class MessagesActivity extends BaseActivity {
 
+    private ListView chatsLV;
+    private ArrayList<Chat> chatsForUser;
+    private ChatsListArrayAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,21 +41,23 @@ public class MessagesActivity extends BaseActivity {
         }
 
         SearchView searchSV = (SearchView) findViewById(R.id.messages_SV_search);
-        ListView chatsLV = (ListView) findViewById(R.id.messages_LV_chats_list);
-
+        chatsLV = (ListView) findViewById(R.id.messages_LV_chats_list);
+        chatsForUser = new ArrayList<>();
+        adapter = new ChatsListArrayAdapter(this, R.layout.chats_list_row_layout, chatsForUser);
+        chatsLV.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        ArrayList<Chat> chatsForUser = DB.getChatsForUser(user);
+        chatsForUser = DB.getChatsForUser(user);
+        adapter.setChats(chatsForUser);
     }
 
 
     private static class ChatsListArrayAdapter extends ArrayAdapter<Chat> {
 
-        private final Chat[] chats;
+        private ArrayList<Chat> chats;
 
         private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
         private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -66,11 +72,16 @@ public class MessagesActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return chats.length;
+            return chats.size();
         }
 
-        public ChatsListArrayAdapter(Context context, int resource, Chat[] chats) {
-            super(context, -1);
+        public void setChats(ArrayList<Chat> chats) {
+            this.chats = chats;
+            notifyDataSetChanged();
+        }
+
+        public ChatsListArrayAdapter(Context context, int resource, ArrayList<Chat> chats) {
+            super(context, resource);
             this.chats = chats;
         }
 
@@ -93,16 +104,16 @@ public class MessagesActivity extends BaseActivity {
             } else {
                 viewHolder = (ViewHolderItem) convertView.getTag();
             }
-            Chat chat = chats[position];
+
+            Chat chat = chats.get(position);
             User otherUser = chat.getOtherUser(user);
             Request request = chat.getRequest();
             Date latestMsgDate = chat.getLatestMsgDate();
             String dateDate = dateFormat.format(latestMsgDate);
             String dateTime = timeFormat.format(latestMsgDate);
 
-
-            viewHolder.profileImageIV.setImageBitmap(otherUser.getImage());
             viewHolder.usernameTV.setText(otherUser.getUsername());
+            viewHolder.profileImageIV.setImageBitmap(otherUser.getImage());
             viewHolder.titleTV.setText(request.getTitle());
             viewHolder.dateDateTV.setText(dateDate);
             viewHolder.dateTimeTV.setText(dateTime);
