@@ -11,6 +11,6 @@ public class Utils {
 
     public static final String EXTRA_CHAT_ID = "extra_chat_id";
 
-    public static final String EXTRA_USER_1_ID = "extra_user_1_id";
+    public static final String EXTRA_CHAT_OTHER_USER = "extra_user_1_id";
     public static final String EXTRA_USER_2_ID = "extra_user_2_id";
 }

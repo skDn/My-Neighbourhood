@@ -42,12 +42,12 @@ public class ChatActivity extends BaseActivity {
 
         Bundle extras = getIntent().getExtras();
         long chatId = extras.getLong(Utils.EXTRA_CHAT_ID);
-        long user1Id = extras.getLong(Utils.EXTRA_USER_1_ID);
-        long user2Id = extras.getLong(Utils.EXTRA_USER_2_ID);
+        long otherUserId = extras.getLong(Utils.EXTRA_CHAT_OTHER_USER);
+        this.otherUser = DB.getUser(otherUserId);
 
-        System.out.println("user1 : " + user1Id + ", user2: " + user2Id);
         System.out.println("currentUser: " + user.getUsername() + ", id: " + user.getId());
-        this.otherUser = DB.getUser(user.getId() == user1Id ? user2Id : user1Id);
+        System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
+
         this.messages = DB.getMessagesForChat(chatId);
 
 

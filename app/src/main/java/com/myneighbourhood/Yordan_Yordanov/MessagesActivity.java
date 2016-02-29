@@ -51,9 +51,12 @@ public class MessagesActivity extends BaseActivity {
         chatsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                long chatId = chatsForUser.get(position).getId();
+                Chat chat = chatsForUser.get(position);
+                long chatId = chat.getId();
+                long otherUserId = chat.getOtherUser(user).getId();
                 Intent i = new Intent(MessagesActivity.this, ChatActivity.class);
                 i.putExtra(Utils.EXTRA_CHAT_ID, chatId);
+                i.putExtra(Utils.EXTRA_CHAT_OTHER_USER, otherUserId);
                 startActivity(i);
             }
         });
