@@ -45,6 +45,8 @@ public class ChatActivity extends BaseActivity {
         long user1Id = extras.getLong(Utils.EXTRA_USER_1_ID);
         long user2Id = extras.getLong(Utils.EXTRA_USER_2_ID);
 
+        System.out.println("user1 : " + user1Id + ", user2: " + user2Id);
+        System.out.println("currentUser: " + user.getUsername() + ", id: " + user.getId());
         this.otherUser = DB.getUser(user.getId() == user1Id ? user2Id : user1Id);
         this.messages = DB.getMessagesForChat(chatId);
 
@@ -59,7 +61,6 @@ public class ChatActivity extends BaseActivity {
         checkBoxUser1 = (CheckBox) findViewById(R.id.chat_CB_user_1);
         checkBoxUser2 = (CheckBox) findViewById(R.id.chat_CB_user_2);
 
-        
 
     }
 }

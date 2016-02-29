@@ -712,20 +712,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteUser(User user) {
         System.out.println("deleting user : " + user.getUsername());
-        String query = "DELETE FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + user.getUsername();
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(query);
+        try {
+            String query = "DELETE FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + user.getUsername();
+
+            db.execSQL(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         db.close();
     }
-
-//    private static final String TABLE_MESSAGE = "Message";
-//    private static final String COLUMN_MESSAGE_ID = "messageId";
-//    private static final String COLUMN_MESSAGES_TEXT = "text";
-//    private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
-//    private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
-//    private static final String COLUMN_MESSAGES_FROM_USER_FK = "from_user_fk";
-//    private static final String COLUMN_MESSAGES_TO_USER_FK = "to_user_fk";
-
 
     public ArrayList<Message> getMessagesForChat(long chatId) {
         ArrayList<Message> messages = new ArrayList<>();

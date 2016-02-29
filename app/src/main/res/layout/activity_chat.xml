@@ -5,6 +5,25 @@
     android:layout_height="match_parent"
     tools:context="com.myneighbourhood.Yordan_Yordanov.ChatActivity">
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/chat_TIL_message_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="10dp">
+
+        <EditText
+            android:id="@+id/chat_ET_new_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Message"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,22 +97,5 @@
     </LinearLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/chat_TIL_message_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp">
 
-        <EditText
-            android:id="@+id/chat_ET_new_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Message"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true" />
-
-    </android.support.design.widget.TextInputLayout>
 </RelativeLayout>
