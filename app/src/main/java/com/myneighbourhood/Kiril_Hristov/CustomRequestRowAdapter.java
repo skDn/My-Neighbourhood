@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
+import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -28,10 +31,12 @@ import java.util.ArrayList;
 public class CustomRequestRowAdapter extends ArrayAdapter<String> {
 
     ArrayList<Request> feedRequests;
+    User user;
 
-    public CustomRequestRowAdapter(Context context, String[] titles, ArrayList<Request> feedRequest) {
+    public CustomRequestRowAdapter(Context context, String[] titles, ArrayList<Request> feedRequest, User user) {
         super(context, R.layout.custom_request_row, titles);
         this.feedRequests = feedRequest;
+        this.user = user;
     }
 
     @Override
@@ -50,7 +55,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
 
 
@@ -94,7 +99,11 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
         viewHolder.contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DBHelper db = DBHelper.getInstance(getContext());
                 Intent i = new Intent(getContext(), ChatActivity.class);
+                Chat c = db.addChat(feedRequests.get(position).getCreator(), user, feedRequests.get(position));
+                i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
                 i.putExtra("tab", 0);
                 getContext().startActivity(i);
             }
