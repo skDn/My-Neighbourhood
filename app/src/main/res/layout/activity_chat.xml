@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Message"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:maxLines="1"
             android:singleLine="true" />
 
