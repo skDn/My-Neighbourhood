@@ -110,6 +110,8 @@ public class ChatActivity extends BaseActivity {
 
         private ArrayList<Message> messages;
         private final User otherUser;
+        private LinearLayout wrapper;
+        private TextView msgTV;
 
         public void setMessages(ArrayList<Message> messages) {
             this.messages = messages;
@@ -134,16 +136,20 @@ public class ChatActivity extends BaseActivity {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 row = inflater.inflate(R.layout.chat_msg_layout, null);
             }
+
+
+            wrapper = (LinearLayout) row.findViewById(R.id.wrapper);
+
             Message currMsg = messages.get(position);
-            TextView msgTV = (TextView) row.findViewById(R.id.msg_TV_msg);
+
+            msgTV = (TextView) row.findViewById(R.id.msg_TV_msg);
+
             msgTV.setText(currMsg.getText());
 
-            if (currMsg.getFromUser().getId() == otherUser.getId()) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.gravity = Gravity.LEFT;
-                msgTV.setLayoutParams(params);
-                msgTV.setGravity(Gravity.LEFT);
-            }
+            msgTV.setBackgroundResource(currMsg.getFromUser().getId() == otherUser.getId()
+                    ? R.drawable.bubble_orange : R.drawable.bubble_white);
+            wrapper.setGravity(currMsg.getFromUser().getId() == otherUser.getId()
+                    ? Gravity.LEFT : Gravity.RIGHT);
 
             return row;
         }
