@@ -570,6 +570,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+
     public Message addMessage(Message msg) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESSAGES_TEXT, msg.getText());

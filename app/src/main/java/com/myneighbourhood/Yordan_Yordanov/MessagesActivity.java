@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -66,7 +67,7 @@ public class MessagesActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         chatsForUser = DB.getChatsForUser(user);
-        adapter.setChats(chatsForUser);
+        adapter.setChats(this.chatsForUser);
     }
 
 
@@ -83,6 +84,7 @@ public class MessagesActivity extends BaseActivity {
             TextView titleTV;
             TextView dateDateTV;
             TextView dateTimeTV;
+            LinearLayout vLayout;
         }
 
         @Override
@@ -110,6 +112,7 @@ public class MessagesActivity extends BaseActivity {
                 convertView = inflater.inflate(R.layout.chats_list_row_layout, parent, false);
                 viewHolder = new ViewHolderItem();
 
+                viewHolder.vLayout = (LinearLayout) convertView;
                 viewHolder.profileImageIV = (ImageView) convertView.findViewById(R.id.chats_list_row_CIV_profile_pic);
                 viewHolder.usernameTV = (TextView) convertView.findViewById(R.id.chats_list_row_TV_user_username);
                 viewHolder.titleTV = (TextView) convertView.findViewById(R.id.chats_list_row_TV_request_title);

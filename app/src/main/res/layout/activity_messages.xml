@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context="com.myneighbourhood.Yordan_Yordanov.MessagesActivity">
 
@@ -14,17 +14,17 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:gravity="left"
+        android:layout_marginBottom="10dp"
         android:queryHint="@string/messages_search" />
 
     <ListView
         android:id="@+id/messages_LV_chats_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:cacheColorHint="#00000000"
         android:listSelector="@android:color/white"
         android:paddingTop="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:transcriptMode="alwaysScroll" />
 
 
