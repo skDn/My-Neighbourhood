@@ -16,7 +16,7 @@ android {
     aaptOptions {
         additionalParameters "--no-version-vectors"
     }
-    
+
     buildTypes {
         release {
             minifyEnabled false

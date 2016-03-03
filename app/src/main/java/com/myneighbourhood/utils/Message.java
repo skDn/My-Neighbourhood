@@ -22,7 +22,39 @@ public class Message {
         this.toUser = toUser;
     }
 
+    public Message(Date msgTime, long chatId, String text, User fromUser, User toUser) {
+        this.msgTime = msgTime;
+        this.chatId = chatId;
+        this.text = text;
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Date getTimestamp() {
+        return msgTime;
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public User getToUser() {
+        return toUser;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

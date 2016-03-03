@@ -5,37 +5,55 @@
     android:layout_height="match_parent"
     tools:context="com.myneighbourhood.Yordan_Yordanov.ChatActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/chat_TIL_message_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/chat_RL_send_message_layout"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
 
-        <EditText
-            android:id="@+id/chat_ET_new_message"
+        <ImageView
+            android:id="@+id/chat_B_send_message"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_send_black_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/chat_TIL_message_input_layout"
+            android:layout_toLeftOf="@+id/chat_B_send_message"
+            android:layout_toStartOf="@+id/chat_B_send_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Message"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/chat_ET_new_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Message"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/chat_TIL_message_input_layout"
+        android:layout_above="@id/chat_RL_send_message_layout"
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_marginTop="2dp"
             android:gravity="center"
-            android:text="Instructions what to do ..... "
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:text="Instructions what to do ..... " />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,15 +112,14 @@
 
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/chat_SV_messages"
+        <ListView
+            android:id="@+id/chat_LV_messages"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </ScrollView>
+        </ListView>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

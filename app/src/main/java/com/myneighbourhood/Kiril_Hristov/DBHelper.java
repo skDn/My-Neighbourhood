@@ -570,11 +570,33 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addMessage(Chat chat, Message msg) {
+//    private static final String TABLE_MESSAGE = "Message";
+//    private static final String COLUMN_MESSAGE_ID = "messageId";
+//    private static final String COLUMN_MESSAGES_TEXT = "text";
+//    private static final String COLUMN_MESSAGES_TIMESTAMP = "timestamp";
+//    private static final String COLUMN_MESSAGES_CHAT_FK = "chat_fk";
+//    private static final String COLUMN_MESSAGES_FROM_USER_FK = "from_user_fk";
+//    private static final String COLUMN_MESSAGES_TO_USER_FK = "to_user_fk";
+
+    public Message addMessage(Message msg) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESSAGES_TEXT, msg.getText());
-        values.put(COLUMN_MESSAGES_TIMESTAMP, System.currentTimeMillis());
-        values.put(COLUMN_MESSAGES_CHAT_FK, chat.getId());
+        values.put(COLUMN_MESSAGES_TIMESTAMP, msg.getTimestamp().getTime());
+        values.put(COLUMN_MESSAGES_CHAT_FK, msg.getChatId());
+        values.put(COLUMN_MESSAGES_FROM_USER_FK, msg.getFromUser().getId());
+        values.put(COLUMN_MESSAGES_TO_USER_FK, msg.getToUser().getId());
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        long insertedId = db.insert(TABLE_MESSAGE, null, values);
+
+        if (insertedId == -1) {
+            return null;
+        } else {
+            msg.setId(insertedId);
+            return msg;
+        }
+
     }
 
     public ArrayList<Chat> getChatsForUser(User user) {

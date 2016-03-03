@@ -35,8 +35,9 @@
 
         <ImageView
             android:id="@+id/addNewsImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp" />
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/icons_photo_gallery" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

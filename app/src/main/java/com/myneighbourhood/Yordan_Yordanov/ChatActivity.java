@@ -1,23 +1,33 @@
 package com.myneighbourhood.Yordan_Yordanov;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
+import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Message;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatActivity extends BaseActivity {
 
     private ArrayList<Message> messages;
-    private ScrollView messagesSV;
+    private ListView messagesLV;
     private EditText newMessageET;
     private TextView checkBox1Label;
     private TextView checkBox2Label;
@@ -26,6 +36,9 @@ public class ChatActivity extends BaseActivity {
     private User user1;
     private User user2;
     private User otherUser;
+    private Chat chat;
+    private ImageView sendMessageIV;
+    private MsgAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +56,21 @@ public class ChatActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         long chatId = extras.getLong(Utils.EXTRA_CHAT_ID);
         long otherUserId = extras.getLong(Utils.EXTRA_CHAT_OTHER_USER);
-        this.otherUser = DB.getUser(otherUserId);
+        this.chat = DB.getChat(chatId);
+        this.messages = DB.getMessagesForChat(chatId);
+//        this.otherUser = DB.getUser(otherUserId);
+        this.otherUser = chat.getOtherUser(user);
 
         System.out.println("currentUser: " + user.getUsername() + ", id: " + user.getId());
         System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
 
-        this.messages = DB.getMessagesForChat(chatId);
-//        this.chat = DB.getChat(chatId);
 
-
-        messagesSV = (ScrollView) findViewById(R.id.chat_SV_messages);
+        messagesLV = (ListView) findViewById(R.id.chat_LV_messages);
         newMessageET = (EditText) findViewById(R.id.chat_ET_new_message);
         checkBox1Label = (TextView) findViewById(R.id.chat_TV_check_box_1_label);
         checkBox2Label = (TextView) findViewById(R.id.chat_TV_check_box_2_label);
+        sendMessageIV = (ImageView) findViewById(R.id.chat_B_send_message);
+
         checkBox1Label.setText(user.getUsername() + " confirms");
         checkBox2Label.setText(otherUser.getUsername() + " confirms");
 
@@ -64,6 +79,63 @@ public class ChatActivity extends BaseActivity {
 
         checkBoxUser2.setClickable(false);
 
+        adapter = new MsgAdapter(this, -1, this.messages);
+        messagesLV.setAdapter(adapter);
 
+        sendMessageIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messageString = newMessageET.getText().toString();
+                Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
+                DB.addMessage(message);
+                newMessageET.setText("");
+                messages.add(message);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        messages = DB.getMessagesForChat(chat.getId());
+        adapter.notifyDataSetChanged();
+    }
+
+    private class MsgAdapter extends ArrayAdapter<Message> {
+
+        private final ArrayList<Message> messages;
+
+        @Override
+        public int getCount() {
+            return messages.size();
+        }
+
+        public MsgAdapter(Context context, int resource, ArrayList<Message> messages) {
+            super(context, -1);
+            this.messages = messages;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            if (row == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                row = inflater.inflate(R.layout.chat_msg_layout, null);
+            }
+            Message currMsg = messages.get(position);
+            TextView msgTV = (TextView) row.findViewById(R.id.msg_TV_msg);
+            msgTV.setText(currMsg.getText());
+
+            if (currMsg.getFromUser().getId() == otherUser.getId()) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.gravity = Gravity.LEFT;
+                msgTV.setLayoutParams(params);
+                msgTV.setGravity(Gravity.LEFT);
+            }
+
+            return row;
+        }
+    }
+
 }
