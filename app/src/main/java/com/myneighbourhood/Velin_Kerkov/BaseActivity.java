@@ -55,6 +55,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (showHomeInSteadOfChat()) {
+            menu.findItem(R.id.menu_action_home).setVisible(true);
+            menu.findItem(R.id.menu_action_messages).setVisible(false);
+        }
         return true;
     }
 
@@ -76,6 +80,11 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.menu_action_neighbourhood:
                 i = new Intent(this, MyNeighbourhoodActivity.class);
                 startActivity(i);
+                return true;
+            case R.id.menu_action_home:
+                i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                return true;
             default:
                 return false;
         }
@@ -83,6 +92,10 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean useToolbar() {
         return true;
+    }
+
+    protected boolean showHomeInSteadOfChat() {
+        return false;
     }
 
     protected void setLoggedInUser(User user) {

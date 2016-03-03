@@ -31,6 +31,10 @@ public class MessagesActivity extends BaseActivity {
     private ArrayList<Chat> chatsForUser;
     private ChatsListArrayAdapter adapter;
 
+    public boolean showHomeInSteadOfChat(){
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
