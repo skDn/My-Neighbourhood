@@ -55,10 +55,8 @@ public class ChatActivity extends BaseActivity {
 
         Bundle extras = getIntent().getExtras();
         long chatId = extras.getLong(Utils.EXTRA_CHAT_ID);
-        long otherUserId = extras.getLong(Utils.EXTRA_CHAT_OTHER_USER);
         this.chat = DB.getChat(chatId);
         this.messages = DB.getMessagesForChat(chatId);
-//        this.otherUser = DB.getUser(otherUserId);
         this.otherUser = chat.getOtherUser(user);
 
         System.out.println("currentUser: " + user.getUsername() + ", id: " + user.getId());
@@ -79,20 +77,25 @@ public class ChatActivity extends BaseActivity {
 
         checkBoxUser2.setClickable(false);
 
-        adapter = new MsgAdapter(this, -1, this.messages);
+        adapter = new MsgAdapter(this, -1, this.messages, otherUser);
         messagesLV.setAdapter(adapter);
 
         sendMessageIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageString = newMessageET.getText().toString();
-                Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
-                DB.addMessage(message);
-                newMessageET.setText("");
-                messages.add(message);
-                adapter.notifyDataSetChanged();
+                handleNewMessage();
             }
         });
+    }
+
+    private void handleNewMessage() {
+        String messageString = newMessageET.getText().toString();
+        Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
+        DB.addMessage(message);
+        newMessageET.setText("");
+        messages.add(message);
+        adapter.setMessages(messages);
+        messagesLV.smoothScrollToPosition(adapter.getCount()-1);
     }
 
     @Override
@@ -100,20 +103,28 @@ public class ChatActivity extends BaseActivity {
         super.onResume();
         messages = DB.getMessagesForChat(chat.getId());
         adapter.notifyDataSetChanged();
+        messagesLV.smoothScrollToPosition(adapter.getCount()-1);
     }
 
-    private class MsgAdapter extends ArrayAdapter<Message> {
+    private static class MsgAdapter extends ArrayAdapter<Message> {
 
-        private final ArrayList<Message> messages;
+        private ArrayList<Message> messages;
+        private final User otherUser;
+
+        public void setMessages(ArrayList<Message> messages) {
+            this.messages = messages;
+            notifyDataSetChanged();
+        }
 
         @Override
         public int getCount() {
             return messages.size();
         }
 
-        public MsgAdapter(Context context, int resource, ArrayList<Message> messages) {
+        public MsgAdapter(Context context, int resource, ArrayList<Message> messages, User otherUser) {
             super(context, -1);
             this.messages = messages;
+            this.otherUser = otherUser;
         }
 
         @Override
