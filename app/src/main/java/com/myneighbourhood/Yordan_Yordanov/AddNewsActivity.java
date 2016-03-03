@@ -15,6 +15,7 @@ import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 public class AddNewsActivity extends BaseActivity {
@@ -23,6 +24,7 @@ public class AddNewsActivity extends BaseActivity {
     EditText newsTitle;
     EditText newsDescription;
     Button submitNews;
+    Bitmap imageToSave;
     int tab;
 
     @Override
@@ -57,7 +59,7 @@ public class AddNewsActivity extends BaseActivity {
                 else {
                     Calendar cal = Calendar.getInstance();
                     /// id?
-                    DB.addNews(new News(getUser(), title, description, cal.getTimeInMillis(), null));
+                    DB.addNews(new News(getUser(), title, description, cal.getTimeInMillis(), imageToSave));
                     onBackPressed();
                 }
             }
@@ -72,8 +74,10 @@ public class AddNewsActivity extends BaseActivity {
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
 
-            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 150, 150);
+            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 200, 150);
             addNewsImage.setImageBitmap(bitmapFromURI);
+
+            imageToSave = bitmapFromURI;
         }
     }
 

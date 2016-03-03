@@ -29,7 +29,6 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
         ImageView newsImage;
         TextView username;
         TextView newsTitle;
-        TextView newsText;
     }
 
     @Override
@@ -44,13 +43,17 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
             viewHolder.newsImage = (ImageView) convertView.findViewById(R.id.RowNewsImage);
             viewHolder.username  = (TextView) convertView.findViewById(R.id.RowNewsUsername);
             viewHolder.newsTitle = (TextView) convertView.findViewById(R.id.RowNewsTitle);
-//            viewHolder.newsText = (TextView) convertView.findViewById(R.id.RowNewsDescription);
 
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
+
+        if(newsFeed.get(position).getPicture()==null){
+            viewHolder.newsImage.setImageResource(R.drawable.logo_login);
+        }
+        else viewHolder.newsImage.setImageBitmap(newsFeed.get(position).getPicture());
 
 //        String title = getItem(position);
         viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());

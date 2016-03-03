@@ -61,6 +61,8 @@ public class NewsActivity extends BaseActivity {
 
         newsDescription.setText(currentNews.getText());
         newsTitle.setText(currentNews.getTitle());
+        newsImage = (ImageView) findViewById(R.id.newsCoverImage);
+        newsImage.setImageBitmap(currentNews.getPicture());
     }
 
     @Override
