@@ -563,11 +563,23 @@ public class DBHelper extends SQLiteOpenHelper {
         long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
         System.out.println("chat added : " + insertedChatId);
         if (insertedChatId == -1) {
-            return null;
+            return getExistingChat(user1, user2, request);
         } else {
             Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date());
             return chat;
         }
+    }
+
+    public Chat getExistingChat(User user1, User user2, Request request) {
+        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE ("
+                + COLUMN_CHATS_USER_1 + " = " + user1.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user2.getId() + ") OR ("
+                + COLUMN_CHATS_USER_1 + " = " + user2.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user1.getId() + ") AND "
+                + COLUMN_CHATS_REQUEST_ID + " = " + request.getId();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(queryChats, null);
+
+        c.moveToFirst();
+        return createChatFromCursor(c);
     }
 
 
@@ -591,6 +603,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
     }
+
+
+
+
 
     public ArrayList<Chat> getChatsForUser(User user) {
         ArrayList<Chat> chats = new ArrayList<>();
