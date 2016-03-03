@@ -49,6 +49,7 @@ public class ChatActivity extends BaseActivity {
         System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
 
         this.messages = DB.getMessagesForChat(chatId);
+//        this.chat = DB.getChat(chatId);
 
 
         messagesSV = (ScrollView) findViewById(R.id.chat_SV_messages);
@@ -60,6 +61,8 @@ public class ChatActivity extends BaseActivity {
 
         checkBoxUser1 = (CheckBox) findViewById(R.id.chat_CB_user_1);
         checkBoxUser2 = (CheckBox) findViewById(R.id.chat_CB_user_2);
+
+        checkBoxUser2.setClickable(false);
 
 
     }

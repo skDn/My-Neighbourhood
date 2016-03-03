@@ -1,5 +1,6 @@
 package com.myneighbourhood.utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ public class Chat {
     Date latestMsgDate;
     Date latestViewByUser1Date;
     Date latestViewByUser2Date;
+    ArrayList<Message> messages;
 
     public Chat(long id, Date createdAt, Request request, User user1, User user2, Date latestMsgDate, Date latestViewByUser1Date, Date latestViewByUser2Date) {
         this.id = id;
@@ -41,14 +43,14 @@ public class Chat {
         return latestMsgDate;
     }
 
-//    public void addMsg(Message msg) {
-//        if (msg != null) {
-//            if (messages == null) {
-//                messages = new ArrayList<>();
-//            }
-//            messages.add(msg);
-//        }
-//    }
+    public void addMsg(Message msg) {
+        if (msg != null) {
+            if (messages == null) {
+                messages = new ArrayList<>();
+            }
+            messages.add(msg);
+        }
+    }
 
     public Request getRequest() {
         return request;

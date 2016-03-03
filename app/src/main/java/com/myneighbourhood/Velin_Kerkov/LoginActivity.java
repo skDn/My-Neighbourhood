@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Address;
-import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
@@ -66,7 +65,7 @@ public class LoginActivity extends BaseActivity {
             adminRequestRes = DB.getRequest(adminRequest.getCreator().getId(), adminRequest.getTitle());
         }
         DB.deleteAdminViliChat(admin, vili);
-        Chat chat = DB.addChat(newAdmin, newVili, adminRequestRes);
+        DB.addChat(newAdmin, newVili, adminRequestRes);
 
 
         // bind to UI elements
