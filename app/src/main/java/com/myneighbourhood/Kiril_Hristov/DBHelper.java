@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 17;
+    private static final int DB_VERSION = 19;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -108,22 +108,23 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String createUser =
             "CREATE TABLE " + TABLE_USER + "(" +
                     COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_USER_USERNAME + " TEXT, " +
+                    COLUMN_USER_USERNAME + " TEXT UNIQUE, " +
                     COLUMN_USER_FIRSTNAME + " TEXT, " +
                     COLUMN_USER_LASTNAME + " TEXT, " +
                     COLUMN_USER_PASSWORD + " TEXT, " +
                     COLUMN_USER_EMAIL + " TEXT, " +
                     COLUMN_USER_PHONE + " TEXT, " +
-                    COLUMN_USER_PICTURE + " BLOB" + ");";
+                    COLUMN_USER_PICTURE + " BLOB" +
+                    ");";
 
     private static final String createRating =
             "CREATE TABLE " + TABLE_RATING + "(" +
-                    COLUMN_RATING_USER_ID + " INTEGER, " +
+                    COLUMN_RATING_USER_ID + " INTEGER UNIQUE, " +
                     COLUMN_RATING_AS_REQUESTER + " INTEGER, " +
                     COLUMN_RATING_AS_APPLICANT + " INTEGER, " +
                     COLUMN_RATING_ENDORCEDBY + " INTEGER, " +
-                    "FOREIGN KEY (" + COLUMN_RATING_USER_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_RATING_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+
                     ");";
 
     private static final String createAddress =
@@ -132,8 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_ADDRESS_STREET + " TEXT, " +
                     COLUMN_ADDRESS_RECT_X + " DOUBLE, " +
                     COLUMN_ADDRESS_RECT_Y + " DOUBLE, " +
-                    "FOREIGN KEY (" + COLUMN_ADDRESS_USER_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_ADDRESS_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
                     ");";
 
     private static final String createRequest =
@@ -146,8 +146,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_REQUEST_TIMESTAMP + " INTEGER, " +
                     COLUMN_REQUEST_EXPIRES + " INTEGER, " +
                     COLUMN_REQUEST_ACCEPTED + " INTEGER, " +
-                    "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "UNIQUE (" + COLUMN_REQUEST_CREATED_BY_ID + ", " + COLUMN_REQUEST_TITLE + ") " +
                     ");";
 
     private static final String createNews =
@@ -158,8 +158,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_NEWS_TEXT + " TEXT, " +
                     COLUMN_NEWS_TIMESTAMP + " INTEGER, " +
                     COLUMN_NEWS_PICTURE + " BLOB, " +
-                    "FOREIGN KEY (" + COLUMN_NEWS_CREATED_BY_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_NEWS_CREATED_BY_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "UNIQUE (" + COLUMN_NEWS_CREATED_BY_ID + ", " + COLUMN_NEWS_TITLE + ") " +
                     ");";
 
     private static final String createApplicant =
@@ -169,12 +169,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
                     COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
                     COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
-                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " +
-                    TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " +
-                    TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
                     ");";
 
     private static final String createMessage =
@@ -404,8 +401,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Request addRequestFromUI(Request request) {
+    public Request addRequest(Request request) {
         // check if request exists already
+
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreator().getId());
         values.put(COLUMN_REQUEST_TITLE, request.getTitle());
@@ -420,6 +419,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         if (insertedId == -1) {
+            System.out.println("addRequest -1");
             return null;
         } else {
             request.setId(insertedId);

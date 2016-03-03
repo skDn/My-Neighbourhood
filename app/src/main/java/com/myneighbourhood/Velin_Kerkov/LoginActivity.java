@@ -59,9 +59,10 @@ public class LoginActivity extends BaseActivity {
 
         Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
 
-        Request adminRequestRes = DB.addRequestFromUI(adminRequest);
+        Request adminRequestRes = DB.addRequest(adminRequest);
         if (adminRequestRes == null) {
             // zna4i ima ve4e takav
+            System.out.println("adminRequestRes == null");
             adminRequestRes = DB.getRequest(adminRequest.getCreator().getId(), adminRequest.getTitle());
         }
         DB.deleteAdminViliChat(admin, vili);
