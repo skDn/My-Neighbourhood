@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp"
+    android:background="@color/colorBackground"
     tools:context="com.myneighbourhood.Yordan_Yordanov.MyNeighbourhoodActivity">
 
     <fragment
@@ -19,7 +20,7 @@
         android:id="@+id/searchNeighbours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d3d3d3"
+        android:background="@android:color/white"
         android:queryHint="Search neighbours">
 
     </SearchView>

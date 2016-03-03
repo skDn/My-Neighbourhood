@@ -30,7 +30,7 @@ public class NewsFeedFragment extends Fragment {
     private ArrayList<News> newsFeed;
     FloatingActionButton addNewsActionButton;
     private DBHelper dbHelper;
-    // TODO: are we displaying news, that has been created by the logged user
+    View v;
 
 
     public NewsFeedFragment() {
@@ -47,7 +47,7 @@ public class NewsFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_news_feed, container, false);
+        v = inflater.inflate(R.layout.fragment_news_feed, container, false);
         mainActivity = (MainActivity) getActivity();
         dbHelper = mainActivity.getDB();
         NewsFeedListView = (ListView) v.findViewById(R.id.newsFeedListView);
@@ -74,7 +74,7 @@ public class NewsFeedFragment extends Fragment {
         ArrayAdapter<String> requestFeedAdapter =
                 new CustomNewsRowAdapter(mainActivity, titles, newsFeed);
         NewsFeedListView.setAdapter(requestFeedAdapter);
-
+        NewsFeedListView.setEmptyView(v.findViewById(R.id.noNewsYet));
         NewsFeedListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
