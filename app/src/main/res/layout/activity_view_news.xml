@@ -13,7 +13,8 @@
         android:id="@+id/userLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/newsCreatedByUserImage"
@@ -62,8 +63,8 @@
             android:layout_height="100dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.1"
-            android:src="@drawable/logo_menu" />
+            android:layout_weight="0.1"/>
+            <!--android:src="@drawable/logo_menu" />-->
     </LinearLayout>
 
 
@@ -87,7 +88,7 @@
 
         <TextView
             android:id="@+id/newsDescriptionText"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Hello world"
             android:gravity="center"
