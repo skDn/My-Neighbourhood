@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 19;
+    private static final int DB_VERSION = 20;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -199,7 +199,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_CHATS_USER_2 + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_1 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_2 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + ") " +
+                    "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+                    "UNIQUE (" + COLUMN_CHATS_USER_1 +", " + COLUMN_CHATS_USER_2 + ", " + COLUMN_CHATS_REQUEST_ID + ") " +
                     ");";
 
 
