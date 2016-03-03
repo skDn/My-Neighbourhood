@@ -3,9 +3,12 @@ package com.myneighbourhood.Kiril_Hristov;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -101,11 +104,39 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 System.out.println("clicking remove for : " + v.getTag());
-                feedRequests.remove((int) v.getTag());
-                CustomRequestRowAdapter.this.notifyDataSetChanged();
+                //feedRequests.remove((int) v.getTag());
+                //CustomRequestRowAdapter.this.notifyDataSetChanged();
+                removeListItem((View) (v.getParent()).getParent());
             }
         });
 
         return convertView;
         }
+
+
+    protected void removeListItem(final View rowView) {
+        final Animation animation = AnimationUtils.loadAnimation(
+                getContext(), android.R.anim.slide_out_right);
+        rowView.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+//                rowView.setVisibility(View.GONE);
+                int tag = (int) rowView.findViewById(R.id.RowRequestHide).getTag();
+                feedRequests.remove(tag);
+                CustomRequestRowAdapter.this.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
 }
