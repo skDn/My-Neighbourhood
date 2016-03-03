@@ -62,7 +62,7 @@ public class RequestFeedFragment extends Fragment {
             titles[i] = requestFeed.get(i).getTitle();
         }
 
-        ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed);
+        ArrayAdapter<String> requestFeedAdapter = new CustomRequestRowAdapter(mainActivity, titles, requestFeed, mainActivity.getUser());
         RequestFeedListView.setAdapter(requestFeedAdapter);
         RequestFeedListView.setEmptyView(v.findViewById(R.id.noFeedRequestsYet));
 

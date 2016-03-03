@@ -604,10 +604,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-
-
-
-
     public ArrayList<Chat> getChatsForUser(User user) {
         ArrayList<Chat> chats = new ArrayList<>();
 

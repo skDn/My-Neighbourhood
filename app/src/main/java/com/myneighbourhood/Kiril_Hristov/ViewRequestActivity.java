@@ -50,6 +50,15 @@ public class ViewRequestActivity extends BaseActivity {
         apply = (Button) findViewById(R.id.ReqActButton);
 
         final Request request = DB.getRequest(requestId);
+
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle(request.getTitle());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("request requeist " + request.getPeopleNeeded());
 
         Bitmap image = request.getCreator().getImage();
@@ -75,6 +84,8 @@ public class ViewRequestActivity extends BaseActivity {
                 Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
                 Chat c = DB.addChat(request.getCreator(), user, request);
                 i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
+                startActivity(i);
+                finish();
             }
         });
     }
