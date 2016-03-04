@@ -171,7 +171,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -181,7 +181,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:background="@color/colorPrimary"
-            android:text="Contact" />
+            android:text="Apply" />
 
         <Button
             android:id="@+id/RowRequestHide"

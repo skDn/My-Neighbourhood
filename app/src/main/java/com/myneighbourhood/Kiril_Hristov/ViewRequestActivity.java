@@ -15,9 +15,11 @@ import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
+import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewRequestActivity extends BaseActivity {
@@ -70,6 +72,26 @@ public class ViewRequestActivity extends BaseActivity {
         description.setText(request.getDescription());
 
 
+        ArrayList<User> applicants = DB.getApplicants(requestId);
+
+        boolean isApplicant = false;
+        for(User applicant : applicants){
+            if (applicant.getId() == user.getId()){
+                isApplicant = true;
+                break;
+            }
+        }
+
+        if(isApplicant){
+            apply.setText("Already applied, Contact");
+            apply.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
+        }
+        else{
+            apply.setText("I am glad to help!");
+            apply.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+
+
         Integer pn = request.getPeopleNeeded();
         String pnS = pn.toString();
         peopleNeeded.setText(String.valueOf(request.getPeopleNeeded()));
@@ -81,16 +103,13 @@ public class ViewRequestActivity extends BaseActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!DB.addApplicant(user.getId(), request.getId(), request.getCreator().getId())){
-                    showDialogWithOkButton("You have already applied for that request!");
-                }
-                else {
-                    Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
-                    Chat c = DB.addChat(request.getCreator(), user, request);
-                    i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
-                    startActivity(i);
-                    finish();
-                }
+                DB.addApplicant(user.getId(), request.getId(), request.getCreator().getId());
+                Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
+                Chat c = DB.addChat(request.getCreator(), user, request);
+                i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
+                startActivity(i);
+                finish();
+
             }
         });
     }

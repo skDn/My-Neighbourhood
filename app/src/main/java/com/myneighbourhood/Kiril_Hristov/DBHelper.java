@@ -823,12 +823,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public ArrayList<User> getApplicants(long requestId, User creator) {
+    public ArrayList<User> getApplicants(long requestId) {
         ArrayList<User> applicants = new ArrayList<>();
 
         String query = "SELECT " + COLUMN_APPLICANT_APPLICANT_ID +" FROM " + TABLE_APPLICANT
-                     + " WHERE " + COLUMN_APPLICANT_CREATOR_ID + " = " + creator.getId()
-                     + " AND " + COLUMN_APPLICANT_REQUEST_ID + " = " + requestId;
+                     + " WHERE " + COLUMN_APPLICANT_REQUEST_ID + " = " + requestId;
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);

@@ -8,6 +8,10 @@
     tools:context="com.myneighbourhood.Kiril_Hristov.ViewRequestActivity"
     android:background="@color/colorBackground">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -160,17 +164,22 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/ReqActButton"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"
-                android:text="I am glad to help!"
-                android:background="@color/colorPrimary"/>
+
 
         </LinearLayout>
 
+
+
     </RelativeLayout>
+        <Button
+            android:id="@+id/ReqActButton"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="I am glad to help!"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"/>
+
+    </LinearLayout>
 
 </ScrollView>

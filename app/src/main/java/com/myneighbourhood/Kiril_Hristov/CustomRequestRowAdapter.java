@@ -3,6 +3,7 @@ package com.myneighbourhood.Kiril_Hristov;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,13 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
     ArrayList<Request> feedRequests;
     User user;
+    DBHelper db;
 
     public CustomRequestRowAdapter(Context context, String[] titles, ArrayList<Request> feedRequest, User user) {
         super(context, R.layout.custom_request_row, titles);
         this.feedRequests = feedRequest;
         this.user = user;
+        db = DBHelper.getInstance(context);
     }
 
     @Override
@@ -108,13 +111,33 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         viewHolder.username.setText(feedRequests.get(position).getCreator().getUsername());
         viewHolder.title.setText(title);
         viewHolder.description.setText(feedRequests.get(position).getDescription());
-        viewHolder.rating.setText(rating.toString());
+        viewHolder.rating.setText(String.valueOf(rating));
+
+        ArrayList<User> applicants = db.getApplicants(feedRequests.get(position).getId());
+
+        boolean isApplicant = false;
+        for(User applicant : applicants){
+            if (applicant.getId() == user.getId()){
+                isApplicant = true;
+                break;
+            }
+        }
+
+        if(isApplicant){
+            viewHolder.contact.setText("Contact");
+            viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_dark));
+        }
+        else{
+            viewHolder.contact.setText("Apply");
+            viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        }
+
 
         viewHolder.contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                db.addApplicant(user.getId(), feedRequests.get(position).getId(), feedRequests.get(position).getCreator().getId());
 
-                DBHelper db = DBHelper.getInstance(getContext());
                 Intent i = new Intent(getContext(), ChatActivity.class);
                 Chat c = db.addChat(feedRequests.get(position).getCreator(), user, feedRequests.get(position));
                 i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());

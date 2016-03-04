@@ -54,7 +54,7 @@ public class ApplicantsActivity extends BaseActivity {
         peopleNeeded = (TextView) findViewById(R.id.ApplicantsActPeopleNeeded);
         applicantsList = (ListView) findViewById(R.id.applicantsList);
 
-        applicants = DB.getApplicants(request.getId(), user);
+        applicants = DB.getApplicants(request.getId());
 
 
         String[] userNames = new String[applicants.size()];
