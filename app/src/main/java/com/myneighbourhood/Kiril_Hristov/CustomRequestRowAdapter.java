@@ -3,7 +3,6 @@ package com.myneighbourhood.Kiril_Hristov;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
@@ -28,7 +26,7 @@ import java.util.ArrayList;
  * Created by Kiril on 19/02/16.
  */
 
-public class CustomRequestRowAdapter extends ArrayAdapter<String> {
+public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
 
     ArrayList<Request> feedRequests;
     User user;
@@ -42,6 +40,11 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
     @Override
     public int getCount() {
         return feedRequests.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     static class ViewHolderItem {
@@ -62,6 +65,8 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.custom_request_row, parent, false);
+
+            
             viewHolder = new ViewHolderItem();
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);

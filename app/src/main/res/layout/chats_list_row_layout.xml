@@ -32,7 +32,10 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <include layout="@layout/separator_black" />
+        <include
+            layout="@layout/separator_black"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
 
         <TextView
             android:id="@+id/chats_list_row_TV_user_username"

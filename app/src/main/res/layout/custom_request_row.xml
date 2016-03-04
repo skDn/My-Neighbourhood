@@ -1,62 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp"
-    android:gravity="center"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:padding="5dp">
 
+    <!--<TextView-->
+    <!--android:id="@+id/usernameCaption"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--android:textStyle="bold"-->
+    <!--android:textSize="18sp"-->
+    <!--android:text="Created by" />-->
     <TextView
-        android:id="@+id/usernameCaption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="Created by" />
-
-    <LinearLayout
-        android:layout_below="@+id/usernameCaption"
-        android:id="@+id/topLayout"
+        android:id="@+id/RowRequestTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:gravity="center"
+        android:text="Title"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <include layout="@layout/separator_grey" />
+
+    <RelativeLayout
+        android:id="@+id/custom_request_row_RL_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/RowRequestImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight="0.1"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_account_circle_black_36dp"/>
+            android:paddingLeft="-5dp"
+            android:paddingStart="-5dp"
+            android:src="@drawable/ic_account_circle_black_36dp" />
 
-        <TextView
-            android:id="@+id/RowRequestUsername"
-            android:layout_width="0dp"
-            android:layout_weight="0.6"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/custom_request_row_LL_middle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/RowRequestImage"
+            android:layout_toLeftOf="@+id/custom_request_row_LL_end"
+            android:layout_toRightOf="@+id/RowRequestImage"
+            android:layout_toStartOf="@+id/custom_request_row_LL_end"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/custom_request_row_TV_creator_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="creator"
+                    android:textSize="@dimen/small_label_text_size" />
+
+                <TextView
+                    android:scrollHorizontally="true"
+                    android:id="@+id/RowRequestUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/custom_request_row_TV_creator_label"
+                    android:layout_toRightOf="@+id/custom_request_row_TV_creator_label"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="username"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <include
+                layout="@layout/separator_black"
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/custom_request_row_TV_created_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="created at"
+                    android:textSize="@dimen/small_label_text_size" />
+
+                <TextView
+                    android:id="@+id/chats_list_row_TV_user_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:layout_toEndOf="@+id/custom_request_row_TV_created_at"
+                    android:layout_toRightOf="@+id/custom_request_row_TV_created_at"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Username"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/custom_request_row_LL_end"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center"
-            android:text="username"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="As Requester"/>
+                android:text="As Requester"
+                android:textSize="@dimen/small_label_text_size" />
 
             <RelativeLayout
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
                 <ImageView
                     android:id="@+id/favorite_button"
@@ -68,68 +146,50 @@
                     android:id="@+id/RowRequestRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="80"
                     android:layout_alignBottom="@+id/favorite_button"
-                    android:layout_alignRight="@+id/favorite_button"
                     android:layout_alignEnd="@+id/favorite_button"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignRight="@+id/favorite_button"
+                    android:layout_marginBottom="18dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="18dp" />
+                    android:layout_marginRight="20dp"
+                    android:text="80" />
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
+    <include layout="@layout/separator_grey" />
 
-    <LinearLayout
-        android:id="@+id/middleLayout"
-        android:gravity="center"
+    <TextView
+        android:id="@+id/RowRequestDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topLayout"
-        android:orientation="vertical">
+        android:maxLines="6"
+        android:ellipsize="end"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
-        <include layout="@layout/separator_grey" />
-
-        <TextView
-            android:id="@+id/RowRequestTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            />
-
-        <TextView
-            android:id="@+id/RowRequestDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="description"/>
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-
-        android:orientation="horizontal"
-        android:layout_below="@+id/middleLayout">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/RowRequestContact"
             android:layout_width="0dp"
-            android:layout_weight="0.5"
             android:layout_height="match_parent"
-            android:text="Contact"
-            android:background="@color/colorPrimary"/>
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimary"
+            android:text="Contact" />
 
         <Button
             android:id="@+id/RowRequestHide"
             android:layout_width="0dp"
-            android:layout_weight="0.5"
             android:layout_height="match_parent"
-            android:text="Hide"
             android:layout_marginLeft="20dp"
-            android:background="@color/colorPrimaryDark" />
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimaryDark"
+            android:text="Hide" />
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
