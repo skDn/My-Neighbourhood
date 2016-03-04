@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -67,6 +68,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
 
 
+        ((FrameLayout)findViewById(R.id.chat_FL_list_wrapper)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(v);
+            }
+        });
         messagesLV = (ListView) findViewById(R.id.chat_LV_messages);
         newMessageET = (EditText) findViewById(R.id.chat_ET_new_message);
         checkBox1Label = (TextView) findViewById(R.id.chat_TV_check_box_1_label);
@@ -80,7 +87,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         shakeHandsBTN.setOnClickListener(this);
 
         checkBoxUser1.setClickable(false);
-
 
         checkBoxUser2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -116,12 +122,14 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private void handleNewMessage() {
         String messageString = newMessageET.getText().toString();
-        Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
-        DB.addMessage(message);
-        newMessageET.setText("");
-        messages.add(message);
-        adapter.setMessages(messages);
-        messagesLV.smoothScrollToPosition(adapter.getCount() - 1);
+        if (messageString.length() > 0) {
+            Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
+            DB.addMessage(message);
+            newMessageET.setText("");
+            messages.add(message);
+            adapter.setMessages(messages);
+            messagesLV.smoothScrollToPosition(adapter.getCount() - 1);
+        }
     }
 
     @Override
