@@ -6,7 +6,7 @@
     <!--android:orderInCategory="100" app:showAsAction="never" />-->
 
     <item
-        android:id="@+id/menu_action_home"
+        android:id="@+id/menu_action_home_messages"
         android:icon="@drawable/home"
         android:title="Home"
         android:visible="false"
@@ -20,16 +20,37 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/menu_action_home_jobs"
+        android:icon="@drawable/home"
+        android:title="Home"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_action_jobs"
         android:title="Jobs"
         android:icon="@drawable/ic_done_all_black_24dp"
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_action_home_neighbourhood"
+        android:icon="@drawable/home"
+        android:title="Home"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_action_neighbourhood"
         android:icon="@drawable/logo_menu"
         android:title="@string/action_neighbourhood"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_action_home_profile"
+        android:icon="@drawable/home"
+        android:title="Home"
+        android:visible="false"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_action_profile"

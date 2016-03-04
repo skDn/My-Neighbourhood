@@ -56,9 +56,25 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         if (showHomeInSteadOfChat()) {
-            menu.findItem(R.id.menu_action_home).setVisible(true);
+            menu.findItem(R.id.menu_action_home_messages).setVisible(true);
             menu.findItem(R.id.menu_action_messages).setVisible(false);
         }
+
+        if (showHomeInSteadOfMyNeighbourhood()) {
+            menu.findItem(R.id.menu_action_home_neighbourhood).setVisible(true);
+            menu.findItem(R.id.menu_action_neighbourhood).setVisible(false);
+        }
+
+        if (showHomeInSteadOfProfile()) {
+            menu.findItem(R.id.menu_action_home_profile).setVisible(true);
+            menu.findItem(R.id.menu_action_profile).setVisible(false);
+        }
+
+        if (showHomeInSteadOfJobs()) {
+            menu.findItem(R.id.menu_action_home_jobs).setVisible(true);
+            menu.findItem(R.id.menu_action_jobs).setVisible(false);
+        }
+
         return true;
     }
 
@@ -81,7 +97,7 @@ public class BaseActivity extends AppCompatActivity {
                 i = new Intent(this, MyNeighbourhoodActivity.class);
                 startActivity(i);
                 return true;
-            case R.id.menu_action_home:
+            case R.id.menu_action_home_messages:
                 i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 return true;
@@ -101,6 +117,19 @@ public class BaseActivity extends AppCompatActivity {
     protected boolean showHomeInSteadOfChat() {
         return false;
     }
+
+    protected boolean showHomeInSteadOfMyNeighbourhood() {
+        return false;
+    }
+
+    protected boolean showHomeInSteadOfProfile() {
+        return false;
+    }
+
+    protected boolean showHomeInSteadOfJobs() {
+        return false;
+    }
+
 
     protected void setLoggedInUser(User user) {
         this.user = user;
