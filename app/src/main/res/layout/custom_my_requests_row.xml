@@ -36,7 +36,7 @@
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="Edit"
-            android:background="#1B5E20"/>
+            android:background="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/rowDeleteRequest"
@@ -44,7 +44,7 @@
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="Delete"
-            android:background="#B71C1C"
+            android:background="@color/colorPrimaryDark"
             android:layout_toRightOf="@+id/rowEditRequest"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>

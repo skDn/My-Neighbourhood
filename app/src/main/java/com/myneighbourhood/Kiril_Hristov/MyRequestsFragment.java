@@ -75,7 +75,7 @@ public class MyRequestsFragment extends Fragment {
                         myIntent.putExtra("requestId", idClicked);
                         myIntent.putExtra("tab", 1);
                         startActivity(myIntent);
-                        mainActivity.finish();
+                        //mainActivity.finish();
                     }
                 }
         );
@@ -86,7 +86,7 @@ public class MyRequestsFragment extends Fragment {
                 Intent myIntent = new Intent(mainActivity, AddRequestActivity.class);
                 myIntent.putExtra("tab", 1);
                 startActivity(myIntent);
-                mainActivity.finish();
+                //mainActivity.finish();
             }
         });
     }
