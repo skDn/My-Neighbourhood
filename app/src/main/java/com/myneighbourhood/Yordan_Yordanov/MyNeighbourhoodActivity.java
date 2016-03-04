@@ -2,13 +2,16 @@ package com.myneighbourhood.Yordan_Yordanov;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.myneighbourhood.Kiril_Hristov.NonScrollListView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MyProfileActivity;
@@ -21,10 +24,10 @@ import java.util.ArrayList;
 public class MyNeighbourhoodActivity extends BaseActivity {
 
     private ArrayList<User> neighbours;
-    ListView NeighbourListView;
+    NonScrollListView NeighbourListView;
     SearchView searchNeighbours;
     LinearLayout neighbourhoodLayout;
-
+    ScrollView scrollNeighbourhood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +42,33 @@ public class MyNeighbourhoodActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        NeighbourListView = (ListView) findViewById(R.id.MyNeighbourhoodListView);
 
+
+        NeighbourListView = (NonScrollListView) findViewById(R.id.MyNeighbourhoodListView);
+        neighbourhoodLayout = (LinearLayout) findViewById(R.id.MyNeighbourhoodLayout);
+        scrollNeighbourhood = (ScrollView) findViewById(R.id.scrollNeighbourhood);
         searchNeighbours = (SearchView) findViewById(R.id.searchNeighbours);
         searchNeighbours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchNeighbours.onActionViewExpanded();
+                scrollNeighbourhood.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollNeighbourhood.scrollTo(0, (int)searchNeighbours.getY());
+                    }
+                }, 500);
             }
         });
 
+
+        neighbourhoodLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
 
         // getting users from the database
         neighbours = DB.getUsers();
@@ -62,6 +82,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
         ArrayAdapter<String> neighbourhoodRowAdapter =
                 new CustomNeighbourhoodRowAdapter(this, userNames, neighbours);
         NeighbourListView.setAdapter(neighbourhoodRowAdapter);
+        NeighbourListView.setScrollContainer(false);
 
         // setting onclicklistener to navigate to the user's profile.
         NeighbourListView.setOnItemClickListener(

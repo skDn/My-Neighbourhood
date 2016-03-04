@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
@@ -66,7 +67,10 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.custom_request_row, parent, false);
 
-            
+            RelativeLayout userInfoRL = (RelativeLayout) convertView.findViewById(R.id.custom_request_row_RL_user_info);
+            userInfoRL.setOnClickListener(this);
+            userInfoRL.setTag(position);
+
             viewHolder = new ViewHolderItem();
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
