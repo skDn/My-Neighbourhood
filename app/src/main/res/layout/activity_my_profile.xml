@@ -2,9 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="2dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         tools:context=".Velin_Kerkov.MyProfileActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/my_profile_CIV_profile_pic"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
@@ -52,7 +52,7 @@
                     android:text="As requester" />
 
                 <TextView
-                    android:id="@+id/profile_TV_rating_requester"
+                    android:id="@+id/my_profile_TV_rating_requester"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                     android:text="As applicant" />
 
                 <TextView
-                    android:id="@+id/profile_TV_rating_applicant"
+                    android:id="@+id/my_profile_TV_rating_applicant"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
                     android:text="Endorsed by" />
 
                 <TextView
-                    android:id="@+id/profile_TV_rating_endorsed_by"
+                    android:id="@+id/my_profile_TV_rating_endorsed_by"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                     android:text="Username" />
 
                 <TextView
-                    android:id="@+id/profile_TV_username"
+                    android:id="@+id/my_profile_TV_username"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -138,7 +138,7 @@
                     android:text="First name" />
 
                 <TextView
-                    android:id="@+id/profile_TV_first_name"
+                    android:id="@+id/my_profile_TV_first_name"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -153,7 +153,7 @@
                     android:text="Last name" />
 
                 <TextView
-                    android:id="@+id/profile_TV_last_name"
+                    android:id="@+id/my_profile_TV_last_name"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -168,7 +168,7 @@
                     android:text="Email" />
 
                 <TextView
-                    android:id="@+id/profile_TV_email"
+                    android:id="@+id/my_profile_TV_email"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -183,7 +183,7 @@
                     android:text="Phone" />
 
                 <TextView
-                    android:id="@+id/profile_TV_phone"
+                    android:id="@+id/my_profile_TV_phone"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -198,13 +198,13 @@
                     android:text="Address" />
 
                 <TextView
-                    android:id="@+id/profile_TV_address"
+                    android:id="@+id/my_profile_TV_address"
                     style="@style/ProfileActivityRowTVSettings"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <fragment
-                android:id="@+id/register_CMF_map"
+                android:id="@+id/my_profile_CMF_map"
                 android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
@@ -215,7 +215,7 @@
         <include layout="@layout/separator_black" />
 
         <Button
-            android:id="@+id/profile_B_log_off"
+            android:id="@+id/my_profile_B_log_off"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"

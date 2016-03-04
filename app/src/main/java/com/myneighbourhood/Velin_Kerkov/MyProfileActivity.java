@@ -24,16 +24,16 @@ public class MyProfileActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        Button logOffBTN = (Button) findViewById(R.id.profile_B_log_off);
-        TextView ratingRequesterTV = (TextView) findViewById(R.id.profile_TV_rating_requester);
-        TextView ratingApplicantTV = (TextView) findViewById(R.id.profile_TV_rating_applicant);
-        TextView ratingEndorsedByTV = (TextView) findViewById(R.id.profile_TV_rating_endorsed_by);
-        TextView usernameTV = (TextView) findViewById(R.id.profile_TV_username);
-        TextView firstNameTV = (TextView) findViewById(R.id.profile_TV_first_name);
-        TextView lastNameTV = (TextView) findViewById(R.id.profile_TV_last_name);
-        TextView emailTV = (TextView) findViewById(R.id.profile_TV_email);
-        TextView phoneTV = (TextView) findViewById(R.id.profile_TV_phone);
-        TextView addressTV = (TextView) findViewById(R.id.profile_TV_address);
+        Button logOffBTN = (Button) findViewById(R.id.my_profile_B_log_off);
+        TextView ratingRequesterTV = (TextView) findViewById(R.id.my_profile_TV_rating_requester);
+        TextView ratingApplicantTV = (TextView) findViewById(R.id.my_profile_TV_rating_applicant);
+        TextView ratingEndorsedByTV = (TextView) findViewById(R.id.my_profile_TV_rating_endorsed_by);
+        TextView usernameTV = (TextView) findViewById(R.id.my_profile_TV_username);
+        TextView firstNameTV = (TextView) findViewById(R.id.my_profile_TV_first_name);
+        TextView lastNameTV = (TextView) findViewById(R.id.my_profile_TV_last_name);
+        TextView emailTV = (TextView) findViewById(R.id.my_profile_TV_email);
+        TextView phoneTV = (TextView) findViewById(R.id.my_profile_TV_phone);
+        TextView addressTV = (TextView) findViewById(R.id.my_profile_TV_address);
 
         usernameTV.setText(user.getUsername());
         emailTV.setText(user.getEmail());
