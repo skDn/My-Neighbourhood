@@ -1,7 +1,6 @@
 package com.myneighbourhood.Kiril_Hristov;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
-import com.myneighbourhood.Velin_Kerkov.MyProfileActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
-import com.myneighbourhood.Yordan_Yordanov.CustomNeighbourhoodRowAdapter;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
@@ -22,7 +19,7 @@ import com.myneighbourhood.utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Applicants extends BaseActivity {
+public class ApplicantsActivity extends BaseActivity {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -83,11 +80,11 @@ public class Applicants extends BaseActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(Applicants.this, ChatActivity.class);
+                        Intent i = new Intent(ApplicantsActivity.this, ChatActivity.class);
                         Chat c = DB.addChat(user, applicants.get(position), request);
                         i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
                         startActivity(i);
-                        finish();
+//                        finish();
                     }
                 }
         );

@@ -51,7 +51,7 @@
         <activity android:name=".Yordan_Yordanov.NewsActivity" />
         <activity android:name=".Kiril_Hristov.AddRequestActivity" />
         <activity android:name=".Kiril_Hristov.ViewRequestActivity" />
-        <activity android:name=".Kiril_Hristov.Applicants"></activity>
+        <activity android:name=".Kiril_Hristov.ApplicantsActivity"></activity>
         <activity android:name=".Velin_Kerkov.ProfileActivity"></activity>
     </application>
 
