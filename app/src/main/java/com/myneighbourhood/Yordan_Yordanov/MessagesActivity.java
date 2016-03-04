@@ -48,7 +48,13 @@ public class MessagesActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        SearchView searchSV = (SearchView) findViewById(R.id.messages_SV_search);
+        final SearchView searchSV = (SearchView) findViewById(R.id.messages_SV_search);
+        searchSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchSV.onActionViewExpanded();
+            }
+        });
         chatsLV = (ListView) findViewById(R.id.messages_LV_chats_list);
         chatsForUser = new ArrayList<>();
         adapter = new ChatsListArrayAdapter(this, R.layout.chats_list_row_layout, chatsForUser);
