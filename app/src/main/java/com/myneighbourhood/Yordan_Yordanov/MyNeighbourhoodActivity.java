@@ -11,7 +11,9 @@ import android.widget.SearchView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MyProfileActivity;
+import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -65,10 +67,12 @@ public class MyNeighbourhoodActivity extends BaseActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         long idClicked = neighbours.get(position).getId();
-                        Intent myIntent = new Intent(MyNeighbourhoodActivity.this, MyProfileActivity.class);
-                        myIntent.putExtra("userId", idClicked);
-                        startActivity(myIntent);
-                        finish();
+                        Intent i = new Intent(MyNeighbourhoodActivity.this, ProfileActivity.class);
+                        if (idClicked == user.getId()) {
+                            i = new Intent(MyNeighbourhoodActivity.this, MyProfileActivity.class);
+                        }
+                        i.putExtra(Utils.EXTRA_OTHER_USER, idClicked);
+                        startActivity(i);
                     }
                 }
         );
