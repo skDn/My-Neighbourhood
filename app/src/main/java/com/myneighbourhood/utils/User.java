@@ -34,8 +34,8 @@ public class User {
         this.firstName = firstName != null ? firstName : "";
         this.lastName = lastName != null ? lastName : "";
         this.password = password != null ? password : "";
-        this.email = email != null ? password : "";
-        this.phone = phone != null ? password : "";
+        this.email = email != null ? email : "";
+        this.phone = phone != null ? phone : "";
         this.image = image;
     }
 
@@ -121,6 +121,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User: " + username;
+
+        return "User: {" + username + ", " + firstName + ", " + lastName + ", " + phone + ", " + email + "}";
     }
 }

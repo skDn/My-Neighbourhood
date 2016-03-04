@@ -53,6 +53,8 @@ public class LoginActivity extends BaseActivity {
             System.out.println("Vili: " + vili.getId());
         }
 
+        System.out.println(newAdmin.toString());
+        System.out.println(newVili.toString());
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR, 10);
 
