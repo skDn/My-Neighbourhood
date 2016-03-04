@@ -43,6 +43,28 @@ public class MyProfileActivity extends BaseActivity {
         usernameTV.setText(user.getUsername());
         emailTV.setText(user.getEmail());
         phoneTV.setText(user.getPhone());
+        ratingRequesterTV.setText(String.valueOf(user.getRating().getRatingAsRequester()));
+        ratingApplicantTV.setText(String.valueOf(user.getRating().getRatingAsApplicant()));
+        ratingEndorsedByTV.setText(String.valueOf(user.getRating().getEndorsedBy()));
+
+        firstNameTV.setText(user.getFirstName());
+        lastNameTV.setText(user.getLastName());
+        addressTV.setText(user.getAddress().getAddress());
+
+
+        System.out.println("Username: " + user.getUsername()
+                + "\nFirstname: " + user.getFirstName()
+                + "\nLastname: " + user.getLastName()
+                + "\nphone: " + user.getPhone()
+                + "\nemail: " + user.getEmail()
+                + "\naddress: " + user.getAddress().getAddress()
+                + "\nratingReq: " + user.getRating().getRatingAsRequester()
+                + "\nratingAppl: " + user.getRating().getRatingAsApplicant()
+                + "\nendorcedBy: " + user.getRating().getEndorsedBy());
+
+
+        System.out.println("USERS:\n");
+        DB.printUSers();
 
         logOffBTN.setOnClickListener(new View.OnClickListener() {
             @Override

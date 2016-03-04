@@ -18,6 +18,7 @@ import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,7 +28,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 20;
+    private static final int DB_VERSION = 21;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -104,6 +105,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_2 = "latest_view_by_user_2";
 
 
+    public void printUSers(){
+        String q = "SELECT * FROM " + TABLE_USER;
+        Cursor cursor = getReadableDatabase().rawQuery(q, null);
+        for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
+            System.out.println(createUserFromCursor(cursor));
+        }
+
+        cursor.close();
+    }
     // Create table queries
     private static final String createUser =
             "CREATE TABLE " + TABLE_USER + "(" +

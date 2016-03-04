@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -22,6 +23,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
     private ArrayList<User> neighbours;
     ListView NeighbourListView;
     SearchView searchNeighbours;
+    LinearLayout neighbourhoodLayout;
 
 
     @Override
