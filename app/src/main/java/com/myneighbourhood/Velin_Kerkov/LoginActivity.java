@@ -40,8 +40,8 @@ public class LoginActivity extends BaseActivity {
 
         User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
         User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
-        DB.deleteUser(admin);
-        DB.deleteUser(vili);
+//        DB.deleteUser(admin);
+//        DB.deleteUser(vili);
         User newAdmin = DB.getUser(admin.getUsername(), admin.getPassword());
         User newVili = DB.getUser(vili.getUsername(), vili.getPassword());
 

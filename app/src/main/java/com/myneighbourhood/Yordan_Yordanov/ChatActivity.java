@@ -69,13 +69,13 @@ public class ChatActivity extends BaseActivity {
         checkBox2Label = (TextView) findViewById(R.id.chat_TV_check_box_2_label);
         sendMessageIV = (ImageView) findViewById(R.id.chat_B_send_message);
 
-        checkBox1Label.setText(user.getUsername() + " confirms");
-        checkBox2Label.setText(otherUser.getUsername() + " confirms");
+        checkBox1Label.setText(otherUser.getUsername() + " confirms");
+        checkBox2Label.setText(user.getUsername() + " confirms");
 
         checkBoxUser1 = (CheckBox) findViewById(R.id.chat_CB_user_1);
         checkBoxUser2 = (CheckBox) findViewById(R.id.chat_CB_user_2);
 
-        checkBoxUser2.setClickable(false);
+        checkBoxUser1.setClickable(false);
 
         adapter = new MsgAdapter(this, -1, this.messages, otherUser);
         messagesLV.setAdapter(adapter);
