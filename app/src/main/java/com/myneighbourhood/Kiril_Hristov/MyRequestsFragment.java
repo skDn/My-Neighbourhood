@@ -71,7 +71,7 @@ public class MyRequestsFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         long idClicked = myRequests.get(position).getId();
-                        Intent myIntent = new Intent(mainActivity, ViewRequestActivity.class);
+                        Intent myIntent = new Intent(mainActivity, Applicants.class);
                         myIntent.putExtra("requestId", idClicked);
                         myIntent.putExtra("tab", 1);
                         startActivity(myIntent);

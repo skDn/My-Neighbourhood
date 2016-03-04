@@ -59,33 +59,38 @@ public class ViewRequestActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        System.out.println("request requeist " + request.getPeopleNeeded());
-
         Bitmap image = request.getCreator().getImage();
         if(profilePicture != null) {
             profilePicture.setImageBitmap(image);
         }
         else {profilePicture.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black_36dp));}
         username.setText(request.getCreator().getUsername());
-//        rating.setText(request.getCreator().getRating().getRatingAsRequester());
+        rating.setText(String.valueOf(request.getCreator().getRating().getRatingAsRequester()));
         title.setText(request.getTitle());
         description.setText(request.getDescription());
 
-//        peopleNeeded.setText(request.getPeopleNeeded());
+
+        Integer pn = request.getPeopleNeeded();
+        String pnS = pn.toString();
+        peopleNeeded.setText(String.valueOf(request.getPeopleNeeded()));
 
         String dateDate = dateFormat.format(request.getExpires());
         String dateTime = timeFormat.format(request.getExpires());
-        expires.setText(dateDate + dateTime);
+        expires.setText(dateDate + " " + dateTime);
 
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
-                Chat c = DB.addChat(request.getCreator(), user, request);
-                i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
-                startActivity(i);
-                finish();
+                if(!DB.addApplicant(user.getId(), request.getId(), request.getCreator().getId())){
+                    showDialogWithOkButton("You have already applied for that request!");
+                }
+                else {
+                    Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
+                    Chat c = DB.addChat(request.getCreator(), user, request);
+                    i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
+                    startActivity(i);
+                    finish();
+                }
             }
         });
     }

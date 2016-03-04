@@ -60,12 +60,7 @@
                 android:id="@+id/RowNeighbourApplicantRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/favorite_button_applicant"
-                android:layout_alignEnd="@+id/favorite_button_applicant"
-                android:layout_alignRight="@+id/favorite_button_applicant"
-                android:layout_marginBottom="18dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
                 android:text="30" />
         </RelativeLayout>
     </LinearLayout>
@@ -98,12 +93,7 @@
                 android:id="@+id/RowNeighbourRequesterRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/favorite_button_requester"
-                android:layout_alignEnd="@+id/favorite_button_requester"
-                android:layout_alignRight="@+id/favorite_button_requester"
-                android:layout_marginBottom="18dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
                 android:text="80" />
         </RelativeLayout>
     </LinearLayout>

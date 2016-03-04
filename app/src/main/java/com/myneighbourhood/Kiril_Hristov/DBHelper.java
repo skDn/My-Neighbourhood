@@ -776,6 +776,57 @@ public class DBHelper extends SQLiteOpenHelper {
         return messages;
     }
 
+//    private static final String createApplicant =
+//            "CREATE TABLE " + TABLE_APPLICANT + "(" +
+//                    COLUMN_APPLICANT_RECORD + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//                    COLUMN_APPLICANT_APPLICANT_ID + " INTEGER, " +
+//                    COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
+//                    COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
+//                    COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
+//                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+//                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+//                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+//                    ");";
+
+    public boolean addApplicant(long applicantId, long requestId, long creatorId){
+
+        ContentValues values = new ContentValues();
+        long now = System.currentTimeMillis();
+        values.put(COLUMN_APPLICANT_APPLICANT_ID, applicantId);
+        values.put(COLUMN_APPLICANT_REQUEST_ID, requestId);
+        values.put(COLUMN_APPLICANT_CREATOR_ID, creatorId);
+        values.put(COLUMN_APPLICANT_TIMESTAMP, now);
+
+        long insertedApplicantRecord = getWritableDatabase().insert(TABLE_APPLICANT, null, values);
+        System.out.println("ADD APPLICANT " + insertedApplicantRecord);
+        if (insertedApplicantRecord == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    public ArrayList<User> getApplicants(long requestId, User creator) {
+        ArrayList<User> applicants = new ArrayList<>();
+
+        String query = "SELECT " + COLUMN_APPLICANT_APPLICANT_ID +" FROM " + TABLE_APPLICANT
+                     + " WHERE " + COLUMN_APPLICANT_CREATOR_ID + " = " + creator.getId()
+                     + " AND " + COLUMN_APPLICANT_REQUEST_ID + " = " + requestId;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            System.out.println("MAIKA TI DA EBA SHIBANA PACHA");
+            long applicantId = c.getLong(c.getColumnIndex(COLUMN_APPLICANT_APPLICANT_ID));
+            User u = getUser(applicantId);
+            applicants.add(u);
+        }
+        System.out.println("SIZE NA APPLICANTS V DB" + applicants.size());
+        c.close();
+        db.close();
+        return applicants;
+    }
+
     public Chat getChat(long chatId) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_CHATS + " WHERE " + COLUMN_CHATS_ID + " = " + chatId;

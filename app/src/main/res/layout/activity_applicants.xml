@@ -9,82 +9,114 @@
     android:background="@color/colorBackground">
 
 
-
     <LinearLayout
-        android:layout_below="@+id/ReqActUserSectionSeparator"
+        android:id="@+id/summaryLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/ApplicantsActTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:layout_gravity="center_horizontal"
+            android:text = "Title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/ApplicantsActDescription"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:text = "request text"
+            />
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="0.1"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/ApplicantsActExpiresCaption"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "Expires at: " />
+
+
+            <TextView
+                android:id="@+id/ApplicantsActExpires"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "date" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="0.1"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/ApplicantsActPeopleNeededCaption"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "People needed: " />
+
+
+            <TextView
+                android:id="@+id/ApplicantsActPeopleNeeded"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "number" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <TextView
-        android:id="@+id/ReqActTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:layout_gravity="center_horizontal"
-        android:text = "Title"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/ReqActDescription"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.6"
-        android:text = "request text"
-        />
-
-
-    <LinearLayout
+        android:id="@+id/applintsCaption"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:layout_below="@+id/summaryLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Applicants for that request:"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/explain"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/applintsCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="(Click on applicant to start a chat)"
+        android:layout_centerHorizontal="true"/>
+
+
+    <ListView
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/explain"
+        android:dividerHeight="2dp"
+        android:id="@+id/applicantsList"
         android:layout_width="match_parent"
-        android:layout_weight="0.1"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content"
+        android:divider="@color/colorBackground"
+        android:background="@android:color/white"/>
 
-        <TextView
-            android:id="@+id/ReqActExpiresCaption"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "Expires at: " />
-
-
-        <TextView
-            android:id="@+id/ReqActExpires"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "date" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="0.1"
-        android:layout_height="0dp">
-
-        <TextView
-            android:id="@+id/ReqActPeopleNeededCaption"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "People needed: " />
-
-
-        <TextView
-            android:id="@+id/ReqActPeopleNeeded"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "number" />
-
-    </LinearLayout>
-
-</LinearLayout>
 
 </RelativeLayout>
