@@ -14,8 +14,10 @@ public class Request {
     private long expires;
     private int accepted;
 
+    private int status;
+
     // to use when creating Request
-    public Request(User creator, String title, String description, int peopleNeeded, long expires){
+    public Request(User creator, String title, String description, int peopleNeeded, long expires, int status){
         this.creator=creator;
         this.title = title;
         this.description = description;
@@ -25,10 +27,11 @@ public class Request {
         // defaults
         this.timestamp = System.currentTimeMillis();
         this.accepted = 0;
+        this.status = status;
     }
 
     // to use when fetching from DB
-    public Request(long id, User creator, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted){
+    public Request(long id, User creator, String title, String description, int peopleNeeded, long timestamp, long expires, int accepted, int status){
         System.out.println("creator: " + creator);
         this.id = id;
         this.creator = creator;
@@ -38,6 +41,7 @@ public class Request {
         this.timestamp = timestamp;
         this.expires = expires;
         this.accepted = accepted;
+        this.status = status;
     }
 
     public long getId() {
@@ -99,5 +103,15 @@ public class Request {
     public void setAccepted(int accepted) {
         this.accepted = accepted;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
 
 }

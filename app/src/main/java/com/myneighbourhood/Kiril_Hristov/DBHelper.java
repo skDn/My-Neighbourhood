@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 26;
+    private static final int DB_VERSION = 27;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -65,6 +65,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_REQUEST_TIMESTAMP = "timestamp";
     private static final String COLUMN_REQUEST_EXPIRES = "expires";
     private static final String COLUMN_REQUEST_ACCEPTED = "isAccepted";
+    private static final String COLUMN_REQUEST_STATUS = "status";
 
     //News table
     private static final String TABLE_NEWS = "News";
@@ -157,6 +158,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_REQUEST_TIMESTAMP + " INTEGER, " +
                     COLUMN_REQUEST_EXPIRES + " INTEGER, " +
                     COLUMN_REQUEST_ACCEPTED + " INTEGER, " +
+                    COLUMN_REQUEST_STATUS + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_REQUEST_CREATED_BY_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "UNIQUE (" + COLUMN_REQUEST_CREATED_BY_ID + ", " + COLUMN_REQUEST_TITLE + ") " +
                     ");";
@@ -438,6 +440,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_REQUEST_TIMESTAMP, request.getTimestamp());
         values.put(COLUMN_REQUEST_EXPIRES, request.getExpires());
         values.put(COLUMN_REQUEST_ACCEPTED, request.getAccepted());
+        values.put(COLUMN_REQUEST_STATUS, request.getStatus());
         SQLiteDatabase db = getWritableDatabase();
         long insertedId = db.insert(TABLE_REQUEST, null, values);
         db.close();
@@ -505,7 +508,8 @@ public class DBHelper extends SQLiteOpenHelper {
         long timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
         long expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
         int accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
-        return new Request(requestId, creator, title, description, peopleNeeded, timestamp, expires, accepted);
+        int status = c.getInt(c.getColumnIndex(COLUMN_REQUEST_STATUS));
+        return new Request(requestId, creator, title, description, peopleNeeded, timestamp, expires, accepted, status);
     }
 
     // get myRequests or feedRequests
@@ -880,5 +884,32 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         db.close();
         request.setAccepted(1);
+    }
+
+    public void requestStatusUpdate(Request request) {
+        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_STATUS + " = " + request.getStatus() + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +   request.getId();
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+    }
+
+    public ArrayList<Request> getAllRequests() {
+        ArrayList<Request> toReturn = new ArrayList<>();
+
+        String getRequests =
+                "SELECT * FROM " + TABLE_REQUEST;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(getRequests, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Request r = createRequestFromCursor(c);
+            toReturn.add(r);
+
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return toReturn;
     }
 }

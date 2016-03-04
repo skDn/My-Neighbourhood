@@ -57,7 +57,7 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 else{
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.HOUR, hourSelected);
-                    DB.addRequest(new Request(user, title, description, numberOfPeopleSelected, cal.getTimeInMillis()));
+                    DB.addRequest(new Request(user, title, description, numberOfPeopleSelected, cal.getTimeInMillis(), 0));
                     onBackPressed();
                 }
             }

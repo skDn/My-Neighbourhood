@@ -53,6 +53,8 @@
         <activity android:name=".Kiril_Hristov.ViewRequestActivity" />
         <activity android:name=".Kiril_Hristov.ApplicantsActivity" />
         <activity android:name=".Velin_Kerkov.ProfileActivity" />
+        <activity android:name=".Kiril_Hristov.JobsActivity" >
+        </activity>
     </application>
 
 </manifest>

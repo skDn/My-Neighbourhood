@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR, 10);
 
-        Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis());
+        Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis(), 0);
 
         Request adminRequestRes = DB.addRequest(adminRequest);
         if (adminRequestRes == null) {
