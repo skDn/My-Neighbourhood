@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.utils.News;
 import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
@@ -21,8 +20,18 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
 
     private ArrayList<User> neighbours;
 
+    @Override
+    public int getCount() {
+        return neighbours.size();
+    }
+
+    public void setNeighbours(ArrayList<User> neighbours) {
+        this.neighbours = neighbours;
+        notifyDataSetChanged();
+    }
+
     public CustomNeighbourhoodRowAdapter(Context context, String[] userNames, ArrayList<User> neighbours) {
-        super(context, R.layout.custom_neighbourhood_row, userNames);
+        super(context, R.layout.custom_neighbourhood_row);
         this.neighbours = neighbours;
     }
 
