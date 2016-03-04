@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
 
         android:orientation="vertical"
-        tools:context="com.myneighbourhood.Velin_Kerkov.ProfileActivity">
+        tools:context=".Velin_Kerkov.MyProfileActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"

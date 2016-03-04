@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Utils;
 
-public class ProfileActivity extends BaseActivity {
+public class MyProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +43,11 @@ public class ProfileActivity extends BaseActivity {
         logOffBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileActivity.user = null;
+                MyProfileActivity.user = null;
                 SP_VILI_EDITOR.remove(Utils.SP_LAST_USER_ID);
                 SP_VILI_EDITOR.apply();
 
-                Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
+                Intent i = new Intent(MyProfileActivity.this, LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }

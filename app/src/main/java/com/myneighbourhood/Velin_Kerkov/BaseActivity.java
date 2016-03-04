@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_action_profile:
-                Intent i = new Intent(this, ProfileActivity.class);
+                Intent i = new Intent(this, MyProfileActivity.class);
                 startActivity(i);
                 return true;
             case R.id.menu_action_messages:

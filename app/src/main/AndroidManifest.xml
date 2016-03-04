@@ -48,7 +48,7 @@
             android:noHistory="true" />
         <activity
             android:name=".Velin_Kerkov.RegisterActivity" />
-        <activity android:name=".Velin_Kerkov.ProfileActivity" />
+        <activity android:name=".Velin_Kerkov.MyProfileActivity" />
         <activity android:name=".Yordan_Yordanov.AddNewsActivity" />
         <activity android:name=".Yordan_Yordanov.ChatActivity" />
         <activity android:name=".Yordan_Yordanov.MessagesActivity" />
