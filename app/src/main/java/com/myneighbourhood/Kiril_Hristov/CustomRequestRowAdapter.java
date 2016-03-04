@@ -23,13 +23,17 @@ import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Kiril on 19/02/16.
  */
 
 public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
 
     ArrayList<Request> feedRequests;
     User user;
@@ -59,6 +63,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
     static class ViewHolderItem {
         ImageView userImage;
         TextView username;
+        TextView dateCreated;
         TextView title;
         TextView description;
         TextView rating;
@@ -83,6 +88,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowRequestUsername);
+            viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.custom_request_row_TV_created_at);
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.RowRequestDescription);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
@@ -112,6 +118,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         viewHolder.title.setText(title);
         viewHolder.description.setText(feedRequests.get(position).getDescription());
         viewHolder.rating.setText(String.valueOf(rating));
+        viewHolder.dateCreated.setText(dateFormat.format(new Date(feedRequests.get(position).getTimestamp())));
 
         ArrayList<User> applicants = db.getApplicants(feedRequests.get(position).getId());
 

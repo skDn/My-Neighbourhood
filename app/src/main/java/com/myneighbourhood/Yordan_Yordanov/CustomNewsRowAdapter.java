@@ -1,7 +1,6 @@
 package com.myneighbourhood.Yordan_Yordanov;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
 
 import java.text.SimpleDateFormat;
@@ -28,7 +26,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     public CustomNewsRowAdapter(Context context, String[] titles, ArrayList<News> newsFeed) {
-        super(context, R.layout.custom_request_row, titles);
+        super(context, R.layout.custom_news_row, titles);
         this.newsFeed = newsFeed;
     }
 

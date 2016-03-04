@@ -101,7 +101,7 @@
                     android:textSize="@dimen/small_label_text_size" />
 
                 <TextView
-                    android:id="@+id/chats_list_row_TV_user_username"
+                    android:id="@+id/request_row_TV_date_created"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
@@ -109,7 +109,7 @@
                     android:layout_toRightOf="@+id/custom_request_row_TV_created_at"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="Username"
+                    android:text="Date created"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </RelativeLayout>
