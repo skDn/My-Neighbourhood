@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        tools:context=".Velin_Kerkov.MyProfileActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile_pic_house"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <include layout="@layout/separator_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profile_rect_background"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="Ratings"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="As requester" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_requester"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="As applicant" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_applicant"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Endorsed by" />
+
+                <TextView
+                    android:id="@+id/profile_TV_rating_endorsed_by"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/separator_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/profile_rect_background"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="Details"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Username" />
+
+                <TextView
+                    android:id="@+id/profile_TV_username"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="First name" />
+
+                <TextView
+                    android:id="@+id/profile_TV_first_name"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Last name" />
+
+                <TextView
+                    android:id="@+id/profile_TV_last_name"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Email" />
+
+                <TextView
+                    android:id="@+id/profile_TV_email"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Phone" />
+
+                <TextView
+                    android:id="@+id/profile_TV_phone"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/profileTableRow"
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:text="Address" />
+
+                <TextView
+                    android:id="@+id/profile_TV_address"
+                    style="@style/ProfileActivityRowTVSettings"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <fragment
+                android:id="@+id/register_CMF_map"
+                android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:layout_marginBottom="10sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/separator_black" />
+
+        <Button
+            android:id="@+id/profile_B_log_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="log Out"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>
