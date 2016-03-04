@@ -33,6 +33,8 @@ public class RegisterActivity extends BaseActivity {
     private Fragment mapFragment;
     private ScrollView mainLayoutSV;
     private MapView mapView;
+    private EditText firstNameET;
+    private EditText lastNameET;
 
     @Override
     protected boolean useToolbar() {
@@ -53,7 +55,8 @@ public class RegisterActivity extends BaseActivity {
         usernameET = (EditText) findViewById(R.id.register_ET_username);
         addressET = (EditText) findViewById(R.id.register_ET_address);
         profilePicIV = (CircleImageView) findViewById(R.id.register_CIV_profile_picture);
-
+        firstNameET = (EditText) findViewById(R.id.register_ET_first_name);
+        lastNameET = (EditText) findViewById(R.id.register_ET_last_name);
 
         // set up onClick listeners
         registerBTN.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +67,11 @@ public class RegisterActivity extends BaseActivity {
                 String password = passwordET.getText().toString();
                 String phone = phoneET.getText().toString();
                 String username = usernameET.getText().toString();
+                String firstName = firstNameET.getText().toString();
+                String lastName = lastNameET.getText().toString();
                 String address = addressET.getText().toString();
 
-                User user = DB.registerUser(new User(username, "", "", password, email, phone, null), new Address("100 Gibson Street", 0, 0));
+                User user = DB.registerUser(new User(username, firstName, lastName, password, email, phone, null), new Address("100 Gibson Street", 0, 0));
                 setLoggedInUser(user);
                 SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
                 SP_VILI_EDITOR.apply();
