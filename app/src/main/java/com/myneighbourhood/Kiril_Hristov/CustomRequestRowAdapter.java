@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
@@ -45,7 +46,11 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
     @Override
     public void onClick(View v) {
-
+        int requestIndex = (int) v.getTag();
+        long clickedRequestCreatorId = feedRequests.get(requestIndex).getCreator().getId();
+        Intent i = new Intent(getContext(), ProfileActivity.class);
+        i.putExtra(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY, clickedRequestCreatorId);
+        getContext().startActivity(i);
     }
 
     static class ViewHolderItem {

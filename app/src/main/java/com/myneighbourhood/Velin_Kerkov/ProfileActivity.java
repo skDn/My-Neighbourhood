@@ -21,7 +21,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
 
         Bundle extras = getIntent().getExtras();
-        long otherUserId = extras.getLong(Utils.EXTRA_OTHER_USER);
+        long otherUserId = extras.getLong(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY);
         otherUser = DB.getUser(otherUserId);
 
         Button blockContentFromBTN = (Button) findViewById(R.id.profile_B_block_content_from);

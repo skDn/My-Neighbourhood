@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
@@ -94,7 +93,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
                         if (idClicked == user.getId()) {
                             i = new Intent(MyNeighbourhoodActivity.this, MyProfileActivity.class);
                         }
-                        i.putExtra(Utils.EXTRA_OTHER_USER, idClicked);
+                        i.putExtra(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY, idClicked);
                         startActivity(i);
                     }
                 }
