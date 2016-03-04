@@ -9,18 +9,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
         tools:context=".Velin_Kerkov.MyProfileActivity">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/my_profile_CIV_profile_pic"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:src="@drawable/profile_pic_house"
-            app:civ_border_color="#FF000000"
-            app:civ_border_width="2dp" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/my_profile_CIV_profile_pic"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile_pic_house"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp" />
 
         <include layout="@layout/separator_black" />
 
