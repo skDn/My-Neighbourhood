@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/MyNeighbourhoodLayout"
+    android:id="@+id/scrollNeighbourhood"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,26 +9,34 @@
     android:background="@color/colorBackground"
     tools:context="com.myneighbourhood.Yordan_Yordanov.MyNeighbourhoodActivity">
 
-    <fragment
-        android:id="@+id/register_CMF_map"
-        android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="10dp" />
-
-    <SearchView
-        android:id="@+id/searchNeighbours"
+    <LinearLayout
+        android:id="@+id/MyNeighbourhoodLayout"
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:queryHint="Search neighbours">
+        android:orientation="vertical">
 
-    </SearchView>
+        <fragment
+            android:id="@+id/register_CMF_map"
+            android:name="com.myneighbourhood.Velin_Kerkov.CustomMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp" />
 
-    <ListView
-        android:id="@+id/MyNeighbourhoodListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:dividerHeight="5dp" />
-</LinearLayout>
+        <SearchView
+            android:id="@+id/searchNeighbours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:queryHint="Search neighbours">
+
+        </SearchView>
+
+        <com.myneighbourhood.Kiril_Hristov.NonScrollListView
+            android:id="@+id/MyNeighbourhoodListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:dividerHeight="5dp" />
+    </LinearLayout>
+</ScrollView>
