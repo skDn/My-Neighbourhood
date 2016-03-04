@@ -85,6 +85,10 @@ public class BaseActivity extends AppCompatActivity {
                 i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.menu_action_jobs:
+                i = new Intent(this, JobsActivity.class);
+                startActivity(i);
+                return true;
             default:
                 return false;
         }
