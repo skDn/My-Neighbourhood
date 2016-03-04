@@ -112,6 +112,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/chat_B_shake_hands"
+            android:text="shake hands"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
         <ListView
             android:id="@+id/chat_LV_messages"
             android:layout_width="match_parent"

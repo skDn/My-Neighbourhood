@@ -83,6 +83,7 @@ public class Chat {
 
     public void setChecked(User user, boolean checked) {
         if (user1.getId() == user.getId()) {
+            System.out.println("CHAT setting accepted 1");
             setAcceptedUser1(checked);
         } else if (user2.getId() == user.getId()) {
             setAcceptedUser2(checked);

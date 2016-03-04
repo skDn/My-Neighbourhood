@@ -18,7 +18,6 @@ import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -58,7 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Request table
     private static final String TABLE_REQUEST = "Request";
-    private static final String COLUMN_REQUEST_ID = "requestId";
+    private static final String COLUMN_REQUESTS_REQUEST_ID = "requestId";
     private static final String COLUMN_REQUEST_CREATED_BY_ID = "userId";
     private static final String COLUMN_REQUEST_TITLE = "title";
     private static final String COLUMN_REQUEST_DESCRIPTION = "description";
@@ -150,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String createRequest =
             "CREATE TABLE " + TABLE_REQUEST + "(" +
-                    COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_REQUESTS_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_REQUEST_CREATED_BY_ID + " INTEGER, " +
                     COLUMN_REQUEST_TITLE + " TEXT, " +
                     COLUMN_REQUEST_DESCRIPTION + " TEXT, " +
@@ -182,7 +181,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
                     COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUESTS_REQUEST_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "UNIQUE ( " + COLUMN_APPLICANT_APPLICANT_ID + ", " + COLUMN_APPLICANT_REQUEST_ID + " )" +
                     ");";
@@ -214,7 +213,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_CHATS_ACCEPTED_USER_2 + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_1 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_2 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUESTS_REQUEST_ID + "), " +
                     "UNIQUE (" + COLUMN_CHATS_USER_1 + ", " + COLUMN_CHATS_USER_2 + ", " + COLUMN_CHATS_REQUEST_ID + ") " +
                     ");";
 
@@ -474,7 +473,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String getRequest =
                 "SELECT * FROM " + TABLE_REQUEST +
-                        " WHERE " + COLUMN_REQUEST_ID + " = " + requestId + ";";
+                        " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " + requestId + ";";
         Cursor c = db.rawQuery(getRequest, null);
 
         if (c.getCount() > 0) {
@@ -495,7 +494,7 @@ public class DBHelper extends SQLiteOpenHelper {
         System.out.println("CreateRequestFromUser user: " + creator + ", userId: " + creatorId);
         String title = "";
         String description = "";
-        long requestId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_ID));
+        long requestId = c.getLong(c.getColumnIndex(COLUMN_REQUESTS_REQUEST_ID));
         if (c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE)) != null) {
             title = c.getString(c.getColumnIndex(COLUMN_REQUEST_TITLE));
         }
@@ -803,7 +802,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //                    COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
 //                    COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
 //                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-//                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
+//                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUESTS_REQUEST_ID + "), " +
 //                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
 //                    ");";
 
@@ -875,4 +874,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void requestAccepted(Request request) {
+        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_ACCEPTED + " = " + 1 + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +   request.getId();
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+    }
 }
