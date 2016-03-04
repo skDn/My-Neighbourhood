@@ -65,8 +65,7 @@ public class Applicants extends BaseActivity {
             userNames[j] = applicants.get(j).getUsername();
         }
 
-
-        System.out.println("KOLKO APPLICANTS IMA: " +  applicants.size());
+        System.out.println("KOLKO APPLICANTS IMA: " + applicants.size());
 
         title.setText(request.getTitle());
         description.setText(request.getDescription());
@@ -75,9 +74,9 @@ public class Applicants extends BaseActivity {
         String dateTime = timeFormat.format(request.getExpires());
         expires.setText(dateDate + " " + dateTime);
 
-        ArrayAdapter<String> neighbourhoodRowAdapter =
-                new CustomNeighbourhoodRowAdapter(this, userNames, applicants);
-        applicantsList.setAdapter(neighbourhoodRowAdapter);
+        ArrayAdapter<String> applicantsAdapter =
+                new CustomApplicantRowAdapter(this, userNames, applicants);
+        applicantsList.setAdapter(applicantsAdapter);
 
         // setting onclicklistener to create a chat with the applicant
         applicantsList.setOnItemClickListener(
