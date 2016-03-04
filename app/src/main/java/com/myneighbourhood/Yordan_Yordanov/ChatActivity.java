@@ -73,9 +73,21 @@ public class ChatActivity extends BaseActivity {
         checkBox2Label.setText(user.getUsername() + " confirms");
 
         checkBoxUser1 = (CheckBox) findViewById(R.id.chat_CB_user_1);
+        checkBoxUser1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = checkBoxUser1.isChecked();
+                chat.setChecked(user, checked);
+            }
+        });
+
+
         checkBoxUser2 = (CheckBox) findViewById(R.id.chat_CB_user_2);
 
         checkBoxUser1.setClickable(false);
+        checkBoxUser1.setChecked(chat.getAcceptedBy(otherUser));
+        checkBoxUser2.setChecked(chat.getAcceptedBy(user));
+
 
         adapter = new MsgAdapter(this, -1, this.messages, otherUser);
         messagesLV.setAdapter(adapter);

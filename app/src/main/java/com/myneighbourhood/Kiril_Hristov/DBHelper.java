@@ -28,7 +28,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 21;
+    private static final int DB_VERSION = 22;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -103,6 +103,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CHATS_LATEST_MSG_TIME = "latest_msg";
     private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_1 = "latest_view_by_user_1";
     private static final String COLUMN_CHATS_LATEST_VIEW_BY_USER_2 = "latest_view_by_user_2";
+    private static final String COLUMN_CHATS_ACCEPTED_USER_1 = "accepted_by_user_1";
+    private static final String COLUMN_CHATS_ACCEPTED_USER_2 = "accepted_by_user_2";
 
 
     public void printUSers(){
@@ -181,7 +183,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
-                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
+                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
+                    "UNIQUE ( " + COLUMN_APPLICANT_APPLICANT_ID + ", " + COLUMN_APPLICANT_REQUEST_ID + " )" +
                     ");";
 
     private static final String createMessage =
@@ -207,6 +210,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     COLUMN_CHATS_REQUEST_ID + " INTEGER, " +
                     COLUMN_CHATS_USER_1 + " INTEGER, " +
                     COLUMN_CHATS_USER_2 + " INTEGER, " +
+                    COLUMN_CHATS_ACCEPTED_USER_1 + " INTEGER, " +
+                    COLUMN_CHATS_ACCEPTED_USER_2 + " INTEGER, " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_1 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_CHATS_USER_2 + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
                     "FOREIGN KEY (" + COLUMN_CHATS_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUEST_ID + "), " +
@@ -584,13 +589,15 @@ public class DBHelper extends SQLiteOpenHelper {
         values.putNull(COLUMN_CHATS_LATEST_MSG_TIME);
         values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_1, now);
         values.put(COLUMN_CHATS_LATEST_VIEW_BY_USER_2, now);
+        values.put(COLUMN_CHATS_ACCEPTED_USER_1, 0);
+        values.put(COLUMN_CHATS_ACCEPTED_USER_2, 0);
 
         long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
         System.out.println("chat added : " + insertedChatId);
         if (insertedChatId == -1) {
             return getExistingChat(user1, user2, request);
         } else {
-            Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date());
+            Chat chat = new Chat(insertedChatId, new Date(now), request, user1, user2, null, new Date(), new Date(), false, false);
             return chat;
         }
     }
@@ -666,6 +673,8 @@ public class DBHelper extends SQLiteOpenHelper {
         long latestMsgTime = cursor.getLong(cursor.getColumnIndex(COLUMN_CHATS_LATEST_MSG_TIME));
         long latestViewByUser1Time = cursor.getLong(cursor.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_1));
         long latestViewByUser2Time = cursor.getLong(cursor.getColumnIndex(COLUMN_CHATS_LATEST_VIEW_BY_USER_2));
+        int acceptedUser1 = cursor.getInt(cursor.getColumnIndex(COLUMN_CHATS_ACCEPTED_USER_1));
+        int acceptedUser2 = cursor.getInt(cursor.getColumnIndex(COLUMN_CHATS_ACCEPTED_USER_2));
 
         Date createdAt = new Date(createdAtTime);
         Request request = getRequest(requestId);
@@ -675,7 +684,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Date latestViewByUser1Date = new Date(latestViewByUser1Time);
         Date latestViewByUser2Date = new Date(latestViewByUser2Time);
 
-        return new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date);
+        return new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, acceptedUser1 == 1 , acceptedUser2 == 1);
     }
 
     public void addNews(News news) {
@@ -851,4 +860,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return chat;
     }
+
+    public void updateAccepted(User user, Chat chat){
+        String query = "";
+        if(chat.getUser1().getId() == user.getId()){
+            query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + (chat.isAcceptedUser1() ? 1: 0)
+                + " WHERE " + COLUMN_CHATS_ID + " = " + chat.getId();
+        }
+        else query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_2 + " = " + (chat.isAcceptedUser2() ? 1 : 0)
+                    + " WHERE " + COLUMN_CHATS_ID + " = " + chat.getId();
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
+    }
+
 }

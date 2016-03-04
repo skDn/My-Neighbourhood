@@ -28,7 +28,7 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
 
     static class ViewHolderItem {
         ImageView userImage;
-        TextView username;
+        TextView username, ratingAsApplicant, ratingAsRequest;
     }
 
     @Override
@@ -42,6 +42,8 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowNeighbourImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowNeighbourUsername);
+            viewHolder.ratingAsApplicant = (TextView) convertView.findViewById(R.id.RowNeighbourApplicantRating);
+            viewHolder.ratingAsRequest = (TextView) convertView.findViewById(R.id.RowNeighbourRequesterRating);
 //            viewHolder.userImage.setImageBitmap(neighbours.get(position).getImage());
             convertView.setTag(viewHolder);
         } else {
@@ -51,8 +53,8 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
         viewHolder.username.setText(neighbours.get(position).getUsername());
 //        viewHolder.userImage.setImageIcon();
 
-
-
+        viewHolder.ratingAsRequest.setText(String.valueOf(neighbours.get(position).getRating().getRatingAsRequester()));
+        viewHolder.ratingAsApplicant.setText(String.valueOf(neighbours.get(position).getRating().getRatingAsApplicant()));
         return convertView;
     }
 }
