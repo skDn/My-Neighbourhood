@@ -254,6 +254,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(checkUnique, null);
         if (c.getCount() > 0) {
             // user with that username already exists
+            c.close();
+            db.close();
             return null;
         }
 
@@ -305,7 +307,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public User getUser(String username, String password) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
                         " WHERE " + COLUMN_USER_USERNAME + "=\"" + username + "\" " +
@@ -314,7 +316,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(authenticate, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
-            return createUserFromCursor(c);
+            User userFromCursor = createUserFromCursor(c);
+            c.close();
+            db.close();
+            return userFromCursor;
         }
         c.close();
         db.close();
@@ -322,7 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public User getUser(long userId) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER +
                         " WHERE " + COLUMN_USER_ID + " = " + userId + ";";
@@ -330,7 +335,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (c.getCount() > 0) {
             c.moveToFirst();
-            return createUserFromCursor(c);
+            User userFromCursor = createUserFromCursor(c);
+            c.close();
+            db.close();
+            return userFromCursor;
         }
         c.close();
         db.close();
@@ -363,9 +371,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor ratingC = db.rawQuery(ratingQuery, null);
         ratingC.moveToFirst();
         int ratingAsRequester = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_AS_REQUESTER));
-        int ratingAsApplicatant = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_AS_APPLICANT));
+        int ratingAsApplicant = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_AS_APPLICANT));
         int endorsedBy = ratingC.getInt(ratingC.getColumnIndex(COLUMN_RATING_ENDORCEDBY));
-        Rating userRating = new Rating(user, ratingAsRequester, ratingAsApplicatant, endorsedBy);
+        Rating userRating = new Rating(user, ratingAsRequester, ratingAsApplicant, endorsedBy);
+        ratingC.close();
 
         Cursor addressC = db.rawQuery(addressQuery, null);
         addressC.moveToFirst();
@@ -373,10 +382,11 @@ public class DBHelper extends SQLiteOpenHelper {
         double rectX = addressC.getDouble(addressC.getColumnIndex(COLUMN_ADDRESS_RECT_X));
         double rectY = addressC.getDouble(addressC.getColumnIndex(COLUMN_ADDRESS_RECT_Y));
         Address address = new Address(user, street, rectX, rectY);
+        addressC.close();
+
 
         user.setAddress(address);
         user.setRating(userRating);
-
 
         db.close();
         return user;
@@ -384,7 +394,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<User> getUsers() {
         ArrayList<User> toReturn = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String authenticate =
                 "SELECT * FROM " + TABLE_USER + ";";
         Cursor c = db.rawQuery(authenticate, null);
@@ -429,14 +439,19 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Request getRequest(long creatorId, String title) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_REQUEST + " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + creatorId + " AND " + COLUMN_REQUEST_TITLE + " = \"" + title + "\"";
 
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            return createRequestFromCursor(cursor);
+            Request requestFromCursor = createRequestFromCursor(cursor);
+            cursor.close();
+            db.close();
+            return requestFromCursor;
         }
+        cursor.close();
+        db.close();
         return null;
     }
 
@@ -449,8 +464,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (c.getCount() > 0) {
             c.moveToFirst();
-            return createRequestFromCursor(c);
-
+            Request requestFromCursor = createRequestFromCursor(c);
+            c.close();
+            db.close();
+            return requestFromCursor;
         }
         c.close();
         db.close();
@@ -458,7 +475,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private Request createRequestFromCursor(Cursor c) {
-        SQLiteDatabase db = getReadableDatabase();
         long creatorId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
         User creator = getUser(creatorId);
         System.out.println("CreateRequestFromUser user: " + creator + ", userId: " + creatorId);
@@ -475,7 +491,6 @@ public class DBHelper extends SQLiteOpenHelper {
         long timestamp = c.getLong(c.getColumnIndex(COLUMN_REQUEST_TIMESTAMP));
         long expires = c.getLong(c.getColumnIndex(COLUMN_REQUEST_EXPIRES));
         int accepted = c.getInt(c.getColumnIndex(COLUMN_REQUEST_ACCEPTED));
-        db.close();
         return new Request(requestId, creator, title, description, peopleNeeded, timestamp, expires, accepted);
     }
 
@@ -495,7 +510,7 @@ public class DBHelper extends SQLiteOpenHelper {
             queryToExecute = getFeedRequests;
         } else queryToExecute = getMyRequests;
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
@@ -521,7 +536,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String queryToExecute =
                 "SELECT * FROM " + TABLE_NEWS;
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
@@ -579,7 +594,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryChats, null);
 
         c.moveToFirst();
-        return createChatFromCursor(c);
+        Chat chatFromCursor = createChatFromCursor(c);
+        c.close();
+        db.close();
+        return chatFromCursor;
     }
 
 
@@ -596,9 +614,14 @@ public class DBHelper extends SQLiteOpenHelper {
         long insertedId = db.insert(TABLE_MESSAGE, null, values);
 
         if (insertedId == -1) {
+            db.close();
             return null;
         } else {
             msg.setId(insertedId);
+
+            String updateChatQuery = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_LATEST_MSG_TIME + " = " + msg.getTimestamp().getTime() + " WHERE " + COLUMN_CHATS_ID + " = " + msg.getChatId();
+            db.execSQL(updateChatQuery);
+            db.close();
             return msg;
         }
 
@@ -678,7 +701,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String queryToExecute =
                 "SELECT * FROM " + TABLE_NEWS + " WHERE " + COLUMN_NEWS_ID + "=\"" + id + "\" " + ";";
 
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         if (c.getCount() > 0) {
@@ -699,7 +722,8 @@ public class DBHelper extends SQLiteOpenHelper {
             byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
             picture = BitmapFactory.decodeByteArray(p, 0, p.length);
 
-
+            db.close();
+            c.close();
             return new News(newsId, creator, title, text, timestamp, picture);
         }
         c.close();
@@ -747,7 +771,8 @@ public class DBHelper extends SQLiteOpenHelper {
             Message msg = new Message(msgId, new Date(timestamp), chatId, msgText, getUser(fromUserId), getUser(toUserId));
             messages.add(msg);
         }
-
+        c.close();
+        db.close();
         return messages;
     }
 
