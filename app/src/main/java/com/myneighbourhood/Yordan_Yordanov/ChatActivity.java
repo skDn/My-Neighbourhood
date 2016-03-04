@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,18 +80,31 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         shakeHandsBTN.setOnClickListener(this);
 
         checkBoxUser1.setClickable(false);
-        checkBoxUser2.setOnClickListener(new View.OnClickListener() {
+
+
+        checkBoxUser2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                boolean checked = checkBoxUser2.isChecked();
-                chat.setChecked(user, checked);
-                DB.updateAccepted(user, chat);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    chat.setChecked(user, isChecked);
+                    DB.updateAccepted(user, chat);
+                    updateShakeHandsBTN();
+                } else {
+                    if (chat.getRequest().getAccepted() == 1) {
+                        showDialogWithOkButton("You have already shook hands so you can not change your mind now.");
+                        checkBoxUser2.setChecked(true);
+                    } else {
+                        chat.setChecked(user, isChecked);
+                        DB.updateAccepted(user, chat);
+                        updateShakeHandsBTN();
+                    }
+                }
             }
         });
 
-
         adapter = new MsgAdapter(this, -1, this.messages, otherUser);
         messagesLV.setAdapter(adapter);
+
 
         sendMessageIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,13 +130,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         checkBoxUser1.setChecked(chat.getAcceptedBy(otherUser));
         checkBoxUser2.setChecked(chat.getAcceptedBy(user));
 
-        if (checkBoxUser2.isChecked() && checkBoxUser1.isChecked()) {
-            shakeHandsBTN.setClickable(true);
-            shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        } else {
-            shakeHandsBTN.setClickable(false);
-            shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
-        }
+        updateShakeHandsBTN();
 
 
         messages = DB.getMessagesForChat(chat.getId());
@@ -130,10 +138,30 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         messagesLV.smoothScrollToPosition(adapter.getCount() - 1);
     }
 
+    private void updateShakeHandsBTN() {
+        if (chat.getRequest().getAccepted() == 1) {
+            shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
+            shakeHandsBTN.setText("Hands shaken.");
+            shakeHandsBTN.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogWithOkButton("You have already shook hands.");
+                }
+            });
+        } else if (checkBoxUser2.isChecked() && checkBoxUser1.isChecked()) {
+            shakeHandsBTN.setClickable(true);
+            shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        } else {
+            shakeHandsBTN.setClickable(false);
+            shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray));
+        }
+    }
+
     @Override
     public void onClick(View v) {
         DB.requestAccepted(chat.getRequest());
         showDialogWithOkButton("Great !");
+        updateShakeHandsBTN();
     }
 
     private static class MsgAdapter extends ArrayAdapter<Message> {

@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 22;
+    private static final int DB_VERSION = 24;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -861,6 +861,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void updateAccepted(User user, Chat chat){
+        System.out.println("DB Helper updateAccepted");
         String query = "";
         if(chat.getUser1().getId() == user.getId()){
             query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + (chat.isAcceptedUser1() ? 1: 0)
@@ -879,5 +880,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
         db.close();
+        request.setAccepted(1);
     }
 }
