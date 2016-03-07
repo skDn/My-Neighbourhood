@@ -60,8 +60,7 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
         }
 
         viewHolder.username.setText(neighbours.get(position).getUsername());
-//        viewHolder.userImage.setImageIcon();
-
+        viewHolder.userImage.setImageBitmap(neighbours.get(position).getImage());
         viewHolder.ratingAsRequest.setText(String.valueOf(neighbours.get(position).getRating().getRatingAsRequester()));
         viewHolder.ratingAsApplicant.setText(String.valueOf(neighbours.get(position).getRating().getRatingAsApplicant()));
         return convertView;

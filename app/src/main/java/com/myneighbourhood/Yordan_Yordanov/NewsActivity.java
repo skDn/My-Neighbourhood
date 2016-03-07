@@ -50,7 +50,8 @@ public class NewsActivity extends BaseActivity {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-//        userImage = (ImageView) findViewById(R.id.newsCreatedByUserImage);
+        userImage = (ImageView) findViewById(R.id.newsCreatedByUserImage);
+        userImage.setImageBitmap(createdByUser.getImage());
         userName = (TextView) findViewById(R.id.newsCreatedByUserName);
 
 //        newsImage = (ImageView) findViewById(R.id.newsCoverImage);
