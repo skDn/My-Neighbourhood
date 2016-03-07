@@ -19,6 +19,10 @@ public class CustomNotification {
         }
     }
 
+    public long getId() {
+        return id;
+    }
+
     public enum Type {
         NEW_MESSAGE(1), NEW_APPLICANT(2), NEW_REQUEST(3);
         public int type;

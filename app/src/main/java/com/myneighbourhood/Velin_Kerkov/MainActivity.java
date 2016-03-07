@@ -91,16 +91,18 @@ public class MainActivity extends BaseActivity {
 
         ArrayList<CustomNotification> notifications = DB.getAllNotifications(user);
         for (CustomNotification not : notifications) {
-            sendNotification(not.getText(), notId++);
+            sendNotification(not.getText(), not.getId());
         }
     }
 
-    private void sendNotification(String msg, int notId) {
+    private void sendNotification(String msg, long notId) {
         NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, ApplicantsActivity.class), 0);
+
+        DB.notificationSeen(notId);
 
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -115,7 +117,7 @@ public class MainActivity extends BaseActivity {
                         .setAutoCancel(true);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(notId, mBuilder.build());
+        mNotificationManager.notify((int) notId, mBuilder.build());
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -966,7 +966,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<CustomNotification> getAllNotifications(User user) {
-        String query = " SELECT * FROM " + TABLE_NOTIFICATION + " WHERE (" + COLUMN_NOTIFICATION_FOR_USER_ID + " = " + user.getId() + " OR " + COLUMN_NOTIFICATION_FOR_USER_ID + " IS NULL ) AND " + COLUMN_NOTIFICATION_FROM_USER_ID + " != " + user.getId();
+        String query = " SELECT * FROM " + TABLE_NOTIFICATION + " WHERE (" + COLUMN_NOTIFICATION_FOR_USER_ID + " = " + user.getId() + " OR " + COLUMN_NOTIFICATION_FOR_USER_ID + " IS NULL ) AND " + COLUMN_NOTIFICATION_FROM_USER_ID + " != " + user.getId() + " AND " + COLUMN_NOTIFICATION_IS_SHOWN + " != " + 1;
         ArrayList<CustomNotification> notifications = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
@@ -999,5 +999,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return new CustomNotification(notId, type, forUser, fromUser, notText, notIsShown, timestamp);
 
+    }
+
+    public void notificationSeen(long notId) {
+        String query = "UPDATE " + TABLE_NOTIFICATION + " SET " + COLUMN_NOTIFICATION_IS_SHOWN + " = " + 1 + " WHERE " + COLUMN_NOTIFICATION_ID + " = " + notId;
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(query);
+        db.close();
     }
 }
