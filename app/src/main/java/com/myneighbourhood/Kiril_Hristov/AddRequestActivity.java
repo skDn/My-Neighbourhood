@@ -26,10 +26,9 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
 
     LinearLayout addRequestLayout;
     EditText titleField, descriptionField;
-    TextView displayPeople, displayExpires;
-    Button postButton, selectNumberPeople, selectExpiresIn;
+    TextView displayExpires;
+    Button postButton, selectExpiresIn;
 
-    private int numberOfPeopleSelected = 1 ;
     private int hourSelected = 1;
     String[] hours ;
 
@@ -42,8 +41,6 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         titleField = (EditText) findViewById(R.id.AddRequestTitle);
         descriptionField = (EditText) findViewById(R.id.AddRequestDescription);
         postButton = (Button) findViewById(R.id.AddRequestPostButton);
-        selectNumberPeople = (Button) findViewById(R.id.selectNumberPeopleButton);
-        displayPeople = (TextView) findViewById(R.id.displayPeople);
         selectExpiresIn = (Button) findViewById(R.id.selectExpiresIn);
         displayExpires = (TextView) findViewById(R.id.displayExpires);
 
@@ -57,17 +54,9 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
                 else{
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.HOUR, hourSelected);
-                    DB.addRequest(new Request(user, title, description, numberOfPeopleSelected, cal.getTimeInMillis(), 0));
+                    DB.addRequest(new Request(user, title, description, 1, cal.getTimeInMillis(), 0));
                     onBackPressed();
                 }
-            }
-        });
-
-        numberOfPeopleSelected = 1;
-        selectNumberPeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNumberPicker();
             }
         });
 
@@ -94,63 +83,34 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
 
     protected void changeDisplays() {
         super.onResume();
-        if(numberOfPeopleSelected > 1) {
-            displayPeople.setText(numberOfPeopleSelected+"");
-        }
         if(hourSelected > 1){
             String text = hourSelected+"h";
             displayExpires.setText(text);
         }
-
     }
 
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        if(picker.getId()==R.id.NumberPickerPeople) {
-            numberOfPeopleSelected = newVal;
-        }
-        else {
-            switch (newVal){
-                case 6:
-                    hourSelected = 12;
-                    break;
-                case 7:
-                    hourSelected = 24;
-                    break;
-                case 8:
-                    hourSelected = 48;
-                    break;
-                case 9:
-                    hourSelected = 72;
-                    break;
-                case 10:
-                    hourSelected = 96;
-                    break;
 
-                default: hourSelected = newVal;
-            }
-        }
-    }
+        switch (newVal){
+            case 6:
+                hourSelected = 12;
+                break;
+            case 7:
+                hourSelected = 24;
+                break;
+            case 8:
+                hourSelected = 48;
+                break;
+            case 9:
+                hourSelected = 72;
+                break;
+            case 10:
+                hourSelected = 96;
+                break;
 
-    public void showNumberPicker() {
-        final Dialog d = new Dialog(AddRequestActivity.this);
-        d.setTitle("Number of people required");
-        d.setContentView(R.layout.dialog_number_picker);
-        Button done = (Button) d.findViewById(R.id.NumberPickerButton);
-        final NumberPicker peoplePicker = (NumberPicker) d.findViewById(R.id.NumberPickerPeople);
-        peoplePicker.setMaxValue(10);
-        peoplePicker.setMinValue(1);
-        peoplePicker.setWrapSelectorWheel(false);
-        peoplePicker.setOnValueChangedListener(this);
-        setDividerColor(peoplePicker);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeDisplays();
-                d.dismiss();
-            }
-        });
-        d.show();
+            default: hourSelected = newVal;
+        }
     }
 
     public void showExpirePicker() {

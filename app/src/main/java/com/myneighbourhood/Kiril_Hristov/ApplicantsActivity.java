@@ -24,7 +24,7 @@ public class ApplicantsActivity extends BaseActivity {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-    TextView title, description, expires, peopleNeeded;
+    TextView title, description, expires;
     ListView applicantsList;
     Request request;
     ArrayList<User> applicants;
@@ -51,7 +51,6 @@ public class ApplicantsActivity extends BaseActivity {
         title = (TextView) findViewById(R.id.ApplicantsActTitle);
         description = (TextView) findViewById(R.id.ApplicantsActDescription);
         expires = (TextView) findViewById(R.id.ApplicantsActExpires);
-        peopleNeeded = (TextView) findViewById(R.id.ApplicantsActPeopleNeeded);
         applicantsList = (ListView) findViewById(R.id.applicantsList);
 
         applicants = DB.getApplicants(request.getId());
@@ -66,7 +65,6 @@ public class ApplicantsActivity extends BaseActivity {
 
         title.setText(request.getTitle());
         description.setText(request.getDescription());
-        peopleNeeded.setText(String.valueOf(request.getPeopleNeeded()));
         String dateDate = dateFormat.format(request.getExpires());
         String dateTime = timeFormat.format(request.getExpires());
         expires.setText(dateDate + " " + dateTime);

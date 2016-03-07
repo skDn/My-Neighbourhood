@@ -25,7 +25,7 @@ import java.util.Date;
 public class ViewRequestActivity extends BaseActivity {
 
     ImageView profilePicture;
-    TextView username, title, description, rating, expires, peopleNeeded;
+    TextView username, title, description, rating, expires;
     Button apply;
     int tab;
 
@@ -40,7 +40,6 @@ public class ViewRequestActivity extends BaseActivity {
         Intent i= getIntent();
         long requestId = i.getLongExtra("requestId", 0);
         tab = i.getIntExtra("tab", 0);
-        System.out.println("BLAAAH requestId " + requestId );
 
         profilePicture = (ImageView) findViewById(R.id.ReqActUserImage);
         username = (TextView) findViewById(R.id.ReqActUsername);
@@ -48,7 +47,6 @@ public class ViewRequestActivity extends BaseActivity {
         description = (TextView) findViewById(R.id.ReqActDescription);
         rating = (TextView) findViewById(R.id.ReqActRating);
         expires = (TextView) findViewById(R.id.ReqActExpires);
-        peopleNeeded = (TextView) findViewById(R.id.ReqActPeopleNeeded);
         apply = (Button) findViewById(R.id.ReqActButton);
 
         final Request request = DB.getRequest(requestId);
@@ -91,11 +89,6 @@ public class ViewRequestActivity extends BaseActivity {
             apply.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-
-        Integer pn = request.getPeopleNeeded();
-        String pnS = pn.toString();
-        peopleNeeded.setText(String.valueOf(request.getPeopleNeeded()));
-
         String dateDate = dateFormat.format(request.getExpires());
         String dateTime = timeFormat.format(request.getExpires());
         expires.setText(dateDate + " " + dateTime);
@@ -113,6 +106,4 @@ public class ViewRequestActivity extends BaseActivity {
             }
         });
     }
-
-
 }
