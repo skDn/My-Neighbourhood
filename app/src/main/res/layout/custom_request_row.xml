@@ -144,14 +144,9 @@
 
                 <TextView
                     android:id="@+id/RowRequestRating"
+                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/favorite_button"
-                    android:layout_alignEnd="@+id/favorite_button"
-                    android:layout_alignRight="@+id/favorite_button"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
                     android:text="80" />
             </RelativeLayout>
         </LinearLayout>
