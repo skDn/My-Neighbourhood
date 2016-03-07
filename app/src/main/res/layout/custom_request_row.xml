@@ -14,15 +14,28 @@
     <!--android:textStyle="bold"-->
     <!--android:textSize="18sp"-->
     <!--android:text="Created by" />-->
-    <TextView
-        android:id="@+id/RowRequestTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:gravity="center"
-        android:text="Title"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="title:"
+            android:textSize="@dimen/small_label_text_size"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/RowRequestTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <include layout="@layout/separator_grey" />
 
@@ -69,7 +82,6 @@
                     android:textSize="@dimen/small_label_text_size" />
 
                 <TextView
-                    android:scrollHorizontally="true"
                     android:id="@+id/RowRequestUsername"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -77,6 +89,7 @@
                     android:layout_toRightOf="@+id/custom_request_row_TV_creator_label"
                     android:gravity="center"
                     android:maxLines="1"
+                    android:scrollHorizontally="true"
                     android:text="username"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -145,9 +158,9 @@
 
                 <TextView
                     android:id="@+id/RowRequestRating"
-                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="80" />
             </RelativeLayout>
         </LinearLayout>
@@ -156,14 +169,19 @@
     <include layout="@layout/separator_grey" />
 
     <TextView
+        android:text="description:"
+        android:textSize="@dimen/small_label_text_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
         android:id="@+id/RowRequestDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="6"
-        android:textSize="19sp"
-        android:minHeight="100dp"
         android:ellipsize="end"
-        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+        android:maxLines="6"
+        android:minHeight="100dp"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        android:textSize="19sp" />
 
 
     <LinearLayout

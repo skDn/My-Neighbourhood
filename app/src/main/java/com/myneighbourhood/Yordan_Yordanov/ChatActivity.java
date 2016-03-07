@@ -66,13 +66,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         System.out.println("currentUser: " + user.getUsername() + ", id: " + user.getId());
         System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
 
-
-        findViewById(R.id.chat_FL_list_wrapper).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(v);
-            }
-        });
         messagesLV = (ListView) findViewById(R.id.chat_LV_messages);
         newMessageET = (EditText) findViewById(R.id.chat_ET_new_message);
         checkBox1Label = (TextView) findViewById(R.id.chat_TV_check_box_1_label);

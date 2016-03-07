@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_RL_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.myneighbourhood.Yordan_Yordanov.ChatActivity">
@@ -51,9 +52,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="2dp"
             android:gravity="center"
-            android:layout_marginRight="5dp"
             android:text="Use this chat to negotiate further details between you and the other user. When you feel happy about the details and expected results use the checkbox to confirm your intentions and shake hands in the end." />
 
         <LinearLayout
@@ -74,31 +75,31 @@
 
 
                 <TextView
-                    android:textAllCaps="true"
                     android:id="@+id/chat_TV_check_box_1_label"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_marginLeft="10sp"
                     android:layout_marginStart="10sp"
-                    android:textStyle="bold"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
-                    android:text="user 1 " />
+                    android:text="user 1 "
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:text="confirms"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toEndOf="@id/chat_TV_check_box_1_label"
-                    android:layout_toRightOf="@id/chat_TV_check_box_1_label"
-
-                    android:layout_toLeftOf="@+id/chat_CB_user_1"
-                    android:layout_toStartOf="@+id/chat_CB_user_1"
-
                     android:id="@+id/chat_TV_agrees_label_1"
-                    android:gravity="center_vertical|start"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_toEndOf="@id/chat_TV_check_box_1_label"
+                    android:layout_toLeftOf="@+id/chat_CB_user_1"
+
+                    android:layout_toRightOf="@id/chat_TV_check_box_1_label"
+                    android:layout_toStartOf="@+id/chat_CB_user_1"
+                    android:gravity="center_vertical|start"
+                    android:text="confirms" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -115,28 +116,28 @@
 
 
                 <TextView
-                    android:textAllCaps="true"
                     android:id="@+id/chat_TV_check_box_2_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
-                    android:textStyle="bold"
                     android:layout_marginRight="10dp"
                     android:layout_toEndOf="@+id/chat_CB_user_2"
-                    android:layout_toRightOf="@+id/chat_CB_user_2"
                     android:layout_toLeftOf="@+id/chat_TV_agrees_label_2"
+                    android:layout_toRightOf="@+id/chat_CB_user_2"
                     android:layout_toStartOf="@+id/chat_TV_agrees_label_2"
                     android:gravity="center_vertical|end"
-                    android:text="user 2" />
+                    android:text="user 2"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:text="confirms"
                     android:id="@+id/chat_TV_agrees_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical|end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:text="confirms" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -147,20 +148,13 @@
             android:layout_height="40dp"
             android:text="shake hands" />
 
-        <FrameLayout
-            android:id="@+id/chat_FL_list_wrapper"
+        <ListView
+            android:id="@+id/chat_LV_messages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:dividerHeight="0dp">
 
-
-            <ListView
-                android:id="@+id/chat_LV_messages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:dividerHeight="0dp">
-
-            </ListView>
-        </FrameLayout>
+        </ListView>
 
     </LinearLayout>
 
