@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
-import com.myneighbourhood.Kiril_Hristov.DBHelper;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.Kiril_Hristov.JobsActivity;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.MessagesActivity;

@@ -14,8 +14,8 @@ import android.widget.ListView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.utils.Request;
-import com.myneighbourhood.utils.User;
 
 import java.util.ArrayList;
 

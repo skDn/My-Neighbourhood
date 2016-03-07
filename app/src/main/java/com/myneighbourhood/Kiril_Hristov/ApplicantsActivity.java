@@ -28,6 +28,7 @@ public class ApplicantsActivity extends BaseActivity {
     ListView applicantsList;
     Request request;
     ArrayList<User> applicants;
+    TextView noAppliants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class ApplicantsActivity extends BaseActivity {
         description = (TextView) findViewById(R.id.ApplicantsActDescription);
         expires = (TextView) findViewById(R.id.ApplicantsActExpires);
         applicantsList = (ListView) findViewById(R.id.applicantsList);
-
+        noAppliants = (TextView) findViewById(R.id.noApplicants);
         applicants = DB.getApplicants(request.getId());
 
 
@@ -61,7 +62,9 @@ public class ApplicantsActivity extends BaseActivity {
             userNames[j] = applicants.get(j).getUsername();
         }
 
-        System.out.println("KOLKO APPLICANTS IMA: " + applicants.size());
+        if(applicants.size()!=0){
+            noAppliants.setVisibility(View.GONE);
+        }
 
         title.setText(request.getTitle());
         description.setText(request.getDescription());

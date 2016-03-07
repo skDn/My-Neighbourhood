@@ -19,6 +19,7 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;

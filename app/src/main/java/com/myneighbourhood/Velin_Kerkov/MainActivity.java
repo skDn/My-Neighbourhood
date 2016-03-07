@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.myneighbourhood.Kiril_Hristov.DBHelper;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.Kiril_Hristov.MyRequestsFragment;
 import com.myneighbourhood.Kiril_Hristov.RequestFeedFragment;
 import com.myneighbourhood.R;

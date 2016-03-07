@@ -59,7 +59,7 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
         } else viewHolder.profileImage.setImageResource(R.drawable.ic_account_circle_black_36dp);
 
         viewHolder.username.setText(applicants.get(position).getUsername());
-        viewHolder.rating.setText(String.valueOf(applicants.get(position).getRating()));
+        viewHolder.rating.setText(String.valueOf(applicants.get(position).getRating().getRatingAsApplicant()));
 
         return convertView;
     }

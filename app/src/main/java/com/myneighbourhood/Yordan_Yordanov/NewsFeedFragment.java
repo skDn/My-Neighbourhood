@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.myneighbourhood.Kiril_Hristov.DBHelper;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;

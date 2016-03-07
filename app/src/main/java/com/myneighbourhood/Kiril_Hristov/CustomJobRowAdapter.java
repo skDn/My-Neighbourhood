@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 

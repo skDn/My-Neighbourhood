@@ -1,4 +1,4 @@
-package com.myneighbourhood.Kiril_Hristov;
+package com.myneighbourhood.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,13 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.utils.Address;
-import com.myneighbourhood.utils.Chat;
-import com.myneighbourhood.utils.Message;
-import com.myneighbourhood.utils.News;
-import com.myneighbourhood.utils.Rating;
-import com.myneighbourhood.utils.Request;
-import com.myneighbourhood.utils.User;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
