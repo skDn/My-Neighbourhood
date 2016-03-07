@@ -30,7 +30,7 @@
         android:id="@+id/custom_request_row_RL_user_info"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#ffb74d"
+        android:background="#FFF3E0"
         android:orientation="horizontal">
 
         <ImageView
