@@ -24,6 +24,14 @@ public class ProfileActivity extends BaseActivity {
         long otherUserId = extras.getLong(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY);
         otherUser = DB.getUser(otherUserId);
 
+        try {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setTitle(otherUser.getUsername());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         Button blockContentFromBTN = (Button) findViewById(R.id.profile_B_block_content_from);
         Button blockFeedToBTN = (Button) findViewById(R.id.profile_B_block_feed_to);
         Button endorseBTN = (Button) findViewById(R.id.profile_B_endorse);

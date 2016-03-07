@@ -88,7 +88,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowRequestUsername);
-            viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.custom_request_row_TV_created_at);
+            viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.request_row_TV_date_created);
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.RowRequestDescription);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
