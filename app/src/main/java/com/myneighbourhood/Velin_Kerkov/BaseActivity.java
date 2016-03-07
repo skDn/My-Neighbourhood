@@ -92,12 +92,15 @@ public class BaseActivity extends AppCompatActivity {
                 return true;
             case android.R.id.home:
                 onBackPressed();
-                finish();
+                //finish();
                 return true;
             case R.id.menu_action_neighbourhood:
                 i = new Intent(this, MyNeighbourhoodActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.menu_action_home_neighbourhood:
+            case R.id.menu_action_home_profile:
+            case R.id.menu_action_home_jobs:
             case R.id.menu_action_home_messages:
                 i = new Intent(this, MainActivity.class);
                 startActivity(i);

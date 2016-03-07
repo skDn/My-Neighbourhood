@@ -39,6 +39,11 @@ public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView
     private Comparator<User> byApplicantRating;
 
     @Override
+    protected boolean showHomeInSteadOfMyNeighbourhood() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_neighbourhood);

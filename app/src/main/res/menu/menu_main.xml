@@ -30,7 +30,7 @@
         android:id="@+id/menu_action_jobs"
         android:title="Jobs"
         android:icon="@drawable/ic_done_all_black_24dp"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_action_home_neighbourhood"
@@ -43,7 +43,7 @@
         android:id="@+id/menu_action_neighbourhood"
         android:icon="@drawable/logo_menu"
         android:title="@string/action_neighbourhood"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_action_home_profile"
@@ -56,7 +56,7 @@
         android:id="@+id/menu_action_profile"
         android:icon="@drawable/ic_account_circle_black_36dp"
         android:title="@string/action_profile"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 
 </menu>

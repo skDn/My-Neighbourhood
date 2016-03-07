@@ -1,13 +1,8 @@
 package com.myneighbourhood.Kiril_Hristov;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
@@ -23,9 +18,23 @@ public class JobsActivity extends BaseActivity {
     ArrayList<Request> jobs;
 
     @Override
+    protected boolean showHomeInSteadOfJobs() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
+
+        try {
+            setTitle("Jobs history");
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
 
         jobsList = (ListView) findViewById(R.id.jobsList);
