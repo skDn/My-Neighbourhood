@@ -81,6 +81,7 @@ public class AddNewsActivity extends BaseActivity {
             int width = size.x;
 
             Bitmap bitmapFromURI = getBitmapFromURI(targetUri, width, width/2);
+//            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 200, 150);
             addNewsImage.setImageBitmap(bitmapFromURI);
 
             imageToSave = bitmapFromURI;
