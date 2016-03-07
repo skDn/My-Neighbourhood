@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class MyNeighbourhoodActivity extends BaseActivity {
 
     private ArrayList<User> neighbours;
     NonScrollListView NeighbourListView;
@@ -66,6 +66,36 @@ public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sortOptions);
         dataAdapter.setDropDownViewResource(R.layout.custom_spinner_row);
         sortS.setAdapter(dataAdapter);
+        sortS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("myNeighbourhoodActivity onItemClicked: " + position);
+                switch (position) {
+                    case 0://requester rating
+                        Collections.sort(neighbours, byRequesterRating);
+                        System.out.println("sorting by requester rating");
+                        break;
+                    case 1://applicant rating
+                        System.out.println("sorting by applicant rating");
+                        Collections.sort(neighbours, byApplicantRating);
+                        break;
+                    case 2://endorced by
+                        System.out.println("sorting by endorsed by");
+                        Collections.sort(neighbours, byEndrosedBy);
+                        break;
+                    default:// None
+                        System.out.println("sorting by None");
+                        neighbours = DB.getUsers();
+                }
+                neighbourhoodRowAdapter.setNeighbours(neighbours);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                neighbours = DB.getUsers();
+                neighbourhoodRowAdapter.setNeighbours(neighbours);
+            }
+        });
 
 
         NeighbourListView = (NonScrollListView) findViewById(R.id.MyNeighbourhoodListView);
@@ -97,8 +127,8 @@ public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView
         // getting users from the database
         neighbours = DB.getUsers();
         User toBeRemoved = null;
-        for (User neighbour: neighbours){
-            if (neighbour.getId() == user.getId()){
+        for (User neighbour : neighbours) {
+            if (neighbour.getId() == user.getId()) {
                 toBeRemoved = neighbour;
                 break;
             }
@@ -159,30 +189,6 @@ public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView
         super.onResume();
         neighbours = DB.getUsers();
         neighbourhoodRowAdapter.setNeighbours(neighbours);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (view.getId() == sortS.getId()) {
-            switch (position) {
-                case 1://requester rating
-                    Collections.sort(neighbours, byRequesterRating);
-                    System.out.println("sorting by requester rating");
-                    break;
-                case 2://applicant rating
-                    System.out.println("sorting by applicant rating");
-                    Collections.sort(neighbours, byApplicantRating);
-                    break;
-                case 3://endorced by
-                    System.out.println("sorting by endorsed by");
-                    Collections.sort(neighbours, byEndrosedBy);
-                    break;
-                default:// None
-                    System.out.println("sorting by None");
-                    neighbours = DB.getUsers();
-            }
-            neighbourhoodRowAdapter.setNeighbours(neighbours);
-        }
     }
 }
 

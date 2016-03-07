@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * Created by skDn on 23/02/2016.
  */
-public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.OnClickListener {
 
     private ArrayList<News> newsFeed;
 
@@ -30,7 +30,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
         this.newsFeed = newsFeed;
     }
 
-    static class ViewHolderItem{
+    static class ViewHolderItem {
         ImageView newsImage;
         ImageView userImage;
         TextView username;
@@ -43,28 +43,30 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.custom_news_row, parent, false);
             viewHolder = new ViewHolderItem();
 
             viewHolder.newsImage = (ImageView) convertView.findViewById(R.id.RowNewsImage);
-            viewHolder.username  = (TextView) convertView.findViewById(R.id.RowNewsUsername);
+            viewHolder.username = (TextView) convertView.findViewById(R.id.RowNewsUsername);
             viewHolder.newsTitle = (TextView) convertView.findViewById(R.id.RowNewsTitle);
             viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowNewsUserImage);
             viewHolder.date = (TextView) convertView.findViewById(R.id.RowNewsDate);
             viewHolder.dateTime = (TextView) convertView.findViewById(R.id.RowNewsDateTime);
 
             convertView.setTag(viewHolder);
-        }else{
+        } else {
             viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
 
-        if(newsFeed.get(position).getPicture()==null){
-            viewHolder.newsImage.setImageResource(R.drawable.logo_login);
+        if (newsFeed.get(position).getPicture() == null) {
+            viewHolder.newsImage.setVisibility(View.GONE);
+        } else {
+            viewHolder.newsImage.setVisibility(View.VISIBLE);
+            viewHolder.newsImage.setImageBitmap(newsFeed.get(position).getPicture());
         }
-        else viewHolder.newsImage.setImageBitmap(newsFeed.get(position).getPicture());
 
 //        String title = getItem(position);
         viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());

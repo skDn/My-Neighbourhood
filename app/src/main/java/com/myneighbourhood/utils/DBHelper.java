@@ -20,7 +20,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 40;
+    private static final int DB_VERSION = 42;
     private static final String DB_NAME = "Database.db";
 
     //Notifications
@@ -403,7 +403,6 @@ public class DBHelper extends SQLiteOpenHelper {
             return userFromCursor;
         }
         c.close();
-        db.close();
         return null;
     }
 
@@ -598,6 +597,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String text = "";
         long timestamp = 0;
         Bitmap picture = null;
+        User creator = null;
         ArrayList<News> toReturn = new ArrayList<>();
 
         String queryToExecute =
@@ -607,26 +607,30 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            newsId = c.getInt(c.getColumnIndex(COLUMN_NEWS_ID));
-            userId = c.getLong(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+            System.out.println("DBHelper getNews");
+            newsId = c.getLong(c.getColumnIndex(COLUMN_NEWS_ID));
 
-            User creator = getUser(userId);
-            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
-                title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null) {
-                text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
-            }
-            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
-                timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
-            }
-            byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
-            picture = BitmapFactory.decodeByteArray(p, 0, p.length);
-            toReturn.add(new News(newsId, creator, title, text, timestamp, picture));
-
-            if (!db.isOpen()){
-                db = getReadableDatabase();
-            }
+            toReturn.add(getNews(newsId));
+//            userId = c.getLong(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
+//
+//            creator = getUser(userId);
+//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
+//                title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
+//            }
+//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null) {
+//                text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
+//            }
+//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
+//                timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
+//            }
+//            System.out.println("isOpen: " + db.isOpen());
+//            byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
+//            picture = BitmapFactory.decodeByteArray(p, 0, p.length);
+//            toReturn.add(new News(newsId, creator, title, text, timestamp, picture));
+//
+//            if (!db.isOpen()){
+//                db = getReadableDatabase();
+//            }
             c.moveToNext();
         }
         c.close();
@@ -799,7 +803,6 @@ public class DBHelper extends SQLiteOpenHelper {
             byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
             picture = BitmapFactory.decodeByteArray(p, 0, p.length);
 
-            db.close();
             c.close();
             return new News(newsId, creator, title, text, timestamp, picture);
         }
