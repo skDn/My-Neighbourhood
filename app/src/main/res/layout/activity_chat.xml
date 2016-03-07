@@ -126,7 +126,7 @@
                     android:layout_toLeftOf="@+id/chat_TV_agrees_label_2"
                     android:layout_toStartOf="@+id/chat_TV_agrees_label_2"
                     android:gravity="center_vertical|end"
-                    android:text="user 1" />
+                    android:text="user 2" />
 
                 <TextView
                     android:text="confirms"

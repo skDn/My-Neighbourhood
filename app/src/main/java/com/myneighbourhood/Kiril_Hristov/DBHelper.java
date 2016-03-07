@@ -609,7 +609,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_CHATS_USER_1 + " = " + user1.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user2.getId() + ") OR ("
                 + COLUMN_CHATS_USER_1 + " = " + user2.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user1.getId() + ")) AND "
                 + COLUMN_CHATS_REQUEST_ID + " = " + request.getId();
-        System.out.println(queryChats);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(queryChats, null);
 
