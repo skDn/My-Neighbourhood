@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Utils;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyProfileActivity extends BaseActivity {
 
     @Override
@@ -39,7 +41,9 @@ public class MyProfileActivity extends BaseActivity {
         TextView emailTV = (TextView) findViewById(R.id.my_profile_TV_email);
         TextView phoneTV = (TextView) findViewById(R.id.my_profile_TV_phone);
         TextView addressTV = (TextView) findViewById(R.id.my_profile_TV_address);
+        CircleImageView profilePicCIV = (CircleImageView) findViewById(R.id.my_profile_CIV_profile_pic);
 
+        profilePicCIV.setImageBitmap(user.getImage());
         usernameTV.setText(user.getUsername());
         emailTV.setText(user.getEmail());
         phoneTV.setText(user.getPhone());

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,7 @@ public class RegisterActivity extends BaseActivity {
     private MapView mapView;
     private EditText firstNameET;
     private EditText lastNameET;
+    Bitmap profilePicture = null;
 
     @Override
     protected boolean useToolbar() {
@@ -45,6 +47,7 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        profilePicture = BitmapFactory.decodeResource(getResources(), R.drawable.ic_account_circle_black_36dp);
 
         // bind UI elements
         Button registerBTN = (Button) findViewById(R.id.register_B_register);
@@ -71,7 +74,7 @@ public class RegisterActivity extends BaseActivity {
                 String lastName = lastNameET.getText().toString();
                 String address = addressET.getText().toString();
 
-                User user = DB.registerUser(new User(username, firstName, lastName, password, email, phone, null), new Address("100 Gibson Street", 0, 0));
+                User user = DB.registerUser(new User(username, firstName, lastName, password, email, phone, profilePicture), new Address("100 Gibson Street", 0, 0));
                 setLoggedInUser(user);
                 SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
                 SP_VILI_EDITOR.apply();
@@ -99,6 +102,7 @@ public class RegisterActivity extends BaseActivity {
 
             Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 150, 150);
             profilePicIV.setImageBitmap(bitmapFromURI);
+            profilePicture = bitmapFromURI;
         }
     }
 }
