@@ -146,6 +146,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     private void updateAcceptanceControls() {
         System.out.println("ChatActivity updateAcceptanceControls");
+        System.out.println("-------------!!!!!!!!!!!!!!!!!!!!!!!---------------");
+        System.out.println("otherUser checked: " + chat.getAcceptedBy(otherUser));
+        System.out.println("user checked: " + chat.getAcceptedBy(user));
+        System.out.println("request (" + chat.getRequest().getId() + ") accepted: " + chat.getRequest().getAccepted());
         checkBoxUser1.setChecked(chat.getAcceptedBy(otherUser));
         checkBoxUser2.setChecked(chat.getAcceptedBy(user));
 
@@ -170,7 +174,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         boolean result = DB.acceptRequest(chat.getRequest());
-        if(result) {
+        if (result) {
             showDialogWithOkButton("Great !");
             updateAcceptanceControls();
         } else {

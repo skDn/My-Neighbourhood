@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 28;
+    private static final int DB_VERSION = 30;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -494,7 +494,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private Request createRequestFromCursor(Cursor c) {
         long creatorId = c.getLong(c.getColumnIndex(COLUMN_REQUEST_CREATED_BY_ID));
         User creator = getUser(creatorId);
-        System.out.println("CreateRequestFromUser user: " + creator + ", userId: " + creatorId);
         String title = "";
         String description = "";
         long requestId = c.getLong(c.getColumnIndex(COLUMN_REQUESTS_REQUEST_ID));
@@ -606,10 +605,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public Chat getExistingChat(User user1, User user2, Request request) {
-        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE ("
+        String queryChats = "SELECT * FROM " + TABLE_CHATS + " WHERE (("
                 + COLUMN_CHATS_USER_1 + " = " + user1.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user2.getId() + ") OR ("
-                + COLUMN_CHATS_USER_1 + " = " + user2.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user1.getId() + ") AND "
+                + COLUMN_CHATS_USER_1 + " = " + user2.getId() + " AND " + COLUMN_CHATS_USER_2 + " = " + user1.getId() + ")) AND "
                 + COLUMN_CHATS_REQUEST_ID + " = " + request.getId();
+        System.out.println(queryChats);
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(queryChats, null);
 
@@ -837,12 +837,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
 
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            System.out.println("MAIKA TI DA EBA SHIBANA PACHA");
             long applicantId = c.getLong(c.getColumnIndex(COLUMN_APPLICANT_APPLICANT_ID));
             User u = getUser(applicantId);
             applicants.add(u);
         }
-        System.out.println("SIZE NA APPLICANTS V DB" + applicants.size());
         c.close();
         db.close();
         return applicants;

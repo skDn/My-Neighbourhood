@@ -73,6 +73,7 @@
 
 
                 <TextView
+                    android:textAllCaps="true"
                     android:id="@+id/chat_TV_check_box_1_label"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -86,6 +87,7 @@
 
                 <TextView
                     android:text="confirms"
+                    android:layout_marginLeft="10dp"
                     android:layout_toEndOf="@id/chat_TV_check_box_1_label"
                     android:layout_toRightOf="@id/chat_TV_check_box_1_label"
 
@@ -112,6 +114,7 @@
 
 
                 <TextView
+                    android:textAllCaps="true"
                     android:id="@+id/chat_TV_check_box_2_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
