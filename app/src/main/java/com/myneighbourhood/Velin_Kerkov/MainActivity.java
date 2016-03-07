@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 
-import com.myneighbourhood.Kiril_Hristov.ApplicantsActivity;
 import com.myneighbourhood.Kiril_Hristov.MyRequestsFragment;
 import com.myneighbourhood.Kiril_Hristov.RequestFeedFragment;
 import com.myneighbourhood.R;
@@ -100,7 +99,7 @@ public class MainActivity extends BaseActivity {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, ApplicantsActivity.class), 0);
+                new Intent(this, MainActivity.class), 0);
 
         DB.notificationSeen(notId);
 
