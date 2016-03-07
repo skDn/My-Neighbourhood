@@ -20,7 +20,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 42;
+    private static final int DB_VERSION = 43;
     private static final String DB_NAME = "Database.db";
 
     //Notifications

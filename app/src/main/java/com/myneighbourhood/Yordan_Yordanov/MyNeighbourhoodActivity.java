@@ -128,7 +128,7 @@ public class MyNeighbourhoodActivity extends BaseActivity {
         neighbours = DB.getUsers();
         User toBeRemoved = null;
         for (User neighbour : neighbours) {
-            if (neighbour.getId() == user.getId()) {
+            if (neighbour.getUsername().equals(user.getUsername())) {
                 toBeRemoved = neighbour;
                 break;
             }
