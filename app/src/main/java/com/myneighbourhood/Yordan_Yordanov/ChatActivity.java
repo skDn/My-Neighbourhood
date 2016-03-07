@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Message;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
@@ -116,7 +117,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         String messageString = newMessageET.getText().toString();
         if (messageString.length() > 0) {
             Message message = new Message(new Date(), chat.getId(), messageString, user, otherUser);
-            DB.addMessage(message);
+            CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_MESSAGE, otherUser, user);
+            DB.addMessage(message, notification);
             newMessageET.setText("");
             messages.add(message);
             adapter.setMessages(messages);

@@ -1,6 +1,5 @@
 package com.myneighbourhood.Kiril_Hristov;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,13 +13,13 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ViewRequestActivity extends BaseActivity {
 
@@ -96,7 +95,8 @@ public class ViewRequestActivity extends BaseActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DB.addApplicant(user.getId(), request.getId(), request.getCreator().getId());
+                CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_APPLICANT, request.getCreator(), user);
+                DB.addApplicant(user.getId(), request.getId(), request.getCreator().getId(), notification);
                 Intent i = new Intent(ViewRequestActivity.this, ChatActivity.class);
                 Chat c = DB.addChat(request.getCreator(), user, request);
                 i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());

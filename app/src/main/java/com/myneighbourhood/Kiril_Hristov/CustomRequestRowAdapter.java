@@ -19,6 +19,7 @@ import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
@@ -32,7 +33,7 @@ import java.util.Date;
  * Created by Kiril on 19/02/16.
  */
 
-public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener{
+public class CustomRequestRowAdapter extends ArrayAdapter<String> implements View.OnClickListener {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
 
@@ -124,18 +125,17 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         ArrayList<User> applicants = db.getApplicants(feedRequests.get(position).getId());
 
         boolean isApplicant = false;
-        for(User applicant : applicants){
-            if (applicant.getId() == user.getId()){
+        for (User applicant : applicants) {
+            if (applicant.getId() == user.getId()) {
                 isApplicant = true;
                 break;
             }
         }
 
-        if(isApplicant){
+        if (isApplicant) {
             viewHolder.contact.setText("Contact");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_dark));
-        }
-        else{
+        } else {
             viewHolder.contact.setText("Apply");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         }
@@ -144,7 +144,8 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         viewHolder.contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.addApplicant(user.getId(), feedRequests.get(position).getId(), feedRequests.get(position).getCreator().getId());
+                CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_APPLICANT, feedRequests.get(position).getCreator(), user);
+                db.addApplicant(user.getId(), feedRequests.get(position).getId(), feedRequests.get(position).getCreator().getId(), notification);
                 Intent i = new Intent(getContext(), ChatActivity.class);
                 Chat c = db.addChat(feedRequests.get(position).getCreator(), user, feedRequests.get(position));
                 System.out.println("applying for request: " + feedRequests.get(position));
@@ -166,7 +167,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         });
 
         return convertView;
-        }
+    }
 
 
     protected void removeListItem(final View rowView) {

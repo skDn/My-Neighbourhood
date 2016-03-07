@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Request;
 
 import java.util.Calendar;
@@ -47,14 +48,14 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("VLIZAM TUKA");
                 String title = titleField.getText().toString();
                 String description = descriptionField.getText().toString();
                 if (title.equals("")) showDialogWithOkButton("Please specify a title for the request!");
                 else{
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.HOUR, hourSelected);
-                    DB.addRequest(new Request(user, title, description, 1, cal.getTimeInMillis(), 0));
+                    CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_REQUEST, null, user );
+                    DB.addRequest(new Request(user, title, description, 1, cal.getTimeInMillis(), 0), notification);
                     onBackPressed();
                 }
             }

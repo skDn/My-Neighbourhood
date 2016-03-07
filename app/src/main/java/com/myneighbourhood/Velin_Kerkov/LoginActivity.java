@@ -1,15 +1,9 @@
 package com.myneighbourhood.Velin_Kerkov;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +13,7 @@ import android.widget.Toast;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.utils.Address;
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
@@ -30,7 +25,6 @@ public class LoginActivity extends BaseActivity {
     private EditText passwordET;
     private EditText usernameET;
     private RelativeLayout mainLayoutLL;
-    public static final int NOTIFICATION_ID = 1;
 
     @Override
     protected boolean useToolbar() {
@@ -67,7 +61,8 @@ public class LoginActivity extends BaseActivity {
 
         Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis(), 0);
 
-        Request adminRequestRes = DB.addRequest(adminRequest);
+        CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_REQUEST, null, newAdmin );
+        Request adminRequestRes = DB.addRequest(adminRequest, notification);
         if (adminRequestRes == null) {
             // zna4i ima ve4e takav
             System.out.println("adminRequestRes == null");
@@ -123,30 +118,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-    }
-
-    private void sendNotification(String msg) {
-        NotificationManager mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, LoginActivity.class), 0);
-
-
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("MyNeighbourhood")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg)
-                        .setSound(alarmSound)
-                        .setAutoCancel(true);
-
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
 }

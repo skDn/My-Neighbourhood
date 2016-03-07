@@ -20,8 +20,18 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 31;
+    private static final int DB_VERSION = 33;
     private static final String DB_NAME = "Database.db";
+
+    //Notifications
+    private static final String TABLE_NOTIFICATION = "CustomNotification";
+    private static final String COLUMN_NOTIFICATION_ID = "notification_id";
+    private static final String COLUMN_NOTIFICATION_FOR_USER_ID = "for_user_id";
+    private static final String COLUMN_NOTIFICATION_FROM_USER_ID = "from_user_id";
+    private static final String COLUMN_NOTIFICATION_TYPE = "notification_type";
+    private static final String COLUMN_NOTIFICATION_TEXT = "text";
+    private static final String COLUMN_NOTIFICATION_TIMESTAMP = "timestamp";
+    private static final String COLUMN_NOTIFICATION_IS_SHOWN = "is_shown";
 
     //User table
     private static final String TABLE_USER = "User";
@@ -100,16 +110,30 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_CHATS_ACCEPTED_USER_2 = "accepted_by_user_2";
 
 
-    public void printUSers(){
+    public void printUSers() {
         String q = "SELECT * FROM " + TABLE_USER;
         Cursor cursor = getReadableDatabase().rawQuery(q, null);
-        for(cursor.moveToFirst(); !cursor.isAfterLast();cursor.moveToNext()){
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             System.out.println(createUserFromCursor(cursor));
         }
 
         cursor.close();
     }
+
     // Create table queries
+
+    private static final String createNotification =
+            "CREATE TABLE " + TABLE_NOTIFICATION + " (" +
+                    COLUMN_NOTIFICATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NOTIFICATION_FOR_USER_ID + " INTEGER, " +
+                    COLUMN_NOTIFICATION_FROM_USER_ID + " INTEGER, " +
+                    COLUMN_NOTIFICATION_TIMESTAMP + " INTEGER, " +
+                    COLUMN_NOTIFICATION_IS_SHOWN + " INTEGER, " +
+                    COLUMN_NOTIFICATION_TEXT + " TEXT, " +
+                    COLUMN_NOTIFICATION_TYPE + " INTEGER " +
+                    ")";
+
+
     private static final String createUser =
             "CREATE TABLE " + TABLE_USER + "(" +
                     COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -238,6 +262,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createApplicant);
         db.execSQL(createMessage);
         db.execSQL(createChats);
+        db.execSQL(createNotification);
 //        registerUser(new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", null), new Address("100 Gibson Street", 55.8734611, -4.2890117));
     }
 
@@ -251,9 +276,29 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPLICANT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHATS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
         onCreate(db);
     }
 
+    public void addNotification(CustomNotification notification) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOTIFICATION_TIMESTAMP, notification.getCreationDate().getTime());
+        values.put(COLUMN_NOTIFICATION_TYPE, notification.getType().type);
+        values.put(COLUMN_NOTIFICATION_TEXT, notification.getText());
+        values.put(COLUMN_NOTIFICATION_FROM_USER_ID, notification.getFromUser().getId());
+        values.put(COLUMN_NOTIFICATION_IS_SHOWN, notification.isShown() ? 1 : 0);
+
+        if (notification.getForUser() != null) {
+            values.put(COLUMN_NOTIFICATION_FOR_USER_ID, notification.getForUser().getId());
+        } else {
+            values.putNull(COLUMN_NOTIFICATION_FOR_USER_ID);
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_NOTIFICATION, null, values);
+
+        db.close();
+    }
 
     public User registerUser(User user, Address address) {
         SQLiteDatabase db = getWritableDatabase();
@@ -421,7 +466,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Request addRequest(Request request) {
+    public Request addRequest(Request request, CustomNotification notification) {
         // check if request exists already
 
 
@@ -444,6 +489,10 @@ public class DBHelper extends SQLiteOpenHelper {
             return null;
         } else {
             request.setId(insertedId);
+            if (notification != null) {
+                addNotification(notification);
+            }
+
         }
         return request;
     }
@@ -613,7 +662,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public Message addMessage(Message msg) {
+    public Message addMessage(Message msg, CustomNotification notification) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MESSAGES_TEXT, msg.getText());
         values.put(COLUMN_MESSAGES_TIMESTAMP, msg.getTimestamp().getTime());
@@ -634,6 +683,9 @@ public class DBHelper extends SQLiteOpenHelper {
             String updateChatQuery = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_LATEST_MSG_TIME + " = " + msg.getTimestamp().getTime() + " WHERE " + COLUMN_CHATS_ID + " = " + msg.getChatId();
             db.execSQL(updateChatQuery);
             db.close();
+            if (notification != null) {
+                addNotification(notification);
+            }
             return msg;
         }
 
@@ -679,7 +731,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Date latestViewByUser1Date = new Date(latestViewByUser1Time);
         Date latestViewByUser2Date = new Date(latestViewByUser2Time);
 
-        return new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, acceptedUser1 == 1 , acceptedUser2 == 1);
+        return new Chat(chatId, createdAt, request, user1, user2, latestMsgDate, latestViewByUser1Date, latestViewByUser2Date, acceptedUser1 == 1, acceptedUser2 == 1);
     }
 
     public void addNews(News news) {
@@ -802,7 +854,7 @@ public class DBHelper extends SQLiteOpenHelper {
 //                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
 //                    ");";
 
-    public boolean addApplicant(long applicantId, long requestId, long creatorId){
+    public boolean addApplicant(long applicantId, long requestId, long creatorId, CustomNotification notification) {
 
         ContentValues values = new ContentValues();
         long now = System.currentTimeMillis();
@@ -816,14 +868,17 @@ public class DBHelper extends SQLiteOpenHelper {
         if (insertedApplicantRecord == -1) {
             return false;
         }
+        if (notification != null) {
+            addNotification(notification);
+        }
         return true;
     }
 
     public ArrayList<User> getApplicants(long requestId) {
         ArrayList<User> applicants = new ArrayList<>();
 
-        String query = "SELECT " + COLUMN_APPLICANT_APPLICANT_ID +" FROM " + TABLE_APPLICANT
-                     + " WHERE " + COLUMN_APPLICANT_REQUEST_ID + " = " + requestId;
+        String query = "SELECT " + COLUMN_APPLICANT_APPLICANT_ID + " FROM " + TABLE_APPLICANT
+                + " WHERE " + COLUMN_APPLICANT_REQUEST_ID + " = " + requestId;
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(query, null);
@@ -853,14 +908,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return chat;
     }
 
-    public void updateAccepted(User user, Chat chat){
+    public void updateAccepted(User user, Chat chat) {
         System.out.println("DB Helper updateAccepted");
         String query = "";
-        if(chat.getUser1().getId() == user.getId()){
-            query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + (chat.isAcceptedUser1() ? 1: 0)
-                + " WHERE " + COLUMN_CHATS_ID + " = " + chat.getId();
-        }
-        else query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_2 + " = " + (chat.isAcceptedUser2() ? 1 : 0)
+        if (chat.getUser1().getId() == user.getId()) {
+            query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + (chat.isAcceptedUser1() ? 1 : 0)
+                    + " WHERE " + COLUMN_CHATS_ID + " = " + chat.getId();
+        } else
+            query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_2 + " = " + (chat.isAcceptedUser2() ? 1 : 0)
                     + " WHERE " + COLUMN_CHATS_ID + " = " + chat.getId();
 
         SQLiteDatabase db = getWritableDatabase();
@@ -870,21 +925,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean acceptRequest(Request request) {
         boolean result = true;
-        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_ACCEPTED + " = " + 1 + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +  request.getId();
+        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_ACCEPTED + " = " + 1 + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " + request.getId();
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.execSQL(query);
             request.setAccepted(1);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             result = false;
         }
         db.close();
-        return  result;
+        return result;
     }
 
     public void requestStatusUpdate(Request request) {
-        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_STATUS + " = " + request.getStatus() + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +   request.getId();
+        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_STATUS + " = " + request.getStatus() + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " + request.getId();
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query);
         db.close();
@@ -908,5 +963,41 @@ public class DBHelper extends SQLiteOpenHelper {
         c.close();
         db.close();
         return toReturn;
+    }
+
+    public ArrayList<CustomNotification> getAllNotifications(User user) {
+        String query = " SELECT * FROM " + TABLE_NOTIFICATION + " WHERE (" + COLUMN_NOTIFICATION_FOR_USER_ID + " = " + user.getId() + " OR " + COLUMN_NOTIFICATION_FOR_USER_ID + " IS NULL ) AND " + COLUMN_NOTIFICATION_FROM_USER_ID + " != " + user.getId();
+        ArrayList<CustomNotification> notifications = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        if (c.getCount() > 0) {
+            for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                CustomNotification notification = createNotificationFromCursor(c);
+                notifications.add(notification);
+            }
+        }
+        c.close();
+        db.close();
+
+        return notifications;
+    }
+
+    private CustomNotification createNotificationFromCursor(Cursor c) {
+        long notId = c.getLong(c.getColumnIndex(COLUMN_NOTIFICATION_ID));
+        String notText = c.getString(c.getColumnIndex(COLUMN_NOTIFICATION_TEXT));
+        long forUserId = c.getLong(c.getColumnIndex(COLUMN_NOTIFICATION_FOR_USER_ID));
+        long fromUserId = c.getLong(c.getColumnIndex(COLUMN_NOTIFICATION_FROM_USER_ID));
+        int notType = c.getInt(c.getColumnIndex(COLUMN_NOTIFICATION_TYPE));
+        long notTimestamp = c.getLong(c.getColumnIndex(COLUMN_NOTIFICATION_TIMESTAMP));
+        boolean notIsShown = c.getInt(c.getColumnIndex(COLUMN_NOTIFICATION_IS_SHOWN)) == 1;
+
+
+        User forUser = getUser(forUserId);
+        User fromUser = getUser(fromUserId);
+        CustomNotification.Type type = CustomNotification.getType(notType);
+        Date timestamp = new Date(notTimestamp);
+
+        return new CustomNotification(notId, type, forUser, fromUser, notText, notIsShown, timestamp);
+
     }
 }
