@@ -155,8 +155,6 @@
             android:dividerHeight="0dp">
 
         </ListView>
-
     </LinearLayout>
-
 
 </RelativeLayout>
