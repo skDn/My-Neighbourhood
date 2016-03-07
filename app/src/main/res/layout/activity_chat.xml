@@ -152,7 +152,8 @@
             android:id="@+id/chat_LV_messages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="0dp">
+            android:dividerHeight="0dp"
+            android:divider="#FAFAFA">
 
         </ListView>
     </LinearLayout>
