@@ -74,7 +74,7 @@ public class AddNewsActivity extends BaseActivity {
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
 
-            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 200, 150);
+            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 2000, 1000);
             addNewsImage.setImageBitmap(bitmapFromURI);
 
             imageToSave = bitmapFromURI;
