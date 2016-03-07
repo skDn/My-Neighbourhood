@@ -1,6 +1,7 @@
 package com.myneighbourhood.Kiril_Hristov;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.utils.User;
+import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -33,12 +36,12 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
 
     static class ViewHolderItem{
         TextView username, rating;
-        ImageView profileImage;
+        ImageView profileImage, chatIV;
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderItem viewHolder;
 
         if(convertView == null) {
@@ -49,6 +52,7 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
             viewHolder.profileImage = (ImageView) convertView.findViewById(R.id.ApplicantRowUserImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.ApplicantRowUsername);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.ApplicantRowRating);
+            viewHolder.chatIV = (ImageView) convertView.findViewById(R.id.custom_applicant_row_IV_chat);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolderItem) convertView.getTag();
@@ -60,6 +64,17 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
 
         viewHolder.username.setText(applicants.get(position).getUsername());
         viewHolder.rating.setText(String.valueOf(applicants.get(position).getRating().getRatingAsApplicant()));
+
+
+        viewHolder.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long applicantId = applicants.get(position).getId();
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY, applicantId);
+                getContext().startActivity(i);
+            }
+        });
 
         return convertView;
     }

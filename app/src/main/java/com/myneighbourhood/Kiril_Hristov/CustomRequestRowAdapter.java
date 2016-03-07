@@ -134,10 +134,10 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         }
 
         if (isApplicant) {
-            viewHolder.contact.setText("Reply");
+            viewHolder.contact.setText("Contact");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_dark));
         } else {
-            viewHolder.contact.setText("Reply");
+            viewHolder.contact.setText("Apply");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         }
 
