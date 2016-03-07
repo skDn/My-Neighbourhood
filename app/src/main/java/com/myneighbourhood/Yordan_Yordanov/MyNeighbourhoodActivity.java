@@ -96,6 +96,14 @@ public class MyNeighbourhoodActivity extends BaseActivity implements AdapterView
 
         // getting users from the database
         neighbours = DB.getUsers();
+        User toBeRemoved = null;
+        for (User neighbour: neighbours){
+            if (neighbour.getId() == user.getId()){
+                toBeRemoved = neighbour;
+                break;
+            }
+        }
+        neighbours.remove(toBeRemoved);
 
         // getting user names
         String[] userNames = new String[neighbours.size()];

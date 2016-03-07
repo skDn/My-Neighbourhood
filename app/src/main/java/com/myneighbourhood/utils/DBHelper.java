@@ -20,7 +20,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 36;
+    private static final int DB_VERSION = 39;
     private static final String DB_NAME = "Database.db";
 
     //Notifications
@@ -346,9 +346,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Rating defaultRating;
         if (user.getUsername().equals("Bob")) {
             defaultRating = new Rating(resultUser, 10, 15, 3);
+        } else if (user.getUsername().equals("vili")) {
+            defaultRating = new Rating(resultUser, 20, 2, 6);
         } else {
             defaultRating = new Rating(resultUser, 0, 0, 0);
         }
+
         ContentValues ratingValues = new ContentValues();
         ratingValues.put(COLUMN_RATING_USER_ID, defaultRating.getUser().getId());
         ratingValues.put(COLUMN_RATING_AS_REQUESTER, defaultRating.getRatingAsRequester());
@@ -621,6 +624,9 @@ public class DBHelper extends SQLiteOpenHelper {
             picture = BitmapFactory.decodeByteArray(p, 0, p.length);
             toReturn.add(new News(newsId, creator, title, text, timestamp, picture));
 
+            if (!db.isOpen()){
+                db = getReadableDatabase();
+            }
             c.moveToNext();
         }
         c.close();

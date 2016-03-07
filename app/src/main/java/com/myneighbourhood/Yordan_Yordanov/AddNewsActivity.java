@@ -15,7 +15,6 @@ import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MainActivity;
 import com.myneighbourhood.utils.News;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 public class AddNewsActivity extends BaseActivity {
@@ -74,7 +73,7 @@ public class AddNewsActivity extends BaseActivity {
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
 
-            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 2000, 1000);
+            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 500, 300);
             addNewsImage.setImageBitmap(bitmapFromURI);
 
             imageToSave = bitmapFromURI;

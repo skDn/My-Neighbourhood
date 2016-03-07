@@ -10,37 +10,30 @@
         android:id="@+id/newsDescriptionTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Hello world"
         android:textSize="20sp"
-        android:gravity="center"
         android:textStyle="bold" />
 
 
-    <LinearLayout
-        android:id="@+id/imageLayout"
+    <ImageView
+        android:src="@drawable/ic_next"
+        android:id="@+id/newsCoverImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/newsDescriptionTitle"
+        android:layout_alignEnd="@+id/userLayout"
         android:layout_alignRight="@+id/userLayout"
-        android:layout_alignEnd="@+id/userLayout">
-
-        <ImageView
-            android:id="@+id/newsCoverImage"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="0.1"/>
-        <!--android:src="@drawable/logo_menu" />-->
-    </LinearLayout>
+        android:layout_below="@id/newsDescriptionTitle" />
+    <!--android:src="@drawable/logo_menu" />-->
 
 
     <LinearLayout
-        android:layout_below="@id/imageLayout"
         android:id="@+id/userLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_below="@id/newsCoverImage"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/newsCreatedByUserImage"
@@ -76,24 +69,24 @@
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
         android:id="@+id/newsDescriptionLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/userLayout"
+        android:layout_alignEnd="@+id/imageLayout"
         android:layout_alignRight="@+id/userLayout"
-        android:layout_alignEnd="@+id/imageLayout">
+        android:layout_below="@+id/userLayout"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/newsDescriptionText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Hello world"
-            android:textSize="18sp" />    </LinearLayout>
+            android:textSize="18sp" />
+    </LinearLayout>
 
 
 </RelativeLayout>
