@@ -3,8 +3,10 @@ package com.myneighbourhood.Yordan_Yordanov;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,7 +75,12 @@ public class AddNewsActivity extends BaseActivity {
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
 
-            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 500, 300);
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+
+            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, width, width/2);
             addNewsImage.setImageBitmap(bitmapFromURI);
 
             imageToSave = bitmapFromURI;
