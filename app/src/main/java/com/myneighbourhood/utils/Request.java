@@ -112,6 +112,8 @@ public class Request {
         this.status = status;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Request: " + id + ", " + creator.getUsername() + ", status:" + status + ", accepted: " + accepted;
+    }
 }

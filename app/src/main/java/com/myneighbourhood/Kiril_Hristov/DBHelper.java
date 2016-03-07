@@ -27,7 +27,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 27;
+    private static final int DB_VERSION = 28;
     private static final String DB_NAME = "Database.db";
 
     //User table
@@ -878,12 +878,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void requestAccepted(Request request) {
-        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_ACCEPTED + " = " + 1 + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +   request.getId();
+    public boolean acceptRequest(Request request) {
+        boolean result = true;
+        String query = "UPDATE " + TABLE_REQUEST + " SET " + COLUMN_REQUEST_ACCEPTED + " = " + 1 + " WHERE " + COLUMN_REQUESTS_REQUEST_ID + " = " +  request.getId();
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL(query);
+        try {
+            db.execSQL(query);
+            request.setAccepted(1);
+        } catch (Exception e){
+            e.printStackTrace();
+            result = false;
+        }
         db.close();
-        request.setAccepted(1);
+        return  result;
     }
 
     public void requestStatusUpdate(Request request) {

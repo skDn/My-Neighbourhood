@@ -69,6 +69,7 @@ public class LoginActivity extends BaseActivity {
         DB.deleteAdminViliChat(admin, vili);
         DB.addChat(newAdmin, newVili, adminRequestRes);
 
+        System.out.println("----------------------------------------------------------------------------------------------------------");
 
         // bind to UI elements
         mainLayoutLL = (RelativeLayout) findViewById(R.id.login_RL_main);

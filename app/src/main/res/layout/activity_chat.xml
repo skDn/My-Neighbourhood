@@ -74,14 +74,28 @@
 
                 <TextView
                     android:id="@+id/chat_TV_check_box_1_label"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10sp"
                     android:layout_marginStart="10sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="user 1 " />
+
+                <TextView
+                    android:text="confirms"
+                    android:layout_toEndOf="@id/chat_TV_check_box_1_label"
+                    android:layout_toRightOf="@id/chat_TV_check_box_1_label"
+
                     android:layout_toLeftOf="@+id/chat_CB_user_1"
                     android:layout_toStartOf="@+id/chat_CB_user_1"
-                    android:gravity="center_vertical"
-                    android:text="user 1 agrees" />
+
+                    android:id="@+id/chat_TV_agrees_label_1"
+                    android:gravity="center_vertical|start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -101,13 +115,24 @@
                     android:id="@+id/chat_TV_check_box_2_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:layout_marginEnd="10dp"
+                    android:textStyle="bold"
                     android:layout_marginRight="10dp"
                     android:layout_toEndOf="@+id/chat_CB_user_2"
                     android:layout_toRightOf="@+id/chat_CB_user_2"
+                    android:layout_toLeftOf="@+id/chat_TV_agrees_label_2"
+                    android:layout_toStartOf="@+id/chat_TV_agrees_label_2"
                     android:gravity="center_vertical|end"
-                    android:text="user 1 agrees" />
+                    android:text="user 1" />
+
+                <TextView
+                    android:text="confirms"
+                    android:id="@+id/chat_TV_agrees_label_2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
             </RelativeLayout>
 
         </LinearLayout>

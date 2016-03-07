@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,7 +67,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         System.out.println("otherUser: " + otherUser.getUsername() + ", id: " + otherUser.getId());
 
 
-        ((FrameLayout)findViewById(R.id.chat_FL_list_wrapper)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.chat_FL_list_wrapper).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideKeyboard(v);
@@ -79,8 +78,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         checkBox1Label = (TextView) findViewById(R.id.chat_TV_check_box_1_label);
         checkBox2Label = (TextView) findViewById(R.id.chat_TV_check_box_2_label);
         sendMessageIV = (ImageView) findViewById(R.id.chat_B_send_message);
-        checkBox1Label.setText(otherUser.getUsername() + " confirms");
-        checkBox2Label.setText(user.getUsername() + " confirms");
+        checkBox1Label.setText(otherUser.getUsername());
+        checkBox2Label.setText(user.getUsername());
         checkBoxUser1 = (CheckBox) findViewById(R.id.chat_CB_user_1);
         checkBoxUser2 = (CheckBox) findViewById(R.id.chat_CB_user_2);
         shakeHandsBTN = (Button) findViewById(R.id.chat_B_shake_hands);
@@ -94,7 +93,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 if (isChecked) {
                     chat.setChecked(user, isChecked);
                     DB.updateAccepted(user, chat);
-                    updateShakeHandsBTN();
+                    updateAcceptanceControls();
                 } else {
                     if (chat.getRequest().getAccepted() == 1) {
                         showDialogWithOkButton("You have already shook hands so you can not change your mind now.");
@@ -102,7 +101,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                     } else {
                         chat.setChecked(user, isChecked);
                         DB.updateAccepted(user, chat);
-                        updateShakeHandsBTN();
+                        updateAcceptanceControls();
                     }
                 }
             }
@@ -135,10 +134,9 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        checkBoxUser1.setChecked(chat.getAcceptedBy(otherUser));
-        checkBoxUser2.setChecked(chat.getAcceptedBy(user));
 
-        updateShakeHandsBTN();
+
+        updateAcceptanceControls();
 
 
         messages = DB.getMessagesForChat(chat.getId());
@@ -146,7 +144,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         messagesLV.smoothScrollToPosition(adapter.getCount() - 1);
     }
 
-    private void updateShakeHandsBTN() {
+    private void updateAcceptanceControls() {
+        System.out.println("ChatActivity updateAcceptanceControls");
+        checkBoxUser1.setChecked(chat.getAcceptedBy(otherUser));
+        checkBoxUser2.setChecked(chat.getAcceptedBy(user));
+
         if (chat.getRequest().getAccepted() == 1) {
             shakeHandsBTN.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
             shakeHandsBTN.setText("Hands shaken.");
@@ -167,9 +169,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        DB.requestAccepted(chat.getRequest());
-        showDialogWithOkButton("Great !");
-        updateShakeHandsBTN();
+        boolean result = DB.acceptRequest(chat.getRequest());
+        if(result) {
+            showDialogWithOkButton("Great !");
+            updateAcceptanceControls();
+        } else {
+            showDialogWithOkButton("Something went wrong when saving.");
+        }
     }
 
     private static class MsgAdapter extends ArrayAdapter<Message> {
