@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
         ArrayList<CustomNotification> notifications = DB.getAllNotifications(user);
         for (CustomNotification not : notifications) {
-            sendNotification(not.getText(), not.getId());
+            sendNotification(not.getText(), not.getFromUser().getId() + not.getType().type);
         }
     }
 

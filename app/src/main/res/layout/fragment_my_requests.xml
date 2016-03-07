@@ -33,7 +33,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="No Results" />
+            android:text="You have not yet created any requests." />
 
     </FrameLayout>
 

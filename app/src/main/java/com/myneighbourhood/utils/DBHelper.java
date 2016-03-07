@@ -20,7 +20,7 @@ import java.util.Date;
 public class DBHelper extends SQLiteOpenHelper {
     private static DBHelper INSTANCE;
 
-    private static final int DB_VERSION = 33;
+    private static final int DB_VERSION = 36;
     private static final String DB_NAME = "Database.db";
 
     //Notifications
@@ -343,7 +343,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ADDRESS, null, addressValues);
 
         // create default rating
-        Rating defaultRating = new Rating(resultUser, 0, 0, 0);
+        Rating defaultRating;
+        if (user.getUsername().equals("Bob")) {
+            defaultRating = new Rating(resultUser, 10, 15, 3);
+        } else {
+            defaultRating = new Rating(resultUser, 0, 0, 0);
+        }
         ContentValues ratingValues = new ContentValues();
         ratingValues.put(COLUMN_RATING_USER_ID, defaultRating.getUser().getId());
         ratingValues.put(COLUMN_RATING_AS_REQUESTER, defaultRating.getRatingAsRequester());
@@ -559,10 +564,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String getMyRequests =
                 "SELECT * FROM " + TABLE_REQUEST +
-                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + ";";
+                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " = " + userId + " AND " + COLUMN_REQUEST_ACCEPTED + " != " + 1 + " ORDER BY " + COLUMN_REQUESTS_REQUEST_ID + " DESC ";
         String getFeedRequests =
                 "SELECT * FROM " + TABLE_REQUEST +
-                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " != " + userId + ";";
+                        " WHERE " + COLUMN_REQUEST_CREATED_BY_ID + " != " + userId + " AND " + COLUMN_REQUEST_ACCEPTED + " != " + 1 + " ORDER BY " + COLUMN_REQUESTS_REQUEST_ID + " DESC ";
 
         String queryToExecute;
         if (feedOrMy.equals("feed")) {

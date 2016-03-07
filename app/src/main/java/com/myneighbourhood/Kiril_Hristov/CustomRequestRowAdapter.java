@@ -11,7 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +27,8 @@ import com.myneighbourhood.utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Kiril on 19/02/16.
@@ -63,7 +64,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
     }
 
     static class ViewHolderItem {
-        ImageView userImage;
+        CircleImageView userImage;
         TextView username;
         TextView dateCreated;
         TextView title;
@@ -88,7 +89,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
             viewHolder = new ViewHolderItem();
 
-            viewHolder.userImage = (ImageView) convertView.findViewById(R.id.RowRequestImage);
+            viewHolder.userImage = (CircleImageView) convertView.findViewById(R.id.RowRequestImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowRequestUsername);
             viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.request_row_TV_date_created);
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
@@ -133,10 +134,10 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
         }
 
         if (isApplicant) {
-            viewHolder.contact.setText("Contact");
+            viewHolder.contact.setText("Reply");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.holo_green_dark));
         } else {
-            viewHolder.contact.setText("Apply");
+            viewHolder.contact.setText("Reply");
             viewHolder.contact.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         }
 

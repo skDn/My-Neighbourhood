@@ -39,7 +39,7 @@ public class LoginActivity extends BaseActivity {
         Bitmap defaultProfPicture = BitmapFactory.decodeResource(getResources(), R.drawable.ic_account_circle_black_36dp);
 
 
-        User admin = new User("admin", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
+        User admin = new User("Bob", "fName", "lName", "pass", "mail@mail.com", "080808", BitmapFactory.decodeResource(getResources(), R.drawable.profile_pic_house));
         User vili = new User("vili", "fName", "lName", "pass", "mail@mail.com", "080808", defaultProfPicture);
 //        DB.deleteUser(admin);
 //        DB.deleteUser(vili);
@@ -59,7 +59,8 @@ public class LoginActivity extends BaseActivity {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR, 10);
 
-        Request adminRequest = new Request(newAdmin, "Test adminRequest", "Test description", 1, cal.getTimeInMillis(), 0);
+        Request adminRequest = new Request(newAdmin, "Chess buddy", "I need a chess buddy for tomorrow evening", 1, cal.getTimeInMillis(), 0);
+        Request viliRequest = new Request(newVili, "Computer technician", "Hello,\nI am new to this neighbourhood and looking for friends. \nI am great with computers so I would gladly help someone in need for a beer in return.", 1, cal.getTimeInMillis(), 0);
 
         CustomNotification notification = new CustomNotification(CustomNotification.Type.NEW_REQUEST, null, newAdmin );
         Request adminRequestRes = DB.addRequest(adminRequest, notification);
@@ -103,6 +104,7 @@ public class LoginActivity extends BaseActivity {
                     setLoggedInUser(user);
 
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     finish();
                 } else {

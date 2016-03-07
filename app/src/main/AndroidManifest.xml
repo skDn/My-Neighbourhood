@@ -39,8 +39,7 @@
         </activity>
         <activity android:name=".Velin_Kerkov.BaseActivity" />
         <activity
-            android:name=".Velin_Kerkov.LoginActivity"
-            android:noHistory="true" />
+            android:name=".Velin_Kerkov.LoginActivity" />
         <activity android:name=".Velin_Kerkov.RegisterActivity" />
         <activity android:name=".Velin_Kerkov.MyProfileActivity" />
         <activity android:name=".Yordan_Yordanov.AddNewsActivity" />

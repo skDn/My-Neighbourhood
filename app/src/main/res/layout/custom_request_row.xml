@@ -47,7 +47,7 @@
         android:background="#FFF3E0"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/RowRequestImage"
             android:layout_width="60dp"
             android:layout_height="match_parent"

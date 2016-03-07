@@ -27,6 +27,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:text="No Results" />
+        android:text="There are no requests in the system at the moment." />
 
 </FrameLayout>
