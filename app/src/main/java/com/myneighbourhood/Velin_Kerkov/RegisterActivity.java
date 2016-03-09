@@ -66,22 +66,40 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                String email = emailET.getText().toString();
-                String password = passwordET.getText().toString();
-                String phone = phoneET.getText().toString();
-                String username = usernameET.getText().toString();
-                String firstName = firstNameET.getText().toString();
-                String lastName = lastNameET.getText().toString();
-                String address = addressET.getText().toString();
+                String email = emailET.getText().toString().trim();
+                String password = passwordET.getText().toString().trim();
+                String phone = phoneET.getText().toString().trim();
+                String username = usernameET.getText().toString().trim();
+                String firstName = firstNameET.getText().toString().trim();
+                String lastName = lastNameET.getText().toString().trim();
+                String address = addressET.getText().toString().trim();
 
-                User user = DB.registerUser(new User(username, firstName, lastName, password, email, phone, profilePicture), new Address("100 Gibson Street", 0, 0));
-                setLoggedInUser(user);
-                SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
-                SP_VILI_EDITOR.apply();
 
-                Intent i = new Intent(RegisterActivity.this, SMSAuthorisationActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
+                if (username.equals("")) {
+                    usernameET.setError("Username is required");
+                } else if (password.equals("")) {
+                    passwordET.setError("Password is required");
+                } else if (firstName.equals("")) {
+                    firstNameET.setError("First name is required");
+                } else if (lastName.equals("")) {
+                    lastNameET.setError("Last name is required");
+                } else if (phone.equals("")) {
+                    phoneET.setError("Phone is required");
+                } else {
+
+                    User user = DB.registerUser(new User(username, firstName, lastName, password, email, phone, profilePicture), new Address("100 Gibson Street", 0, 0));
+                    if (user == null) {
+                        usernameET.setError("This username is already registered.");
+                    } else {
+                        setLoggedInUser(user);
+                        SP_VILI_EDITOR.putLong(Utils.SP_LAST_USER_ID, user.getId());
+                        SP_VILI_EDITOR.apply();
+
+                        Intent i = new Intent(RegisterActivity.this, SMSAuthorisationActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+                    }
+                }
             }
         });
 
