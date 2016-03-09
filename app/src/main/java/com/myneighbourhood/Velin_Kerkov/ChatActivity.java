@@ -1,4 +1,4 @@
-package com.myneighbourhood.Yordan_Yordanov;
+package com.myneighbourhood.Velin_Kerkov;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
-import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Message;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
-import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
+import com.myneighbourhood.Velin_Kerkov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.Request;
 import com.myneighbourhood.utils.User;

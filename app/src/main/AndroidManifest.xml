@@ -43,7 +43,7 @@
         <activity android:name=".Velin_Kerkov.RegisterActivity" />
         <activity android:name=".Velin_Kerkov.MyProfileActivity" />
         <activity android:name=".Yordan_Yordanov.AddNewsActivity" />
-        <activity android:name=".Yordan_Yordanov.ChatActivity" />
+        <activity android:name=".Velin_Kerkov.ChatActivity" />
         <activity android:name=".Yordan_Yordanov.MessagesActivity" />
         <activity android:name=".Velin_Kerkov.SMSAuthorisationActivity" />
         <activity android:name=".Yordan_Yordanov.MyNeighbourhoodActivity" />

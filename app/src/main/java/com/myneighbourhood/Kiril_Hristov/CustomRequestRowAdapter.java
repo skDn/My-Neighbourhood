@@ -15,8 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
+import com.myneighbourhood.Velin_Kerkov.ChatActivity;
 import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
-import com.myneighbourhood.Yordan_Yordanov.ChatActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.DBHelper;
