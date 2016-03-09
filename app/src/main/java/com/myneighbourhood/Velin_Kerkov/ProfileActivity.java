@@ -36,15 +36,20 @@ public class ProfileActivity extends BaseActivity {
         Button blockFeedToBTN = (Button) findViewById(R.id.profile_B_block_feed_to);
         Button endorseBTN = (Button) findViewById(R.id.profile_B_endorse);
 
+
         CircleImageView profilePicCIV = (CircleImageView) findViewById(R.id.profile_CIV_profile_pic);
 
         TextView usernameTV = (TextView) findViewById(R.id.profile_TV_username);
+        TextView firstNameTV = (TextView) findViewById(R.id.profile_TV_first_name);
+        TextView lastNameTV = (TextView) findViewById(R.id.profile_TV_last_name);
         TextView ratingRequesterTV = (TextView) findViewById(R.id.profile_TV_rating_requester);
         TextView ratingEndorsedByTV = (TextView) findViewById(R.id.profile_TV_rating_endorsed_by);
         TextView ratingApplicantTV = (TextView) findViewById(R.id.profile_TV_rating_applicant);
 
 
         usernameTV.setText(otherUser.getUsername());
+        firstNameTV.setText(otherUser.getFirstName());
+        lastNameTV.setText(otherUser.getLastName());
         ratingApplicantTV.setText(String.valueOf(otherUser.getRating().getRatingAsApplicant()));
         ratingEndorsedByTV.setText(String.valueOf(otherUser.getRating().getEndorsedBy()));
         ratingRequesterTV.setText(String.valueOf(otherUser.getRating().getRatingAsRequester()));
