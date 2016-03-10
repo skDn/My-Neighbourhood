@@ -476,8 +476,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Request addRequest(Request request, CustomNotification notification) {
         // check if request exists already
-
-
         ContentValues values = new ContentValues();
         values.put(COLUMN_REQUEST_CREATED_BY_ID, request.getCreator().getId());
         values.put(COLUMN_REQUEST_TITLE, request.getTitle());
@@ -493,7 +491,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         if (insertedId == -1) {
-            System.out.println("addRequest -1");
             return null;
         } else {
             request.setId(insertedId);
@@ -608,30 +605,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryToExecute, null);
         c.moveToFirst();
         while (!c.isAfterLast()) {
-            System.out.println("DBHelper getNews");
             newsId = c.getLong(c.getColumnIndex(COLUMN_NEWS_ID));
-
             toReturn.add(getNews(newsId));
-//            userId = c.getLong(c.getColumnIndex(COLUMN_NEWS_CREATED_BY_ID));
-//
-//            creator = getUser(userId);
-//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE)) != null) {
-//                title = c.getString(c.getColumnIndex(COLUMN_NEWS_TITLE));
-//            }
-//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT)) != null) {
-//                text = c.getString(c.getColumnIndex(COLUMN_NEWS_TEXT));
-//            }
-//            if (c.getString(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP)) != null) {
-//                timestamp = c.getLong(c.getColumnIndex(COLUMN_NEWS_TIMESTAMP));
-//            }
-//            System.out.println("isOpen: " + db.isOpen());
-//            byte[] p = c.getBlob(c.getColumnIndex(COLUMN_NEWS_PICTURE));
-//            picture = BitmapFactory.decodeByteArray(p, 0, p.length);
-//            toReturn.add(new News(newsId, creator, title, text, timestamp, picture));
-//
-//            if (!db.isOpen()){
-//                db = getReadableDatabase();
-//            }
             c.moveToNext();
         }
         c.close();
@@ -653,7 +628,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CHATS_ACCEPTED_USER_2, 0);
 
         long insertedChatId = getWritableDatabase().insert(TABLE_CHATS, null, values);
-        System.out.println("chat added : " + insertedChatId);
         if (insertedChatId == -1) {
             return getExistingChat(user1, user2, request);
         } else {
@@ -822,7 +796,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void deleteUser(User user) {
-        System.out.println("deleting user : " + user.getUsername());
         SQLiteDatabase db = getWritableDatabase();
         try {
             String query = "DELETE FROM " + TABLE_USER + " WHERE " + COLUMN_USER_USERNAME + " = " + user.getUsername();
@@ -868,7 +841,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_APPLICANT_TIMESTAMP, now);
 
         long insertedApplicantRecord = getWritableDatabase().insert(TABLE_APPLICANT, null, values);
-        System.out.println("ADD APPLICANT " + insertedApplicantRecord);
         if (insertedApplicantRecord == -1) {
             return false;
         }
@@ -933,7 +905,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void updateAccepted(User user, Chat chat) {
-        System.out.println("DB Helper updateAccepted");
         String query = "";
         if (chat.getUser1().getId() == user.getId()) {
             query = "UPDATE " + TABLE_CHATS + " SET " + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + (chat.isAcceptedUser1() ? 1 : 0)

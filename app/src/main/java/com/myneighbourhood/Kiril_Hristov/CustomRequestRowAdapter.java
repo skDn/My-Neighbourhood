@@ -149,8 +149,6 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
                 db.addApplicant(user.getId(), feedRequests.get(position).getId(), feedRequests.get(position).getCreator().getId(), notification);
                 Intent i = new Intent(getContext(), ChatActivity.class);
                 Chat c = db.addChat(feedRequests.get(position).getCreator(), user, feedRequests.get(position));
-                //System.out.println("applying for request: " + feedRequests.get(position));
-                //System.out.println("chatId: " + c.getId());
                 i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
                 i.putExtra("tab", 0);
                 getContext().startActivity(i);

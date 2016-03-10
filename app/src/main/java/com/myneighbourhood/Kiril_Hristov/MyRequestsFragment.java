@@ -55,7 +55,6 @@ public class MyRequestsFragment extends Fragment {
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         progressDialog.show();
         myRequests = mainActivity.getDB().getRequests(mainActivity.getUser().getId(), "my");
-        System.out.println("current user id " + mainActivity.getUser().getId());
         progressDialog.dismiss();
 
         String[] titles = new String[myRequests.size()];
