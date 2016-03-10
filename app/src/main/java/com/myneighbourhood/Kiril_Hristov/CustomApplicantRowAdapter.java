@@ -39,7 +39,7 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
     static class ViewHolderItem{
         TextView username, rating;
         CircleImageView profileImage;
-        ImageView chatIV;
+        ImageView chatIcon;
     }
 
 
@@ -55,7 +55,7 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
             viewHolder.profileImage = (CircleImageView) convertView.findViewById(R.id.ApplicantRowUserImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.ApplicantRowUsername);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.ApplicantRowRating);
-            viewHolder.chatIV = (ImageView) convertView.findViewById(R.id.custom_applicant_row_IV_chat);
+            viewHolder.chatIcon = (ImageView) convertView.findViewById(R.id.custom_applicant_row_chat_icon);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolderItem) convertView.getTag();

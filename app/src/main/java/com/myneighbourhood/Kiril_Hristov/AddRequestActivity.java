@@ -1,5 +1,7 @@
 package com.myneighbourhood.Kiril_Hristov;
-
+/**
+ * Created by Kiril on 04/03/16.
+ */
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -134,7 +136,6 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
         expiresPicker.setWrapSelectorWheel(false);
         expiresPicker.setOnValueChangedListener(this);
         setDividerColor(expiresPicker);
-        //user.getId()
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

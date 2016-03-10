@@ -1,5 +1,7 @@
 package com.myneighbourhood.Kiril_Hristov;
-
+/**
+ * Created by Kiril on 19/02/16.
+ */
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;

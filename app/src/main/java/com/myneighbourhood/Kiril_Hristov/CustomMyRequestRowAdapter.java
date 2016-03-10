@@ -1,10 +1,12 @@
 package com.myneighbourhood.Kiril_Hristov;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.myneighbourhood.R;
@@ -33,6 +35,7 @@ public class CustomMyRequestRowAdapter extends ArrayAdapter<String>{
     static class ViewHolderItem{
         TextView title;
         TextView description;
+        Button rowEditRequest, rowDeleteRequest;
     }
 
     @Override
@@ -45,6 +48,8 @@ public class CustomMyRequestRowAdapter extends ArrayAdapter<String>{
             viewHolder = new ViewHolderItem();
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.RowRequestDescription);
+            viewHolder.rowEditRequest = (Button) convertView.findViewById(R.id.rowEditRequest);
+            viewHolder.rowDeleteRequest = (Button) convertView.findViewById(R.id.rowDeleteRequest);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolderItem) convertView.getTag();
@@ -53,7 +58,27 @@ public class CustomMyRequestRowAdapter extends ArrayAdapter<String>{
         String title = getItem(position);
         viewHolder.title.setText(title);
         viewHolder.description.setText(feedRequests.get(position).getDescription());
+        viewHolder.rowEditRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog("The functionality of the Edit button is not implemented.");
+            }
+        });
+
+        viewHolder.rowDeleteRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog("The functionalit of the Delete button is not implemented");
+            }
+        });
 
         return convertView;
+    }
+
+    public void showDialog(String message){
+        AlertDialog.Builder allertBuilder = new AlertDialog.Builder(getContext());
+        allertBuilder.setMessage(message);
+        allertBuilder.setPositiveButton("OK", null);
+        allertBuilder.show();
     }
 }

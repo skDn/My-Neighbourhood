@@ -1,5 +1,6 @@
 package com.myneighbourhood.Kiril_Hristov;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,8 +97,29 @@ public class CustomJobRowAdapter extends ArrayAdapter<Request> {
             }
         });
 
+        viewHolder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog("Giving +1 rating to the other user is not implemented");
+            }
+        });
+
+        viewHolder.dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog("Taking -1 rating from the user`s rating is not implemented");
+            }
+        });
+
         return convertView;
     }
 
+
+    public void showDialog(String message){
+        AlertDialog.Builder allertBuilder = new AlertDialog.Builder(getContext());
+        allertBuilder.setMessage(message);
+        allertBuilder.setPositiveButton("OK", null);
+        allertBuilder.show();
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.myneighbourhood.Kiril_Hristov;
-
+/**
+ * Created by Kiril on 04/03/16.
+ */
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -85,7 +87,6 @@ public class ApplicantsActivity extends BaseActivity {
                         Chat c = DB.addChat(user, applicants.get(position), request);
                         i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
                         startActivity(i);
-//                        finish();
                     }
                 }
         );

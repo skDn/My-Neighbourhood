@@ -65,7 +65,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/custom_applicant_row_IV_chat"
+        android:id="@+id/custom_applicant_row_chat_icon"
         android:src="@drawable/ic_chat"
         android:layout_width="0dp"
         android:layout_weight="0.2"
