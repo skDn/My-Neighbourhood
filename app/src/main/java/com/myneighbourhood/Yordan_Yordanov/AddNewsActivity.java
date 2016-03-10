@@ -31,6 +31,15 @@ public class AddNewsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_news);
 
+        try {
+            setTitle("Add News");
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         Intent i = getIntent();
         tab = i.getIntExtra("tab", 0);
 
@@ -72,13 +81,6 @@ public class AddNewsActivity extends BaseActivity {
 
         if (requestCode == REQUEST_BROWSE_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri targetUri = data.getData();
-
-//            Display display = getWindowManager().getDefaultDisplay();
-//            Point size = new Point();
-//            display.getSize(size);
-//            int width = size.x;
-//
-//            Bitmap bitmapFromURI = getBitmapFromURI(targetUri, width, width/2);
             Bitmap bitmapFromURI = getBitmapFromURI(targetUri, 200, 150);
             addNewsImage.setImageBitmap(bitmapFromURI);
 

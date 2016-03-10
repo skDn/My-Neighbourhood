@@ -32,7 +32,7 @@ public class MessagesActivity extends BaseActivity {
     private ArrayList<Chat> chatsForUser;
     private ChatsListArrayAdapter adapter;
 
-    public boolean showHomeInSteadOfChat(){
+    public boolean showHomeInSteadOfChat() {
         return true;
     }
 

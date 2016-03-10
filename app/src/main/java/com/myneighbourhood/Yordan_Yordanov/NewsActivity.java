@@ -54,7 +54,6 @@ public class NewsActivity extends BaseActivity {
         userImage.setImageBitmap(createdByUser.getImage());
         userName = (TextView) findViewById(R.id.newsCreatedByUserName);
 
-//        newsImage = (ImageView) findViewById(R.id.newsCoverImage);
         newsDescription = (TextView) findViewById(R.id.newsDescriptionText);
         newsTitle = (TextView) findViewById(R.id.newsDescriptionTitle);
 

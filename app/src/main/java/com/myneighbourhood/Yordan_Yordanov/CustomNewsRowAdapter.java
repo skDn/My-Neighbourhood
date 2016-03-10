@@ -68,9 +68,7 @@ public class CustomNewsRowAdapter extends ArrayAdapter<String> implements View.O
             viewHolder.newsImage.setImageBitmap(newsFeed.get(position).getPicture());
         }
 
-//        String title = getItem(position);
         viewHolder.newsTitle.setText(newsFeed.get(position).getTitle());
-//        viewHolder.newsText.setText(newsFeed.get(position).getText());
         viewHolder.username.setText(newsFeed.get(position).getCreator().getUsername());
         viewHolder.userImage.setImageBitmap(newsFeed.get(position).getCreator().getImage());
         Date latestMsgDate = new Date(newsFeed.get(position).getTimestamp());

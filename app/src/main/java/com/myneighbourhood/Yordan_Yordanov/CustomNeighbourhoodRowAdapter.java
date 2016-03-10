@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by yordanyordanov on 25/02/2016.
  */
-public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
+public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String> {
 
     private ArrayList<User> neighbours;
 
@@ -53,7 +53,6 @@ public class CustomNeighbourhoodRowAdapter extends ArrayAdapter<String>{
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowNeighbourUsername);
             viewHolder.ratingAsApplicant = (TextView) convertView.findViewById(R.id.RowNeighbourApplicantRating);
             viewHolder.ratingAsRequest = (TextView) convertView.findViewById(R.id.RowNeighbourRequesterRating);
-//            viewHolder.userImage.setImageBitmap(neighbours.get(position).getImage());
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolderItem) convertView.getTag();
