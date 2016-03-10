@@ -17,7 +17,7 @@ import com.myneighbourhood.utils.User;
 import java.util.ArrayList;
 
 /**
- * Created by kirchoni on 04/03/16.
+ * Created by Kiril on 04/03/16.
  */
 public class CustomJobRowAdapter extends ArrayAdapter<Request> {
 
@@ -38,7 +38,6 @@ public class CustomJobRowAdapter extends ArrayAdapter<Request> {
         ImageView like, dislike;
         Button markFinished;
     }
-
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -77,13 +76,16 @@ public class CustomJobRowAdapter extends ArrayAdapter<Request> {
 
         if(jobs.get(position).getCreator().getId() == user.getId()){
             viewHolder.userType.setText("Applicant: ");
-            //DBHelper.getInstance(getContext()).getApplicantForRequest(jobs.get(position));
-            viewHolder.userName.setText("MAIKAMI");
+            ArrayList<User> applicants = db.getApplicants(jobs.get(position).getId());
+            User applicant = db.getApplicantForAcceptedRequest(applicants);
+            viewHolder.userName.setText(applicant.getUsername());
         }
         else {
             viewHolder.userType.setText("Creator: ");
             viewHolder.userName.setText(jobs.get(position).getCreator().getUsername());
         }
+
+        viewHolder.title.setText(jobs.get(position).getTitle());
 
         viewHolder.markFinished.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +95,6 @@ public class CustomJobRowAdapter extends ArrayAdapter<Request> {
                 CustomJobRowAdapter.this.notifyDataSetChanged();
             }
         });
-
-
-
 
         return convertView;
     }

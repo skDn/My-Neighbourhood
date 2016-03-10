@@ -857,17 +857,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return messages;
     }
 
-//    private static final String createApplicant =
-//            "CREATE TABLE " + TABLE_APPLICANT + "(" +
-//                    COLUMN_APPLICANT_RECORD + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                    COLUMN_APPLICANT_APPLICANT_ID + " INTEGER, " +
-//                    COLUMN_APPLICANT_REQUEST_ID + " INTEGER, " +
-//                    COLUMN_APPLICANT_CREATOR_ID + " INTEGER, " +
-//                    COLUMN_APPLICANT_TIMESTAMP + " INTEGER, " +
-//                    "FOREIGN KEY (" + COLUMN_APPLICANT_APPLICANT_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + "), " +
-//                    "FOREIGN KEY (" + COLUMN_APPLICANT_REQUEST_ID + ") REFERENCES " + TABLE_REQUEST + "(" + COLUMN_REQUESTS_REQUEST_ID + "), " +
-//                    "FOREIGN KEY (" + COLUMN_APPLICANT_CREATOR_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_USER_ID + ")" +
-//                    ");";
 
     public boolean addApplicant(long applicantId, long requestId, long creatorId, CustomNotification notification) {
 
@@ -906,6 +895,26 @@ public class DBHelper extends SQLiteOpenHelper {
         c.close();
         db.close();
         return applicants;
+    }
+
+    public User getApplicantForAcceptedRequest(ArrayList<User> allApplicants){
+        User applicant = null;
+        SQLiteDatabase db = getReadableDatabase();
+        for(int i = 0; i<allApplicants.size();i++){
+            String query = "SELECT " + TABLE_APPLICANT + "." + COLUMN_APPLICANT_APPLICANT_ID + " FROM " + TABLE_APPLICANT + ", " + TABLE_CHATS
+                    + " WHERE " + TABLE_APPLICANT + "." + COLUMN_APPLICANT_APPLICANT_ID + " = " + allApplicants.get(i).getId()
+                    + " AND (" + TABLE_CHATS + "." + COLUMN_CHATS_USER_1 + " = " + allApplicants.get(i).getId() + " OR " + TABLE_CHATS + "." + COLUMN_CHATS_USER_2 + " = " + allApplicants.get(i).getId()
+                    + " ) AND " + TABLE_CHATS + "." + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + 1 + " AND " + TABLE_CHATS + "." + COLUMN_CHATS_ACCEPTED_USER_1 + " = " + 1;
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+            if(!c.isAfterLast()){
+                long applicantId = c.getLong(c.getColumnIndex(COLUMN_APPLICANT_APPLICANT_ID));
+                applicant = getUser(applicantId);
+            }
+            c.close();
+        }
+        db.close();
+        return applicant;
     }
 
     public Chat getChat(long chatId) {
