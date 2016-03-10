@@ -1,15 +1,19 @@
 package com.myneighbourhood.Velin_Kerkov;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
+import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.Kiril_Hristov.JobsActivity;
 import com.myneighbourhood.R;
@@ -27,6 +32,7 @@ import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -137,6 +143,10 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void setLoggedInUser(User user) {
         this.user = user;
+        ArrayList<CustomNotification> notifications = DB.getAllNotificationsForUser(user);
+        for (CustomNotification not : notifications) {
+            sendNotification(not.getText(), not.getFromUser().getId() + not.getType().type);
+        }
     }
 
     private void configureToolbar(View view) {
@@ -212,6 +222,31 @@ public class BaseActivity extends AppCompatActivity {
         if (DB == null) {
             DB = DBHelper.getInstance(this);
         }
+    }
+
+    private void sendNotification(String msg, long notId) {
+        NotificationManager mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
+
+        DB.notificationSeen(notId);
+
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.logo)
+                        .setContentTitle("MyNeighbourhood")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(msg))
+                        .setContentText(msg)
+                        .setSound(alarmSound)
+                        .setAutoCancel(true);
+
+        mBuilder.setContentIntent(contentIntent);
+        mNotificationManager.notify((int) notId, mBuilder.build());
     }
 
     public User getUser() {

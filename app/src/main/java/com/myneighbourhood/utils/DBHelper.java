@@ -989,7 +989,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
 
-    public ArrayList<CustomNotification> getAllNotifications(User user) {
+    public ArrayList<CustomNotification> getAllNotificationsForUser(User user) {
         String query = " SELECT * FROM " + TABLE_NOTIFICATION + " WHERE (" + COLUMN_NOTIFICATION_FOR_USER_ID + " = " + user.getId() + " OR " + COLUMN_NOTIFICATION_FOR_USER_ID + " IS NULL ) AND " + COLUMN_NOTIFICATION_FROM_USER_ID + " != " + user.getId() + " AND " + COLUMN_NOTIFICATION_IS_SHOWN + " != " + 1;
         ArrayList<CustomNotification> notifications = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();

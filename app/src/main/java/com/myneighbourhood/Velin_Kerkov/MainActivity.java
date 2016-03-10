@@ -18,7 +18,6 @@ import com.myneighbourhood.Kiril_Hristov.MyRequestsFragment;
 import com.myneighbourhood.Kiril_Hristov.RequestFeedFragment;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Yordan_Yordanov.NewsFeedFragment;
-import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.DBHelper;
 import com.myneighbourhood.utils.User;
 import com.myneighbourhood.utils.Utils;
@@ -87,36 +86,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        ArrayList<CustomNotification> notifications = DB.getAllNotifications(user);
-        for (CustomNotification not : notifications) {
-            sendNotification(not.getText(), not.getFromUser().getId() + not.getType().type);
-        }
-    }
-
-    private void sendNotification(String msg, long notId) {
-        NotificationManager mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
-
-        DB.notificationSeen(notId);
-
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logo)
-                        .setContentTitle("MyNeighbourhood")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg)
-                        .setSound(alarmSound)
-                        .setAutoCancel(true);
-
-        mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify((int) notId, mBuilder.build());
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -58,7 +58,7 @@ public class ProfileActivity extends BaseActivity {
         endorseBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogWithOkButton("This will endorse the user. This functionality has not been implemented yet. TBA");
             }
         });
 
