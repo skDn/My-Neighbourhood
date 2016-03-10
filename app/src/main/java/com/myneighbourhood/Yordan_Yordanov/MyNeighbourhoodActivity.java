@@ -11,7 +11,6 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import com.myneighbourhood.Kiril_Hristov.NonScrollListView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.MyProfileActivity;

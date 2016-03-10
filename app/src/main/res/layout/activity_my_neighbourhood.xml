@@ -55,7 +55,7 @@
 
         </LinearLayout>
 
-        <com.myneighbourhood.Kiril_Hristov.NonScrollListView
+        <com.myneighbourhood.Yordan_Yordanov.NonScrollListView
             android:id="@+id/MyNeighbourhoodListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

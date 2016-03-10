@@ -37,7 +37,15 @@ public class AddRequestActivity extends BaseActivity implements NumberPicker.OnV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_request);
-        getSupportActionBar().setTitle("Add Request");
+        try {
+            setTitle("Add Request");
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         titleField = (EditText) findViewById(R.id.AddRequestTitle);
         descriptionField = (EditText) findViewById(R.id.AddRequestDescription);

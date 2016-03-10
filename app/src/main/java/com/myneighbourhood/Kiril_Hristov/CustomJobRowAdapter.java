@@ -63,8 +63,8 @@ public class CustomJobRowAdapter extends ArrayAdapter<Request> {
 
         if(jobs.get(position).getStatus() == 0){
             viewHolder.status.setText(" In Progress ");
-            viewHolder.like.setVisibility(View.GONE);
-            viewHolder.dislike.setVisibility(View.GONE);
+            viewHolder.like.setVisibility(View.INVISIBLE);
+            viewHolder.dislike.setVisibility(View.INVISIBLE);
             viewHolder.markFinished.setVisibility(View.VISIBLE);
         }
         else {
