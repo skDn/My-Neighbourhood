@@ -16,6 +16,8 @@ import com.myneighbourhood.utils.Utils;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by kiril on 04/03/16.
  */
@@ -36,7 +38,8 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
 
     static class ViewHolderItem{
         TextView username, rating;
-        ImageView profileImage, chatIV;
+        CircleImageView profileImage;
+        ImageView chatIV;
     }
 
 
@@ -49,7 +52,7 @@ public class CustomApplicantRowAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.custom_applicant_row, parent, false);
             viewHolder = new ViewHolderItem();
 
-            viewHolder.profileImage = (ImageView) convertView.findViewById(R.id.ApplicantRowUserImage);
+            viewHolder.profileImage = (CircleImageView) convertView.findViewById(R.id.ApplicantRowUserImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.ApplicantRowUsername);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.ApplicantRowRating);
             viewHolder.chatIV = (ImageView) convertView.findViewById(R.id.custom_applicant_row_IV_chat);

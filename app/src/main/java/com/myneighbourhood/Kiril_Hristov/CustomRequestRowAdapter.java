@@ -91,7 +91,7 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
 
             viewHolder.userImage = (CircleImageView) convertView.findViewById(R.id.RowRequestImage);
             viewHolder.username = (TextView) convertView.findViewById(R.id.RowRequestUsername);
-            viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.request_row_TV_date_created);
+            viewHolder.dateCreated = (TextView) convertView.findViewById(R.id.RequestRowDateCreated);
             viewHolder.title = (TextView) convertView.findViewById(R.id.RowRequestTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.RowRequestDescription);
             viewHolder.rating = (TextView) convertView.findViewById(R.id.RowRequestRating);
@@ -149,8 +149,8 @@ public class CustomRequestRowAdapter extends ArrayAdapter<String> implements Vie
                 db.addApplicant(user.getId(), feedRequests.get(position).getId(), feedRequests.get(position).getCreator().getId(), notification);
                 Intent i = new Intent(getContext(), ChatActivity.class);
                 Chat c = db.addChat(feedRequests.get(position).getCreator(), user, feedRequests.get(position));
-                System.out.println("applying for request: " + feedRequests.get(position));
-                System.out.println("chatId: " + c.getId());
+                //System.out.println("applying for request: " + feedRequests.get(position));
+                //System.out.println("chatId: " + c.getId());
                 i.putExtra(Utils.EXTRA_CHAT_ID, c.getId());
                 i.putExtra("tab", 0);
                 getContext().startActivity(i);

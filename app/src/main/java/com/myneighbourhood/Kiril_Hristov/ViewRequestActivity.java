@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.myneighbourhood.R;
 import com.myneighbourhood.Velin_Kerkov.BaseActivity;
 import com.myneighbourhood.Velin_Kerkov.ChatActivity;
+import com.myneighbourhood.Velin_Kerkov.ProfileActivity;
 import com.myneighbourhood.utils.Chat;
 import com.myneighbourhood.utils.CustomNotification;
 import com.myneighbourhood.utils.Request;
@@ -21,9 +22,11 @@ import com.myneighbourhood.utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ViewRequestActivity extends BaseActivity {
 
-    ImageView profilePicture;
+    CircleImageView profilePicture;
     TextView username, title, description, rating, expires;
     Button apply;
     int tab;
@@ -40,7 +43,7 @@ public class ViewRequestActivity extends BaseActivity {
         long requestId = i.getLongExtra("requestId", 0);
         tab = i.getIntExtra("tab", 0);
 
-        profilePicture = (ImageView) findViewById(R.id.ReqActUserImage);
+        profilePicture = (CircleImageView) findViewById(R.id.ReqActUserImage);
         username = (TextView) findViewById(R.id.ReqActUsername);
         title = (TextView) findViewById(R.id.ReqActTitle);
         description = (TextView) findViewById(R.id.ReqActDescription);
@@ -91,6 +94,15 @@ public class ViewRequestActivity extends BaseActivity {
         String dateDate = dateFormat.format(request.getExpires());
         String dateTime = timeFormat.format(request.getExpires());
         expires.setText(dateDate + " " + dateTime);
+
+        profilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ViewRequestActivity.this, ProfileActivity.class);
+                i.putExtra(Utils.EXTRA_USER_ID_FOR_PROFILE_ACTIVITY, request.getCreator().getId());
+                startActivity(i);
+            }
+        });
 
         apply.setOnClickListener(new View.OnClickListener() {
             @Override

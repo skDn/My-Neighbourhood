@@ -49,7 +49,6 @@ public class RequestFeedFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        System.out.println("V onResume sym");
         ProgressDialog progressDialog = new ProgressDialog(mainActivity, R.style.AppTheme);
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
