@@ -62,5 +62,19 @@ public class ProfileActivity extends BaseActivity {
             }
         });
 
+        blockContentFromBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogWithOkButton("This will block any requests made by this user from your requests feed. Not implemented. TBA");
+            }
+        });
+
+        blockFeedToBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogWithOkButton("This will block request you made from appearing in this user's requests feed. Not implemented. TBA");
+            }
+        });
+
     }
 }
